@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/welcome">
+    android:background="#f5f5f5">
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/imageSplash"
+        android:layout_centerInParent="true"
+        android:src="@mipmap/welcome"
+        android:scaleType="fitXY"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+    <com.itheima.openchina.anim.WeatherView
+        android:id="@+id/animSplashView"
+        android:layout_marginBottom="100dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</RelativeLayout>
