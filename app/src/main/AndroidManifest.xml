@@ -10,6 +10,11 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <!--图片缓存设置-->
+        <meta-data
+            android:name="com.itheima.openchina.config.ImageDiskChaceModle"
+            android:value="GlideModule" />
+
         <activity
             android:name=".SplashActivity"
             android:theme="@style/FullScreen">
@@ -19,7 +24,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.MainActivity"/>
+        <activity android:name=".ui.activity.MainActivity" />
+        <activity android:name=".ui.activity.AddActivity" />
     </application>
 
 </manifest>

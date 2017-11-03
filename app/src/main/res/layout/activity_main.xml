@@ -4,10 +4,37 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="@color/colorAccent"
-        android:fitsSystemWindows="true" />
+    <include layout="@layout/home_title" />
 
+    <FrameLayout
+        android:id="@+id/home_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:background="@color/grash" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line_bg_color" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <android.support.v4.app.FragmentTabHost
+            android:id="@+id/ftab_main_bottom_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/iv_add"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true"
+            android:clickable="true"
+            android:src="@drawable/tab_add" />
+    </RelativeLayout>
+    <!-- <include layout="@layout/home_bottom_tab" />-->
 </LinearLayout>

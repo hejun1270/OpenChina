@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RadioGroup
+        android:id="@+id/home_tab_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/grash"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        <!---首页-->
+        <RadioButton
+            android:id="@+id/tab_synthesize"
+            style="@style/home_tab_style"
+            android:drawableTop="@drawable/tab_synthesize"
+            android:text="综合" />
+
+
+        <RadioButton
+            android:id="@+id/tab_tweet"
+            style="@style/home_tab_style"
+            android:drawableTop="@drawable/tab_tweet"
+            android:text="动弹" />
+
+        <RadioButton
+            android:id="@+id/tab_add"
+            style="@style/home_tab_style"
+            android:drawableTop="@drawable/tab_add"
+            android:layout_marginTop="8dp" />
+
+        <RadioButton
+            android:id="@+id/tab_find"
+            style="@style/home_tab_style"
+            android:drawableTop="@drawable/tab_find"
+            android:text="发现" />
+
+        <RadioButton
+            android:id="@+id/tab_me"
+            style="@style/home_tab_style"
+            android:drawableTop="@drawable/tab_me"
+            android:text="我的" />
+    </RadioGroup>
+</LinearLayout>
