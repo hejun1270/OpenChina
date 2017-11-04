@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grash"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_noLogin"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:background="@mipmap/bg_my"
+        android:orientation="vertical">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/unlogin_head"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:src="@mipmap/widget_dface"
+            app:civ_border_color="@color/white"
+            app:civ_border_width="3dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:text="@string/no_login"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_normal_size" />
+    </LinearLayout>
+
+    <!--我的消息-->
+    <LinearLayout
+        android:id="@+id/ll_my_msg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/me_item_bg"
+        android:clickable="true"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="@dimen/normal_padding"
+            android:src="@mipmap/ic_my_messege" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/my_msg"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_normal_size" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/normal_margin"
+                android:src="@mipmap/ic_arrow_right" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/line_bg_color" />
+        </RelativeLayout>
+    </LinearLayout>
+    <!--我的博客-->
+    <LinearLayout
+        android:id="@+id/ll_my_blogs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/me_item_bg"
+        android:clickable="true"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="@dimen/normal_padding"
+            android:src="@mipmap/ic_my_blog" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/my_blogs"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_normal_size" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/normal_margin"
+                android:src="@mipmap/ic_arrow_right" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/line_bg_color" />
+        </RelativeLayout>
+    </LinearLayout>
+    <!--我的团队-->
+    <LinearLayout
+        android:id="@+id/ll_my_team"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/me_item_bg"
+        android:clickable="true"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="@dimen/normal_padding"
+            android:src="@mipmap/ic_my_team" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/my_team"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_normal_size" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/normal_margin"
+                android:src="@mipmap/ic_arrow_right" />
+        </RelativeLayout>
+    </LinearLayout>
+    <!--我的活动-->
+    <LinearLayout
+        android:id="@+id/ll_my_event"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/me_item_bg"
+        android:clickable="true"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="@dimen/normal_padding"
+            android:src="@mipmap/ic_my_event" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/my_event"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_normal_size" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/normal_margin"
+                android:src="@mipmap/ic_arrow_right" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <!--设置-->
+    <LinearLayout
+        android:id="@+id/ll_my_set"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/me_item_bg"
+        android:clickable="true"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="@dimen/normal_padding"
+            android:src="@mipmap/ic_my_setting" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/my_set"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_normal_size" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/normal_margin"
+                android:src="@mipmap/ic_arrow_right" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

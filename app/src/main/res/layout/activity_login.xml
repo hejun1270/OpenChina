@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/title_pager" />
+
+    <EditText
+        android:id="@+id/et_count"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@drawable/et_bg"
+        android:hint="@string/acount_email"
+        android:padding="15dp"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/text_title_size" />
+
+    <EditText
+        android:id="@+id/et_pwd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/et_bg"
+        android:hint="@string/pwd"
+        android:inputType="textPassword"
+        android:padding="15dp"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/text_title_size" />
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@drawable/btn_login"
+        android:padding="15dp"
+        android:text="@string/login"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_title_size" />
+</LinearLayout>

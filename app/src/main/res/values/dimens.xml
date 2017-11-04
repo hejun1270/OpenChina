@@ -3,4 +3,6 @@
     <dimen name="text_title_size">18sp</dimen>
     <dimen name="text_small_size">12sp</dimen>
     <dimen name="normal_padding">10dp</dimen>
+    <dimen name="text_normal_size">16sp</dimen>
+    <dimen name="normal_margin">10dp</dimen>
 </resources>

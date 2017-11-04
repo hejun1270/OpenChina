@@ -43,4 +43,6 @@ dependencies {
     compile 'com.trycatch.android:mysnackbar:1.2.2'
     /*状态栏透明设置*/
     compile 'com.jaeger.statusbarutil:library:1.4.0'
+    /*圆形图片框架*/
+    compile 'de.hdodenhof:circleimageview:2.2.0'
 }
