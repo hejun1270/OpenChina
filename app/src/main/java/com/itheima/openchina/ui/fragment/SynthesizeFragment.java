@@ -2,6 +2,7 @@ package com.itheima.openchina.ui.fragment;
 
 import com.itheima.openchina.bases.BaseNewsFragment;
 import com.itheima.openchina.beans.FragmentInfo;
+import com.itheima.openchina.ui.fragment.synfragments.ConsultFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,10 +22,10 @@ public class SynthesizeFragment extends BaseNewsFragment{
     @Override
     protected List<FragmentInfo> listViewPagerFragmentData() {
         List<FragmentInfo> list=new ArrayList<>();
-        list.add(new FragmentInfo("开始",new BaseRecyclerFragment()));
-        list.add(new FragmentInfo("中间",new BaseRecyclerFragment()));
-        list.add(new FragmentInfo("结束",new BaseRecyclerFragment()));
-        list.add(new FragmentInfo("完成",new BaseRecyclerFragment()));
+        list.add(new FragmentInfo("开始",new ConsultFragment()));
+        list.add(new FragmentInfo("中间",new ConsultFragment()));
+        list.add(new FragmentInfo("结束",new ConsultFragment()));
+        list.add(new FragmentInfo("完成",new ConsultFragment()));
         return list;
     }
 

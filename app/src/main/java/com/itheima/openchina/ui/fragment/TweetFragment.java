@@ -22,9 +22,7 @@ public class TweetFragment extends BaseNewsFragment {
     @Override
     protected List<FragmentInfo> listViewPagerFragmentData() {
         List<FragmentInfo> list=new ArrayList<>();
-        list.add(new FragmentInfo("开始",new BaseRecyclerFragment()));
-        list.add(new FragmentInfo("开始",new BaseRecyclerFragment()));
-        list.add(new FragmentInfo("开始",new BaseRecyclerFragment()));
+
         return list;
     }
 }
