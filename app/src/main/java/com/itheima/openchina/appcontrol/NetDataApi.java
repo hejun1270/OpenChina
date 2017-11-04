@@ -10,5 +10,13 @@ package com.itheima.openchina.appcontrol;
  */
 
 public class NetDataApi {
+    /**
+     * 网络接口主机地址
+     */
+    public static final String HOST_URL = "http://www.oschina.net";
 
+    /**
+     * 登录地址
+     */
+    public static final String LOGIN_URL = "/action/api/login_validate";
 }

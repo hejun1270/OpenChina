@@ -10,4 +10,12 @@ package com.itheima.openchina.appcontrol;
  */
 
 public class Constant {
+    /**
+     * 用户名存储key
+     */
+    public static final String USER_NAME = "user_name";
+    /**
+     * 用户密码存储key
+     */
+    public static final String USER_PWD = "user_pwd";
 }
