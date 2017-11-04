@@ -1,10 +1,13 @@
 package com.itheima.openchina.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.itheima.openchina.R;
 import com.itheima.openchina.bases.BaseRecyclerAdapter;
+import com.leon.loopviewpagerlib.FunBanner;
 
 import java.util.List;
 
@@ -15,9 +18,9 @@ import java.util.List;
  * Function:
  */
 
-public class SynthesizeAdapter extends BaseRecyclerAdapter {
+public class SynthesizeAdapter<T> extends BaseRecyclerAdapter {
 
-    public SynthesizeAdapter(Context context, List<Object> list) {
+    public SynthesizeAdapter(Context context, List<T> list) {
         super(context,list);
     }
 
@@ -35,8 +38,13 @@ public class SynthesizeAdapter extends BaseRecyclerAdapter {
 
     @Override
     protected View createItemHeadLayout() {
-
-
-        return null;
+        FunBanner.Builder builder = new FunBanner.Builder(getContext());
+        FunBanner build = builder.setEnableAutoLoop(true)
+                .setDotSelectedColor(Color.RED)
+                .setHeightWidthRatio(0.5f)
+                .setIndicatorBarHeight(20)
+                .setIndicatorBackgroundColor(Color.parseColor("#7D6B6363"))
+                .build();
+        return build;
     }
 }

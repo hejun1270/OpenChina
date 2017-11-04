@@ -19,15 +19,15 @@ import java.util.List;
  * Function:
  */
 
-public abstract class BaseRecyclerAdapter extends RecyclerView.Adapter {
+public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
     private  Context context;
-    private List<Object> list;
+    private List<T> list;
 
     public static final int HeadType = 0;
     public static final int bodyType = 1;
     public static final int footType = 2;
 
-    public BaseRecyclerAdapter(Context context,List<Object> list) {
+    public BaseRecyclerAdapter(Context context,List<T> list) {
         this.context=context;
         this.list = list;
     }
@@ -36,7 +36,7 @@ public abstract class BaseRecyclerAdapter extends RecyclerView.Adapter {
         return context;
     }
 
-    public List<Object> getList() {
+    public List<T> getList() {
         return list;
     }
 
