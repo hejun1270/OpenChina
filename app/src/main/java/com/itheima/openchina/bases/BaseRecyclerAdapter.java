@@ -42,7 +42,6 @@ public abstract class BaseRecyclerAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        //TODO layout布局
         View view = null;
         LogUtils.i(viewType+"");
         switch (viewType) {
