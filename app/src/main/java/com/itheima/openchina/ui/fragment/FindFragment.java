@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import com.google.zxing.activity.CaptureActivity;
 import com.itheima.openchina.R;
 import com.itheima.openchina.bases.BaseFragment;
