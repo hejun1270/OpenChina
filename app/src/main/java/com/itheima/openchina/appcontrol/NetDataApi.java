@@ -18,5 +18,9 @@ public class NetDataApi {
     /**
      * 登录地址
      */
-    public static final String LOGIN_URL = "/action/api/login_validate";
+    public static final String LOGIN_URL = HOST_URL + "/action/api/login_validate";
+    /**
+     * 我的信息
+     */
+    public static final String MY_INFO = HOST_URL + "/action/api/my_information";
 }

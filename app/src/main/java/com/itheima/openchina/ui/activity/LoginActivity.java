@@ -1,5 +1,8 @@
 package com.itheima.openchina.ui.activity;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -11,9 +14,15 @@ import com.itheima.openchina.R;
 import com.itheima.openchina.appcontrol.Constant;
 import com.itheima.openchina.appcontrol.NetDataApi;
 import com.itheima.openchina.bases.BaseActivity;
+import com.itheima.openchina.beans.LoginInfo;
 import com.itheima.openchina.network_request.PostManager;
 import com.itheima.openchina.utils.GsonUtil;
+import com.itheima.openchina.utils.LogUtils;
+import com.itheima.openchina.utils.LoginUtils;
 import com.itheima.openchina.utils.SpUtil;
+import com.itheima.openchina.utils.ToastUtil;
+import com.itheima.openchina.utils.Utils;
+import com.itheima.openchina.wedigt.LoadDialog;
 import com.jaeger.library.StatusBarUtil;
 
 import java.io.IOException;
@@ -47,6 +56,7 @@ public class LoginActivity extends BaseActivity {
     EditText mEtPwd;
     @BindView(R.id.btn_login)
     Button mBtnLogin;
+    private LoadDialog mLoadDialog;
 
     @Override
     protected int getLayoutRs() {
@@ -72,6 +82,7 @@ public class LoginActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.btn_login:
+                showLoading();
                 startLogin();
                 break;
         }
@@ -86,21 +97,44 @@ public class LoginActivity extends BaseActivity {
         map.put("keep_login", "1");
         map.put("username", count);
         map.put("pwd", pwd);
-        String mapToJson = GsonUtil.parseMapToJson(map);
-        Log.i(TAG, "startLogin: ---<>" + mapToJson);
-        PostManager.getInstance().jsonPost(mapToJson, NetDataApi.HOST_URL + NetDataApi.LOGIN_URL,
-                new
-                        Callback() {
-                            @Override
-                            public void onFailure(Call call, IOException e) {
+        LoginUtils.login(map, new LoginUtils.LoginListener() {
+            @Override
+            public void success(final LoginInfo loginInfo) {
+                if (loginInfo.getErrorCode().equals("1")) {//登录成功
+                    SpUtil.saveString(Constant.UID, loginInfo.getUid());//保存用户id
+                    SpUtil.saveString(Constant.COOKIE, loginInfo.getCookie());//保存用户cookie
+                    ToastUtil.showToast(loginInfo.getErrorMessage());
+                    mLoadDialog.dismiss();
+                    //将登录信息返回给启动此登录界面的activity
+                    Intent intent = getIntent();
+                    intent.putExtra("loginfo", loginInfo);
+                    setResult(1001, intent);//返回登录信息
+                    finish();
+                } else {//登录失败
+                    Utils.runOnUIThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ToastUtil.showToast(loginInfo.getErrorMessage());
+                            mLoadDialog.dismiss();
+                        }
+                    });
+                }
+            }
 
-                            }
+            @Override
+            public void failed(String errorInfo) {
+                LogUtils.i(errorInfo);
+                mLoadDialog.dismiss();
+            }
+        });
+    }
 
-                            @Override
-                            public void onResponse(Call call, Response response) throws
-                                    IOException {
-                                Log.i(TAG, "onResponse: --->" + response.body().toString());
-                            }
-                        });
+
+    private void showLoading() {
+        mLoadDialog = new LoadDialog(this);
+        mLoadDialog.setMsg("正在登录,请稍后...");
+        mLoadDialog.setCanceledOnTouchOutside(false);
+        mLoadDialog.setCancelable(false);
+        mLoadDialog.show();
     }
 }

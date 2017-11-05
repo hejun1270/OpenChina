@@ -8,7 +8,9 @@ import android.view.ViewGroup;
 
 import com.itheima.openchina.R;
 import com.itheima.openchina.bases.BaseFragment;
+import com.itheima.openchina.beans.LoginInfo;
 import com.itheima.openchina.ui.activity.LoginActivity;
+import com.itheima.openchina.utils.LogUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,12 +24,15 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Project:OpenChina <p/>
  * Package:com.itheima.openchina.ui.fragment <p/>
  * Desc:
+ * 我的页面
  */
 
 public class MeFragment extends BaseFragment {
 
-    CircleImageView mUnloginHead;
+    private CircleImageView mUnloginHead;
     private View childView;
+
+    private LoginInfo mLoginInfo;
 
     @Override
     protected void dataOnRefresh() {
@@ -48,13 +53,38 @@ public class MeFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, 1000);
             }
         });
     }
 
     @Override
     protected void onStartLoadData() {
+        //"?uid=3197930" 获取个人信息
         loadSuccess();
+    }
+
+    /**
+     * 当fragment节面可触摸时设置信息
+     */
+    @Override
+    public void onResume() {
+        super.onResume();
+
+    }
+
+    /**
+     * 接收上一个activity返回的数据
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == 1001) {
+            mLoginInfo = (LoginInfo) data.getSerializableExtra("loginfo");
+        }
     }
 }
