@@ -13,6 +13,7 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <application
         android:name=".appcontrol.App"
         android:allowBackup="true"
@@ -36,6 +37,9 @@
         </activity>
         <activity android:name=".ui.activity.MainActivity" />
         <activity android:name=".ui.activity.AddActivity" />
+        <activity
+            android:name=".ui.activity.LoginActivity"
+            android:windowSoftInputMode="adjustNothing" />
     </application>
 
 </manifest>
