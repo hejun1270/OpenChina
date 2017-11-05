@@ -5,10 +5,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.itheima.openchina.R;
-import com.itheima.openchina.adapters.TweetAdapter;
+import com.itheima.openchina.adapters.tweetAdapter.TweetAdapter;
 import com.itheima.openchina.bases.BaseFragment;
 import com.itheima.openchina.beans.TweetInfoBean;
 import com.itheima.openchina.cacheadmin.LoadData;
+import com.itheima.openchina.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ public class NewTweetsFragment extends BaseFragment {
     private RecyclerView recyclerView;
     private List<TweetInfoBean.ResultBean.TweetItem> tweetItems=new ArrayList<>();
     private TweetAdapter recyclerViewAdapter;
-
+    private View view;
 
 
     @Override
@@ -36,21 +37,23 @@ public class NewTweetsFragment extends BaseFragment {
 
     @Override
     protected View onCreateContentView() {
-        View view = View.inflate(getContext(), R.layout.view_fragment_item_list, null);
-         recyclerView = view.findViewById(R.id.rv_item_recycler_view);
-        init();
+        view = View.inflate(getContext(), R.layout.recycleview_view, null);
+        recyclerView = (RecyclerView) view;
+           init();
         return view;
     }
 
     private void init() {
+
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
         recyclerViewAdapter = new TweetAdapter<TweetInfoBean.ResultBean.TweetItem>(getContext(),tweetItems);
+
         recyclerView.setAdapter(recyclerViewAdapter);
     }
 
     @Override
     protected void onStartLoadData() {
-        loadSuccess();
+
 
         /*Thread thread = Thread.currentThread();
         Log.d("------------",thread+"");*/
@@ -58,18 +61,26 @@ public class NewTweetsFragment extends BaseFragment {
                @Override
                public void run() {
                    TweetInfoBean beanData = LoadData.getInstance().getBeanData("http://www.oschina.net/action/apiv2/tweets?type=1", TweetInfoBean.class);
-                   tweetItems.addAll(beanData.getResult().getItems());
+                   List<TweetInfoBean.ResultBean.TweetItem> tweetItemList = beanData.getResult().getItems();
+
+                   tweetItems.addAll(tweetItemList);
+
+                    doLoadData();
                }
            }).start();
-/*
+       //recyclerViewAdapter.notifyDataSetChanged();
+
+
+
+    }
+
+    private void doLoadData() {
         Utils.runOnUIThread(new Runnable() {
             @Override
             public void run() {
-                recyclerViewAdapter.notifyDataSetChanged();
+                loadSuccess();
+
             }
-        });*/
-
-
-
+        });
     }
 }

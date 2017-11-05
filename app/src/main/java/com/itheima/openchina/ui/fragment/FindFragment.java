@@ -1,18 +1,12 @@
 package com.itheima.openchina.ui.fragment;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
-
 
 import com.google.zxing.activity.CaptureActivity;
 import com.itheima.openchina.R;
-import com.itheima.openchina.bases.BaseFragment;
 import com.itheima.openchina.bases.BasePagerFragment;
 import com.itheima.openchina.ui.activity.OpenChinaActivity;
-import com.itheima.openchina.utils.ToastUtil;
 
 /**
  * User:DoctorHe <p/>
