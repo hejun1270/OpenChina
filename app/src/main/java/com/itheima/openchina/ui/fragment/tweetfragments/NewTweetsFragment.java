@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.itheima.openchina.R;
-import com.itheima.openchina.adapters.TweetAdapter;
 import com.itheima.openchina.bases.BaseFragment;
 import com.itheima.openchina.beans.TweetInfoBean;
 import com.itheima.openchina.cacheadmin.LoadData;
@@ -19,14 +18,14 @@ import java.util.List;
  * Version:  1.0
  * Date:    2017/11/4 0004
  * Modify:
- * Description: //TODO
+ * Description:
  * Copyright notice:
  */
 public class NewTweetsFragment extends BaseFragment {
 
     private RecyclerView recyclerView;
     private List<TweetInfoBean.ResultBean.TweetItem> tweetItems=new ArrayList<>();
-    private TweetAdapter tweetAdapter;
+//    private TweetAdapter tweetAdapter;
 
     @Override
     protected void dataOnRefresh() {
@@ -43,8 +42,8 @@ public class NewTweetsFragment extends BaseFragment {
 
     private void init() {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
-        tweetAdapter = new TweetAdapter(getContext(), tweetItems);
-        recyclerView.setAdapter(tweetAdapter);
+//        tweetAdapter = new TweetAdapter(getContext(), tweetItems);
+//        recyclerView.setAdapter(tweetAdapter);
     }
 
     @Override
@@ -58,7 +57,6 @@ public class NewTweetsFragment extends BaseFragment {
             public void run() {
                 TweetInfoBean beanData = LoadData.getInstance().getBeanData("http://www.oschina.net/action/apiv2/tweets?type=1", TweetInfoBean.class);
                 List<TweetInfoBean.ResultBean.TweetItem> tweetItemList = beanData.getResult().getItems();
-                ToastUtil.showToast(String.valueOf(tweetItemList));
             }
         }).start();
 

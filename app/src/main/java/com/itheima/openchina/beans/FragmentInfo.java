@@ -15,4 +15,5 @@ public class FragmentInfo extends Object{
         this.fragment = fragment;
         this.title = title;
     }
+
 }

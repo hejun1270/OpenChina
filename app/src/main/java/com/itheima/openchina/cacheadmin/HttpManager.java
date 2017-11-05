@@ -33,8 +33,9 @@ public class HttpManager {
             Request request = new Request.Builder()
                     .url(url)
                     .build();
-            Response response = okHttpClient.newCall(request).execute();
 
+
+            Response response = okHttpClient.newCall(request).execute();
             //获取头
             Headers headers = response.headers();
             for (int i = 0; i < headers.size(); i++) {
