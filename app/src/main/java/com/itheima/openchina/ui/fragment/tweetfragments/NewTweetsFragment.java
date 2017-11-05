@@ -9,7 +9,6 @@ import com.itheima.openchina.adapters.TweetAdapter;
 import com.itheima.openchina.bases.BaseFragment;
 import com.itheima.openchina.beans.TweetInfoBean;
 import com.itheima.openchina.cacheadmin.LoadData;
-import com.itheima.openchina.utils.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +25,9 @@ public class NewTweetsFragment extends BaseFragment {
 
     private RecyclerView recyclerView;
     private List<TweetInfoBean.ResultBean.TweetItem> tweetItems=new ArrayList<>();
-    private TweetAdapter tweetAdapter;
+    private TweetAdapter recyclerViewAdapter;
+
+
 
     @Override
     protected void dataOnRefresh() {
@@ -35,32 +36,40 @@ public class NewTweetsFragment extends BaseFragment {
 
     @Override
     protected View onCreateContentView() {
-        View view = View.inflate(getContext(), R.layout.recycleview_view, null);
-        recyclerView = (RecyclerView) view;
+        View view = View.inflate(getContext(), R.layout.view_fragment_item_list, null);
+         recyclerView = view.findViewById(R.id.rv_item_recycler_view);
         init();
         return view;
     }
 
     private void init() {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
-        tweetAdapter = new TweetAdapter(getContext(), tweetItems);
-        recyclerView.setAdapter(tweetAdapter);
+        recyclerViewAdapter = new TweetAdapter<TweetInfoBean.ResultBean.TweetItem>(getContext(),tweetItems);
+        recyclerView.setAdapter(recyclerViewAdapter);
     }
 
     @Override
     protected void onStartLoadData() {
-        //loadSuccess();
+        loadSuccess();
 
         /*Thread thread = Thread.currentThread();
         Log.d("------------",thread+"");*/
-        new Thread(new Runnable() {
+           new Thread(new Runnable() {
+               @Override
+               public void run() {
+                   TweetInfoBean beanData = LoadData.getInstance().getBeanData("http://www.oschina.net/action/apiv2/tweets?type=1", TweetInfoBean.class);
+                   tweetItems.addAll(beanData.getResult().getItems());
+               }
+           }).start();
+/*
+        Utils.runOnUIThread(new Runnable() {
             @Override
             public void run() {
-                TweetInfoBean beanData = LoadData.getInstance().getBeanData("http://www.oschina.net/action/apiv2/tweets?type=1", TweetInfoBean.class);
-                List<TweetInfoBean.ResultBean.TweetItem> tweetItemList = beanData.getResult().getItems();
-                ToastUtil.showToast(String.valueOf(tweetItemList));
+                recyclerViewAdapter.notifyDataSetChanged();
             }
-        }).start();
+        });*/
+
+
 
     }
 }
