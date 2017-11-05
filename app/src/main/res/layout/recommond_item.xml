@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/tv_content"
+        android:padding="8dp"
+        android:layout_centerVertical="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="我是推荐页面"
+        android:textSize="20dp"
+        android:textColor="#000000"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_description"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="8dp"
+        android:textSize="15dp"
+        android:text="我是小页面"
+        android:singleLine="true"/>
+
+</LinearLayout>

@@ -9,6 +9,7 @@ import com.itheima.openchina.adapters.tweetAdapter.TweetAdapter;
 import com.itheima.openchina.bases.BaseFragment;
 import com.itheima.openchina.beans.TweetInfoBean;
 import com.itheima.openchina.cacheadmin.LoadData;
+import com.itheima.openchina.utils.ToastUtil;
 import com.itheima.openchina.utils.Utils;
 
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ import java.util.List;
  * Description: //TODO
  * Copyright notice:
  */
-public class NewTweetsFragment extends BaseFragment {
+public class NewTweetsFragment extends BaseFragment implements TweetAdapter.OnItemClickListener {
 
     private RecyclerView recyclerView;
     private List<TweetInfoBean.ResultBean.TweetItem> tweetItems=new ArrayList<>();
@@ -32,29 +33,43 @@ public class NewTweetsFragment extends BaseFragment {
 
     @Override
     protected void dataOnRefresh() {
-
+          recyclerViewAdapter.notifyDataSetChanged();
     }
 
     @Override
     protected View onCreateContentView() {
-        View view = View.inflate(getContext(), R.layout.recycleview_view, null);
+        view = View.inflate(getContext(), R.layout.recycleview_view, null);
         recyclerView = (RecyclerView) view;
-        init();
+
+
+           init();
         return view;
     }
 
     private void init() {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
+        //设置RecyclerView的适配器
         recyclerViewAdapter = new TweetAdapter<TweetInfoBean.ResultBean.TweetItem>(getContext(),tweetItems);
-
         recyclerView.setAdapter(recyclerViewAdapter);
+        //最新动弹条目点击事件
+        recyclerViewAdapter.setOnItemClickListener(this);
+        dataOnRefresh();
+        //上拉加载更多
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                int visibleItemPosition = layoutManager.findLastVisibleItemPosition();
+                if(visibleItemPosition==tweetItems.size()-1 && newState==RecyclerView.SCROLL_STATE_IDLE){
+                    //上拉刷新调用的方法
+                }
+            }
+        });
     }
-
+    //请求网络数据
     @Override
     protected void onStartLoadData() {
-
-
         /*Thread thread = Thread.currentThread();
         Log.d("------------",thread+"");*/
            new Thread(new Runnable() {
@@ -64,23 +79,24 @@ public class NewTweetsFragment extends BaseFragment {
                    List<TweetInfoBean.ResultBean.TweetItem> tweetItemList = beanData.getResult().getItems();
 
                    tweetItems.addAll(tweetItemList);
-
-                    doLoadData();
+                  //加载成功后
+                   Utils.runOnUIThread(new Runnable() {
+                       @Override
+                       public void run() {
+                           setRefreshEnable(false);
+                               loadSuccess();
+                           recyclerViewAdapter.notifyDataSetChanged();
+                       }
+                   });
                }
            }).start();
-       //recyclerViewAdapter.notifyDataSetChanged();
-
-
-
     }
 
-    private void doLoadData() {
-        Utils.runOnUIThread(new Runnable() {
-            @Override
-            public void run() {
-                loadSuccess();
+    //条目点击处理
+    @Override
+    public void onItemClick(int position) {
+        ToastUtil.showToast("当前条目"+position);
 
-            }
-        });
+
     }
 }

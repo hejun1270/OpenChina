@@ -3,6 +3,8 @@ package com.itheima.openchina.adapters.tweetAdapter;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -21,7 +23,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Version:  1.0
  * Date:    2017/11/4 0004
  * Modify:
- * Description: //TODO
+ * Description: //TODO 这是动弹模块的适配器（创建条目布局、刷新条目数据、设置接口实现条目点击事件）
  * Copyright notice:
  */
 public class TweetAdapter<T> extends BaseRecyclerAdapter {
@@ -34,19 +36,35 @@ public class TweetAdapter<T> extends BaseRecyclerAdapter {
 
 
 
-
+     //加载动弹条目的布局
     @Override
     protected View createItemBodyLayout() {
-
         View view =View.inflate(getContext(), R.layout.item_tweet_new_view,null);
+        ScaleAnimation scaleAnimation = new ScaleAnimation(0,1,0,1, Animation.RELATIVE_TO_SELF,0.5f,Animation.RELATIVE_TO_SELF,0.5f);
+        scaleAnimation.setDuration(500);
+        view.startAnimation(scaleAnimation);
         return view;
     }
 
+    //条目布局数据刷新
     @Override
-    protected void createViewBodyItem(RecyclerView.ViewHolder holder, int position) {
+    protected void createViewBodyItem(RecyclerView.ViewHolder holder, final int position) {
+        //设置条目点击事件
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                   onItemClickListener.onItemClick(position);
+            }
+        });
         //用户头像
         CircleImageView userImg = holder.itemView.findViewById(R.id.profile_image);
         Glide.with(getContext()).load(list.get(position).getAuthor().getPortrait()).into(userImg);
+       /* userImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });*/
         //用户名
         TextView userName = holder.itemView.findViewById(R.id.tv_user_name);
            userName.setText(list.get(position).getAuthor().getName());
@@ -62,5 +80,13 @@ public class TweetAdapter<T> extends BaseRecyclerAdapter {
         //评论数量
         /*TextView commentNum = holder.itemView.findViewById(R.id.tv_comment_num);
          commentNum.setText(list.get(position).getCommentCount());*/
+    }
+    //创建一个接口
+    public interface OnItemClickListener{
+        void onItemClick(int position);
+    }
+      private OnItemClickListener onItemClickListener;
+   public void setOnItemClickListener(OnItemClickListener onItemClickListener){
+            this.onItemClickListener=onItemClickListener;
     }
 }

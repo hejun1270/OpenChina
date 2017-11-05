@@ -20,7 +20,7 @@ import static android.content.ContentValues.TAG;
  * Time:  --- 22:06---
  * Function:
  */
-
+@Deprecated
 public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
     private  Context context;
     private List<T> list;
@@ -101,7 +101,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
             if(createItemHeadLayout()!=null){
                 return list.size()+2;
             }else{
-                return list.size()+1;
+                return list.size();//todo
             }
 
         }

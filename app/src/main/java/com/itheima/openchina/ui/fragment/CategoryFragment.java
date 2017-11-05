@@ -1,11 +1,5 @@
 package com.itheima.openchina.ui.fragment;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -14,9 +8,9 @@ import android.widget.TextView;
 
 import com.itheima.openchina.R;
 import com.itheima.openchina.bases.BaseFragment;
-import com.itheima.openchina.bases.BasePagerFragment;
-
-import org.w3c.dom.Text;
+import com.itheima.openchina.beans.CategoryBean;
+import com.itheima.openchina.cacheadmin.LoadData;
+import com.itheima.openchina.utils.XmlUtils;
 
 /**
  * Created by jiang on 2017/11/4.
@@ -25,12 +19,15 @@ import org.w3c.dom.Text;
 public class CategoryFragment extends BaseFragment {
 
 
-
+    private CategoryBean categoryBean;
+    private int size;
+    private TextView viewcontent;
 
     @Override
     protected void dataOnRefresh() {
-
     }
+
+
 
     @Override
     protected View onCreateContentView() {
@@ -39,11 +36,43 @@ public class CategoryFragment extends BaseFragment {
         listView.setAdapter(new Myadapter());
         return view;
     }
+
+    @Override
+    protected void onStartLoadData() {
+        new Thread(){
+            @Override
+            public void run() {
+                String stringData = LoadData.getInstance().getStringData("http://www.oschina.net/action/api/softwarecatalog_list?tag=0");
+
+                categoryBean = XmlUtils.toBean(CategoryBean.class, stringData.getBytes());
+                size = categoryBean.typeBean.list.size();
+            }
+        }.start();
+        //1. 去网络获取数据
+
+//        new Thread(){
+//            @Override
+//            public void run() {
+//                OkHttpClient okHttpClient=new OkHttpClient.Builder().build();
+//                Request builder = new Request.Builder()
+//                        .url("http://www.oschina.net/action/api/softwarecatalog_list?tag=0")
+//                        .build();
+//                try {
+//                    Response response = okHttpClient.newCall(builder).execute();
+//                    categoryBean = XmlUtils.toBean(CategoryBean.class,response.body().bytes());
+//                    size = categoryBean.typeBean.list.size();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }.start();
+        loadSuccess();
+    }
     public class Myadapter extends BaseAdapter{
 
         @Override
         public int getCount() {
-            return 15;
+            return size;
         }
 
         @Override
@@ -61,14 +90,15 @@ public class CategoryFragment extends BaseFragment {
             View view;
             if(convertView==null){
                 view= View.inflate(getContext(), R.layout.category_item, null);
+                viewcontent = view.findViewById(R.id.tv_content);
+
             }else{
                 view=convertView;
             }
+            viewcontent.setText(categoryBean.typeBean.list.get(position).name);
             return view;
         }
     }
-    @Override
-    protected void onStartLoadData() {
-        loadSuccess();
-    }
+
+
 }
