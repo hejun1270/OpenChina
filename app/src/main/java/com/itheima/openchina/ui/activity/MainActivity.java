@@ -1,6 +1,5 @@
 package com.itheima.openchina.ui.activity;
 
-import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
 import android.view.KeyEvent;
 import android.view.View;
@@ -19,7 +18,6 @@ import com.itheima.openchina.ui.fragment.TweetFragment;
 import com.jaeger.library.StatusBarUtil;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -72,7 +70,7 @@ public class MainActivity extends BaseActivity {
             case KeyEvent.KEYCODE_BACK:
                 long secondTime = System.currentTimeMillis();
                 if (secondTime - firstTime > 2000) {
-                    Toast.makeText(MainActivity.this, "再按一次退出程序", Toast.LENGTH_SHORT)
+                    Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT)
                             .show();
                     firstTime = secondTime;
                     return true;
@@ -85,11 +83,13 @@ public class MainActivity extends BaseActivity {
     }
 
     public void initBottomTab() {
+
         for (int i = 0; i < mTabItemBg.length; i++) {
-            tabhost.setup(getApplicationContext(), getSupportFragmentManager(), R.id.home_content);
+         tabhost.setup(getApplicationContext(), getSupportFragmentManager(), R.id.home_content);
             // 给每个Tab按钮设置图标、文字和内容
             TabHost.TabSpec tabSpec = tabhost.newTabSpec("tab" + i)
                     .setIndicator(getTabItemView(i));
+            //
             // 将Tab按钮添加进Tab选项卡中
             tabhost.addTab(tabSpec, mFragment[i], null);
         }

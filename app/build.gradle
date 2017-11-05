@@ -45,4 +45,5 @@ dependencies {
     compile 'com.jaeger.statusbarutil:library:1.4.0'
     /*圆形图片框架*/
     compile 'de.hdodenhof:circleimageview:2.2.0'
+    compile 'com.github.uncleleonfan:FunBanner:1.2.0'
 }

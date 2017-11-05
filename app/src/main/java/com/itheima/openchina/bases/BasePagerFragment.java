@@ -1,5 +1,7 @@
 package com.itheima.openchina.bases;
 
+import android.view.View;
+
 /**
  * User:DoctorHe <p/>
  * Date: 2017/11/3 <p/>
@@ -19,4 +21,7 @@ public abstract class BasePagerFragment extends BaseFragment {
     protected void onStartLoadData() {
         loadSuccess();
     }
+
+    @Override
+    protected abstract View onCreateContentView();
 }

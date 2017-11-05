@@ -15,9 +15,9 @@ import java.util.List;
  * Function:
  */
 
-public class SynthesizeAdapter extends BaseRecyclerAdapter {
+public class SynthesizeAdapter<T> extends BaseRecyclerAdapter {
 
-    public SynthesizeAdapter(Context context, List<Object> list) {
+    public SynthesizeAdapter(Context context, List<T> list) {
         super(context,list);
     }
 
@@ -32,11 +32,16 @@ public class SynthesizeAdapter extends BaseRecyclerAdapter {
     protected void createViewBodyItem(RecyclerView.ViewHolder holder, int position) {
 
     }
-
+/*
     @Override
     protected View createItemHeadLayout() {
-
-
-        return null;
-    }
+        FunBanner.Builder builder = new FunBanner.Builder(getContext());
+        FunBanner build = builder.setEnableAutoLoop(true)
+                .setDotSelectedColor(Color.RED)
+                .setHeightWidthRatio(0.5f)
+                .setIndicatorBarHeight(20)
+                .setIndicatorBackgroundColor(Color.parseColor("#7D6B6363"))
+                .build();
+        return build;
+    }*/
 }

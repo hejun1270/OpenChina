@@ -30,4 +30,6 @@
     <color name="graywhite">#F5F5F5</color>
     <color name="grayslate">#708090</color>
     <color name="lightblue">#0083FF</color>
+   <!--动弹中的颜色-->
+    <color name="list_item_background_pressed">#FCFCFC</color>
 </resources>
