@@ -39,6 +39,7 @@ public class NewTweetsFragment extends BaseFragment {
     protected View onCreateContentView() {
         view = View.inflate(getContext(), R.layout.recycleview_view, null);
         recyclerView = (RecyclerView) view;
+
            init();
         return view;
     }
@@ -68,16 +69,25 @@ public class NewTweetsFragment extends BaseFragment {
                     doLoadData();
                }
            }).start();
-       //recyclerViewAdapter.notifyDataSetChanged();
 
 
 
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (recyclerViewAdapter!=null){
+            recyclerViewAdapter.notifyDataSetChanged();
+        }
     }
 
     private void doLoadData() {
         Utils.runOnUIThread(new Runnable() {
             @Override
             public void run() {
+                setRefreshEnable(false);
                 loadSuccess();
 
             }

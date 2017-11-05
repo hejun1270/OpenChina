@@ -57,10 +57,10 @@ public class TweetAdapter<T> extends BaseRecyclerAdapter {
         TextView sendTime = holder.itemView.findViewById(R.id.tv_send_time);
         sendTime.setText(list.get(position).getPubDate());
         //点赞数量
-        TextView thunbupNum = holder.itemView.findViewById(R.id.tv_thumbup_num);
-        thunbupNum.setText(list.get(position).getLikeCount());
+        /*TextView thunbupNum = holder.itemView.findViewById(R.id.tv_thumbup_num);
+        thunbupNum.setText(list.get(position).getLikeCount());*/
         //评论数量
-
-
+        /*TextView commentNum = holder.itemView.findViewById(R.id.tv_comment_num);
+         commentNum.setText(list.get(position).getCommentCount());*/
     }
 }
