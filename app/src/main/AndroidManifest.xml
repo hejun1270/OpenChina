@@ -35,6 +35,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.activity.OpenChinaActivity"/>
         <activity android:name=".ui.activity.MainActivity" />
         <activity android:name=".ui.activity.AddActivity" />
         <activity
