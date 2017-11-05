@@ -9,13 +9,8 @@ import android.widget.TextView;
 import com.itheima.openchina.R;
 import com.itheima.openchina.bases.BaseFragment;
 import com.itheima.openchina.beans.CategoryBean;
+import com.itheima.openchina.cacheadmin.LoadData;
 import com.itheima.openchina.utils.XmlUtils;
-
-import java.io.IOException;
-
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 /**
  * Created by jiang on 2017/11/4.
@@ -44,33 +39,33 @@ public class CategoryFragment extends BaseFragment {
 
     @Override
     protected void onStartLoadData() {
-//        new Thread(){
-//
-//            @Override
-//            public void run() {
-//                String stringData = LoadData.getInstance().getStringData("http://www.oschina.net/action/api/softwarecatalog_list?tag=0");
-//                CategoryBean categoryBean = XmlUtils.toBean(CategoryBean.class, stringData.getBytes());
-//                size = categoryBean.typeBean.list.size();
-//            }
-//        }.start();
-        //1. 去网络获取数据
-
         new Thread(){
             @Override
             public void run() {
-                OkHttpClient okHttpClient=new OkHttpClient.Builder().build();
-                Request builder = new Request.Builder()
-                        .url("http://www.oschina.net/action/api/softwarecatalog_list?tag=0")
-                        .build();
-                try {
-                    Response response = okHttpClient.newCall(builder).execute();
-                    categoryBean = XmlUtils.toBean(CategoryBean.class,response.body().bytes());
-                    size = categoryBean.typeBean.list.size();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                String stringData = LoadData.getInstance().getStringData("http://www.oschina.net/action/api/softwarecatalog_list?tag=0");
+
+                categoryBean = XmlUtils.toBean(CategoryBean.class, stringData.getBytes());
+                size = categoryBean.typeBean.list.size();
             }
         }.start();
+        //1. 去网络获取数据
+
+//        new Thread(){
+//            @Override
+//            public void run() {
+//                OkHttpClient okHttpClient=new OkHttpClient.Builder().build();
+//                Request builder = new Request.Builder()
+//                        .url("http://www.oschina.net/action/api/softwarecatalog_list?tag=0")
+//                        .build();
+//                try {
+//                    Response response = okHttpClient.newCall(builder).execute();
+//                    categoryBean = XmlUtils.toBean(CategoryBean.class,response.body().bytes());
+//                    size = categoryBean.typeBean.list.size();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }.start();
         loadSuccess();
     }
     public class Myadapter extends BaseAdapter{
