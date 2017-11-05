@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:gravity="center"
+        android:padding="1dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RadioGroup
+            android:id="@+id/blogs_group"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:showDividers="middle"
+            android:divider="@color/gray"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/radio_but1"
+                android:button="@null"
+                android:checked="true"
+                android:gravity="center"
+                android:layout_margin="15dp"
+                android:textSize="14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="6dp"
+                android:background="@drawable/selector_but_title_syn"
+                android:textColor="@color/but_title_syn_green"
+                android:text="@string/question"/>
+
+            <RadioButton
+                android:id="@+id/radio_but2"
+                android:button="@null"
+                android:layout_margin="15dp"
+                android:textSize="14sp"
+                android:layout_width="wrap_content"
+                android:padding="6dp"
+                android:background="@drawable/selector_but_title_syn"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:textColor="@color/but_title_syn_green"
+                android:text="@string/share"/>
+            <RadioButton
+                android:id="@+id/radio_but3"
+                android:button="@null"
+                android:layout_margin="15dp"
+                android:textSize="14sp"
+                android:padding="6dp"
+                android:background="@drawable/selector_but_title_syn"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:textColor="@color/but_title_syn_green"
+                android:text="@string/Synthesize"/>
+
+            <RadioButton
+                android:id="@+id/radio_but4"
+                android:button="@null"
+                android:layout_margin="15dp"
+                android:textSize="14sp"
+                android:padding="6dp"
+                android:background="@drawable/selector_but_title_syn"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:textColor="@color/but_title_syn_green"
+                android:text="@string/job"/>
+
+            <RadioButton
+                android:id="@+id/radio_but5"
+                android:button="@null"
+                android:layout_margin="15dp"
+                android:textSize="14sp"
+                android:padding="6dp"
+                android:background="@drawable/selector_but_title_syn"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:textColor="@color/but_title_syn_green"
+                android:text="@string/office"/>
+
+        </RadioGroup>
+
+
+    </LinearLayout>
+    <View
+
+        android:background="#cacaca"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+</LinearLayout>

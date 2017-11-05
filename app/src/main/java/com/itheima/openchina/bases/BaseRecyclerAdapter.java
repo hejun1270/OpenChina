@@ -12,6 +12,8 @@ import com.itheima.openchina.utils.LogUtils;
 
 import java.util.List;
 
+import static android.content.ContentValues.TAG;
+
 /**
  * Created by 佘本民
  * When:  --- 2017/10/16---
@@ -23,9 +25,11 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
     private  Context context;
     private List<T> list;
 
+
     public static final int HeadType = 0;
     public static final int bodyType = 1;
     public static final int footType = 2;
+     RecycleViewItemOnClickListener mListener;
 
     public BaseRecyclerAdapter(Context context,List<T> list) {
         this.context=context;
@@ -42,6 +46,8 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+
         View view = null;
         LogUtils.i(viewType+"");
         switch (viewType) {
@@ -64,7 +70,8 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
         }
 
         if(view==null)view=new TextView(context);
-        return new ViewHolder(view);
+        ViewHolder fmListHolder= new ViewHolder(view,mListener);
+        return fmListHolder;
     }
 
     //添加item布局
@@ -79,7 +86,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         createViewBodyItem(holder,position);
-
+//        MyItemOnClickListener myItemOnClickListener
     }
 
     //绑定身体控件
@@ -101,10 +108,21 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
         return 0;
     }
 
-    private class ViewHolder extends RecyclerView.ViewHolder{
+    private class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-         ViewHolder(View itemView) {
-            super(itemView);
+
+        ViewHolder(View itemView, RecycleViewItemOnClickListener mListener) {
+             super(itemView);
+             BaseRecyclerAdapter.this.mListener=mListener;
+             itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+             if(mListener!=null){
+                 mListener.onItemOnClick(view,getPosition());
+                 LogUtils.i(getPosition()+"");
+             }
         }
     }
 
@@ -122,6 +140,19 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
             return footType;
         }
         return bodyType;
+    }
+
+
+
+    public interface RecycleViewItemOnClickListener {
+        public void onItemOnClick(View view,int postion);
+    }
+
+
+    public void setRecycleViewItemOnClickListener(RecycleViewItemOnClickListener mListener){
+        if(mListener!=null){
+            this.mListener=mListener;
+        }
     }
 
 

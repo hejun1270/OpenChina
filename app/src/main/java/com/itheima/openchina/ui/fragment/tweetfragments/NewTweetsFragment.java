@@ -26,9 +26,7 @@ public class NewTweetsFragment extends BaseFragment {
 
     private RecyclerView recyclerView;
     private List<TweetInfoBean.ResultBean.TweetItem> tweetItems=new ArrayList<>();
-    private TweetAdapter recyclerViewAdapter;
-    private View view;
-
+//    private TweetAdapter tweetAdapter;
 
     @Override
     protected void dataOnRefresh() {
@@ -37,18 +35,16 @@ public class NewTweetsFragment extends BaseFragment {
 
     @Override
     protected View onCreateContentView() {
-        view = View.inflate(getContext(), R.layout.recycleview_view, null);
+        View view = View.inflate(getContext(), R.layout.recycleview_view, null);
         recyclerView = (RecyclerView) view;
-           init();
+        init();
         return view;
     }
 
     private void init() {
-
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
-        recyclerViewAdapter = new TweetAdapter<TweetInfoBean.ResultBean.TweetItem>(getContext(),tweetItems);
-
-        recyclerView.setAdapter(recyclerViewAdapter);
+//        tweetAdapter = new TweetAdapter(getContext(), tweetItems);
+//        recyclerView.setAdapter(tweetAdapter);
     }
 
     @Override

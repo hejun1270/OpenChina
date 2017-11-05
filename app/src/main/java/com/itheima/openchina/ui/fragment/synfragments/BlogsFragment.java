@@ -6,11 +6,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.itheima.openchina.R;
-import com.itheima.openchina.adapters.SynthesizeAdapter.SynConsultAdapter;
+import com.itheima.openchina.adapters.SynthesizeAdapter.SynBlogsAdapter;
 import com.itheima.openchina.bases.BaseFragment;
-import com.itheima.openchina.bases.BaseRecyclerAdapter;
-import com.itheima.openchina.beans.ConsultHeadBean;
-import com.itheima.openchina.cacheadmin.LoadData;
 import com.itheima.openchina.utils.ToastUtil;
 
 import java.util.ArrayList;
@@ -23,10 +20,9 @@ import java.util.List;
  * Function:
  */
 
-public class ConsultFragment<T> extends BaseFragment {
+public class BlogsFragment<T> extends BaseFragment {
 
-    List<ConsultHeadBean.ResultBean.ItemsBean> itemsHead=new ArrayList<>();
-    private SynConsultAdapter<String> adapter;
+    private SynBlogsAdapter<String> adapter;
     private RecyclerView recyclerView;
 
     @Override
@@ -37,16 +33,12 @@ public class ConsultFragment<T> extends BaseFragment {
         for (int i = 0; i < 10; i++) {
             list.add("");
         }
-        adapter = new SynConsultAdapter<>(getContext(),list, itemsHead);
+        adapter = new SynBlogsAdapter<>(getContext(),list);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        adapter.setRecycleViewItemOnClickListener(new BaseRecyclerAdapter.RecycleViewItemOnClickListener() {
-            @Override
-            public void onItemOnClick(View view, int postion) {
-                ToastUtil.showToast("ben:"+postion);
-            }
-        });
+
+
         return view;
     }
 
@@ -58,21 +50,6 @@ public class ConsultFragment<T> extends BaseFragment {
 
     @Override
     protected void onStartLoadData() {
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                ConsultHeadBean beanData = LoadData.getInstance().getBeanData(
-                        "http://www.oschina.net/action/apiv2/banner?catalog=1",
-                        ConsultHeadBean.class);
-                itemsHead= beanData.getResult().getItems();
-                toDoinUI();
-            }
-        }).start();
-
-    }
-
-    private void toDoinUI() {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -80,6 +57,10 @@ public class ConsultFragment<T> extends BaseFragment {
                 setRefreshEnable(false);
             }
         });
+
     }
+
+
+
 
 }

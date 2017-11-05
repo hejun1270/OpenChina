@@ -4,7 +4,6 @@ package com.itheima.openchina.adapters.SynthesizeAdapter;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.RadioButton;
 
 import com.itheima.openchina.R;
 import com.itheima.openchina.bases.BaseRecyclerAdapter;
@@ -20,10 +19,10 @@ import java.util.List;
  * Function:
  */
 
-public class SynBlogsAdapter<T> extends BaseRecyclerAdapter {
+public class SynQuestionAdapter<T> extends BaseRecyclerAdapter {
 
     List<ConsultHeadBean.ResultBean.ItemsBean> beanHead=new ArrayList<>();
-    public SynBlogsAdapter(Context context, List<T> list) {
+    public SynQuestionAdapter(Context context, List<T> list) {
         super(context,list);
     }
 
@@ -42,7 +41,7 @@ public class SynBlogsAdapter<T> extends BaseRecyclerAdapter {
 
     @Override
     protected View createItemHeadLayout() {
-        View view = View.inflate(getContext(), R.layout.view_head_blogs_syn, null);
+        View view = View.inflate(getContext(), R.layout.view_head_question_syn, null);
 
         return view;
     }

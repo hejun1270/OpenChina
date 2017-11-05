@@ -15,4 +15,13 @@
     <string name="content">内容正在赶来的路上</string>
     <string name="time">时间</string>
     <string name="message">信息</string>
+    <string name="new_ecommended">最新推荐</string>
+    <string name="this_wearher_hot">本周热门</string>
+    <string name="new_recommended">最新推荐</string>
+    <string name="newest">最新博客</string>
+    <string name="question">提问</string>
+    <string name="share">分享</string>
+    <string name="Synthesize">综合</string>
+    <string name="job">职业</string>
+    <string name="office">站务</string>
 </resources>
