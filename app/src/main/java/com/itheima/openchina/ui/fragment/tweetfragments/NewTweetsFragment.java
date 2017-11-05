@@ -4,8 +4,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.itheima.openchina.                                                                                                                                                                            R;
-import com.itheima.openchina         .adapters.tweetAdapter.TweetAdapter;
+import com.itheima.openchina.R;
+import com.itheima.openchina.adapters.tweetAdapter.TweetAdapter;
 import com.itheima.openchina.bases.BaseFragment;
 import com.itheima.openchina.beans.TweetInfoBean;
 import com.itheima.openchina.cacheadmin.LoadData;
@@ -33,7 +33,7 @@ public class NewTweetsFragment extends BaseFragment implements TweetAdapter.OnIt
 
     @Override
     protected void dataOnRefresh() {
-
+          recyclerViewAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -54,7 +54,8 @@ public class NewTweetsFragment extends BaseFragment implements TweetAdapter.OnIt
         recyclerView.setAdapter(recyclerViewAdapter);
         //最新动弹条目点击事件
         recyclerViewAdapter.setOnItemClickListener(this);
-        //下拉加载更多
+        dataOnRefresh();
+        //上拉加载更多
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
