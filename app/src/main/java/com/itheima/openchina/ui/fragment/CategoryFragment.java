@@ -1,12 +1,5 @@
 package com.itheima.openchina.ui.fragment;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -15,23 +8,11 @@ import android.widget.TextView;
 
 import com.itheima.openchina.R;
 import com.itheima.openchina.bases.BaseFragment;
-import com.itheima.openchina.bases.BasePagerFragment;
 import com.itheima.openchina.beans.CategoryBean;
-import com.itheima.openchina.cacheadmin.CacheManger;
-import com.itheima.openchina.cacheadmin.HttpManager;
-import com.itheima.openchina.cacheadmin.LoadData;
 import com.itheima.openchina.utils.XmlUtils;
 
-import org.w3c.dom.Text;
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-import org.xmlpull.v1.XmlPullParserFactory;
-
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.List;
 
-import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -49,8 +30,6 @@ public class CategoryFragment extends BaseFragment {
 
     @Override
     protected void dataOnRefresh() {
-
-
     }
 
 
