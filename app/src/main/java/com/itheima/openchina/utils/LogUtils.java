@@ -8,9 +8,7 @@ import android.util.Log;
  * 北京传智播客android黑马程序员104期
  **/
 
-//日志工具类
-//在正式发布的时候不能打印日志
-// 在测试的时候需要把所有的日志打开
+
 public class LogUtils {
 
     //日志开关

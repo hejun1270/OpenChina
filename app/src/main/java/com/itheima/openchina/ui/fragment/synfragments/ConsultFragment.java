@@ -4,15 +4,13 @@ package com.itheima.openchina.ui.fragment.synfragments;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Toast;
 
 import com.itheima.openchina.R;
-import com.itheima.openchina.adapters.SynthesizeAdapter;
+import com.itheima.openchina.adapters.SynthesizeAdapter.SynConsultAdapter;
 import com.itheima.openchina.bases.BaseFragment;
-import com.itheima.openchina.beans.FragmentInfo;
-import com.itheima.openchina.cacheadmin.HttpManager;
-import com.itheima.openchina.utils.LogUtils;
-import com.itheima.openchina.utils.Utils;
+import com.itheima.openchina.beans.ConsultHeadBean;
+import com.itheima.openchina.cacheadmin.LoadData;
+import com.itheima.openchina.utils.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,19 +22,23 @@ import java.util.List;
  * Function:
  */
 
-public class ConsultFragment extends BaseFragment {
+public class ConsultFragment<T> extends BaseFragment {
 
+    List<ConsultHeadBean.ResultBean.ItemsBean> itemsHead=new ArrayList<>();
+    private SynConsultAdapter<String> adapter;
+    private RecyclerView recyclerView;
 
     @Override
     protected View onCreateContentView() {
         View view=View.inflate(getContext(),R.layout.recycleview_view,null);
-        RecyclerView recyclerView= (RecyclerView) view;
+        recyclerView = (RecyclerView) view;
         List<String>list=new ArrayList<>();
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 10; i++) {
             list.add("");
         }
+        adapter = new SynConsultAdapter<>(getContext(),list, itemsHead);
+        recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(new SynthesizeAdapter<>(getContext(),list));
         return view;
     }
 
@@ -49,5 +51,34 @@ public class ConsultFragment extends BaseFragment {
     @Override
     protected void onStartLoadData() {
 
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ConsultHeadBean beanData = LoadData.getInstance().getBeanData(
+                        "http://www.oschina.net/action/apiv2/banner?catalog=1",
+                        ConsultHeadBean.class);
+                itemsHead= beanData.getResult().getItems();
+
+                toDoinUI();
+            }
+        }).start();
+
+    }
+
+    private void toDoinUI() {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ToastUtil.showToast(itemsHead.size()+"");
+                loadSuccess();
+                setRefreshEnable(false);
+            }
+        });
+
+    }
+
+    @Override
+    protected void onFInishRefresh() {
+        super.onFInishRefresh();
     }
 }
