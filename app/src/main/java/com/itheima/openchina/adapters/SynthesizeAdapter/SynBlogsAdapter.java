@@ -43,8 +43,6 @@ public class SynBlogsAdapter<T> extends BaseRecyclerAdapter {
 
     @Override
     protected View createItemHeadLayout() {
-
-
         return null;
     }
 
