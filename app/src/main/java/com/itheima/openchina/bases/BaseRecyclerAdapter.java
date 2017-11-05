@@ -120,7 +120,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
         @Override
         public void onClick(View view) {
              if(mListener!=null){
-                 mListener.onItemOnClick(view,getPosition());
+                 mListener.onItemOnClick(view,getPosition()-1);
                  LogUtils.i(getPosition()+"");
              }
         }

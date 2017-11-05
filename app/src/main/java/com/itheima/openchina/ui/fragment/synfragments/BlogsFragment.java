@@ -8,7 +8,6 @@ import android.view.View;
 import com.itheima.openchina.R;
 import com.itheima.openchina.adapters.SynthesizeAdapter.SynBlogsAdapter;
 import com.itheima.openchina.bases.BaseFragment;
-import com.itheima.openchina.utils.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
