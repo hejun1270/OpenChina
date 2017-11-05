@@ -2,17 +2,17 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    android:padding="@dimen/normal_padding"
-    android:background="@color/colorPrimary">
+    android:background="@color/colorPrimary"
+    android:padding="@dimen/normal_padding">
 
     <TextView
         android:id="@+id/home_title"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:text="@string/app_name"
         android:textColor="@color/white"
-        android:textSize="@dimen/text_title_size"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true" />
+        android:textSize="@dimen/text_title_size" />
 
     <ImageView
         android:id="@+id/home_search"
@@ -20,5 +20,5 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:src="@mipmap/actionbar_search_icon" />
+        android:src="@drawable/search_bg" />
 </RelativeLayout>

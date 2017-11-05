@@ -7,7 +7,7 @@ import android.support.v4.app.Fragment;
  * 描述:
  **/
 
-public class FragmentInfo {
+public class FragmentInfo extends Object{
     public Fragment fragment;
     public CharSequence title;
 

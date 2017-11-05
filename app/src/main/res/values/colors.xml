@@ -6,7 +6,8 @@
     <color name="white">#FFFFFF</color>
     <color name="grash">#F2F2F2</color>
     <color name="normal_text_color">#7F7F7F</color>
-    <color name="line_bg_color">#dfdfdf</color>
+    <color name="line_bg_color">#b0b0b0</color>
+    <color name="layout_bg">#dfdfdf</color>
 
     <!-- 下拉刷新时，颜色值 -->
     <color name="swiperefresh_color1">#ff00ddff</color>
@@ -29,4 +30,6 @@
     <color name="graywhite">#F5F5F5</color>
     <color name="grayslate">#708090</color>
     <color name="lightblue">#0083FF</color>
+   <!--动弹中的颜色-->
+    <color name="list_item_background_pressed">#FCFCFC</color>
 </resources>

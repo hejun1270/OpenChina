@@ -20,6 +20,7 @@ import com.itheima.openchina.utils.ToastUtil;
  * Project:OpenChina <p/>
  * Package:com.itheima.openchina.ui.fragment <p/>
  * Desc:
+ *
  */
 
 public class FindFragment extends BasePagerFragment implements View.OnClickListener{

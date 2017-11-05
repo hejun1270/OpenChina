@@ -1,10 +1,11 @@
 package com.itheima.openchina.ui.fragment;
 
-import android.view.View;
-import android.widget.TextView;
+import com.itheima.openchina.bases.BaseNewsFragment;
+import com.itheima.openchina.beans.FragmentInfo;
+import com.itheima.openchina.ui.fragment.synfragments.ConsultFragment;
 
-import com.itheima.openchina.bases.BaseFragment;
-import com.itheima.openchina.bases.BasePagerFragment;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * User:DoctorHe <p/>
@@ -15,13 +16,18 @@ import com.itheima.openchina.bases.BasePagerFragment;
  * Desc:综合
  */
 
-public class SynthesizeFragment extends BasePagerFragment {
+public class SynthesizeFragment extends BaseNewsFragment{
+
 
     @Override
-    protected View onCreateContentView() {
-        setRefreshEnable(false);//设置禁止下拉刷新
-        TextView textView = new TextView(getContext());
-        textView.setText("综合");
-        return textView;
+    protected List<FragmentInfo> listViewPagerFragmentData() {
+        List<FragmentInfo> list=new ArrayList<>();
+        list.add(new FragmentInfo("开始",new ConsultFragment()));
+        list.add(new FragmentInfo("中间",new ConsultFragment()));
+        list.add(new FragmentInfo("结束",new ConsultFragment()));
+        list.add(new FragmentInfo("完成",new ConsultFragment()));
+        return list;
     }
+
+
 }
