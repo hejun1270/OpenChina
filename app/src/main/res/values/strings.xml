@@ -11,4 +11,8 @@
     <string name="login">登录</string>
     <string name="pwd">密码</string>
     <string name="acount_email">邮箱/用户名</string>
+    <string name="title">标题</string>
+    <string name="content">内容正在赶来的路上</string>
+    <string name="time">时间</string>
+    <string name="message">信息</string>
 </resources>
