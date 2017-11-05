@@ -20,10 +20,10 @@ import java.util.List;
  * Function:
  */
 
-public class SynBlogsAdapter<T> extends BaseRecyclerAdapter {
+public class SynBlogsAdapter extends BaseRecyclerAdapter {
 
     List<ConsultHeadBean.ResultBean.ItemsBean> beanHead=new ArrayList<>();
-    public SynBlogsAdapter(Context context, List<T> list) {
+    public SynBlogsAdapter(Context context, List list) {
         super(context,list);
     }
 

@@ -113,10 +113,12 @@ public abstract class BaseFragment extends Fragment {
 
     protected void loadSuccess() {
         onFInishRefresh();
-        llLoadFailed.setVisibility(View.GONE);
-        progressBar.setVisibility(View.GONE);
-        refreshLayout.addView(onCreateContentView());
-        refreshLayout.setVisibility(View.VISIBLE);
+        if(llLoadFailed!=null&&progressBar!=null&&refreshLayout!=null){
+            llLoadFailed.setVisibility(View.GONE);
+            progressBar.setVisibility(View.GONE);
+            refreshLayout.addView(onCreateContentView());
+            refreshLayout.setVisibility(View.VISIBLE);
+        }
     }
 
     /**
@@ -162,4 +164,5 @@ public abstract class BaseFragment extends Fragment {
         refreshLayout.setVisibility(View.GONE);
         onStartLoadData();
     }
+
 }

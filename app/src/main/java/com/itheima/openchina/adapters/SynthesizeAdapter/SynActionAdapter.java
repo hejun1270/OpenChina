@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import com.itheima.openchina.R;
 import com.itheima.openchina.bases.BaseRecyclerAdapter;
 import com.itheima.openchina.beans.ConsultHeadBean;
+import com.itheima.openchina.interfaces.HeadType;
+import com.itheima.openchina.interfaces.ItemType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,10 +22,10 @@ import java.util.List;
  * Function:
  */
 
-public class SynActionAdapter<T> extends BaseRecyclerAdapter {
+public class SynActionAdapter extends BaseRecyclerAdapter {
 
-    List<ConsultHeadBean.ResultBean.ItemsBean> beanHead=new ArrayList<>();
-    public SynActionAdapter(Context context, List<T> list) {
+    List<HeadType> beanHead=new ArrayList<>();
+    public SynActionAdapter(Context context, List<ItemType> list) {
         super(context,list);
     }
 

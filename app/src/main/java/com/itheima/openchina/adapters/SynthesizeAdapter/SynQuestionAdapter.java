@@ -19,10 +19,10 @@ import java.util.List;
  * Function:
  */
 
-public class SynQuestionAdapter<T> extends BaseRecyclerAdapter {
+public class SynQuestionAdapter extends BaseRecyclerAdapter {
 
     List<ConsultHeadBean.ResultBean.ItemsBean> beanHead=new ArrayList<>();
-    public SynQuestionAdapter(Context context, List<T> list) {
+    public SynQuestionAdapter(Context context, List list) {
         super(context,list);
     }
 

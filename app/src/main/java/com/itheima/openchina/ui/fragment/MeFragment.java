@@ -11,6 +11,7 @@ import com.itheima.openchina.bases.BaseFragment;
 import com.itheima.openchina.beans.LoginInfo;
 import com.itheima.openchina.ui.activity.LoginActivity;
 import com.itheima.openchina.utils.LogUtils;
+import com.itheima.openchina.utils.SpUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -70,7 +71,6 @@ public class MeFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-
     }
 
     /**

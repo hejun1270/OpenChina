@@ -1,5 +1,7 @@
 package com.itheima.openchina.beans;
 
+import com.itheima.openchina.interfaces.BodyType;
+
 import java.util.List;
 
 /**
@@ -10,7 +12,7 @@ import java.util.List;
  * Description: //TODO
  * Copyright notice:
  */
-public class TweetInfoBean {
+public class TweetInfoBean implements BodyType{
 
     /**
      * code : 1
@@ -121,7 +123,7 @@ public class TweetInfoBean {
             this.items = items;
         }
 
-        public static class TweetItem {
+        public static class TweetItem implements BodyType{
             /**
              * about : {"commentCount":1,"content":"因为和同事有约定再加上LZ自己也喜欢做完一件事之后进行总结，因此有了这篇文章。这篇文章大部分内容都是面向整个程序员群体的，当然因为LZ本身是做Java开发的，因此有一部分内容也是专门面向咱们Java程序员的。  简单先说一下，LZ坐标杭州，13届本科毕业，算上年前在阿里巴巴B2B事业部的面试，一共有面试了有6家公司（因为LZ不想请假，因此只是每个晚上去其他公司面试，所以面试的公司比较少），其中成功的有4家，另外两家失败...","href":"https://my.oschina.net/u/3721683/blog/1560856","id":1560856,"statistics":{"comment":1,"favCount":0,"like":0,"transmit":1,"view":12},"title":"面试感悟：3年工作经验java程序员应有的技能","type":3,"viewCount":12}
              * appClient : 3

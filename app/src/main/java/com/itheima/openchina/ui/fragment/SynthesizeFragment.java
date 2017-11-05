@@ -29,6 +29,7 @@ public class SynthesizeFragment extends BaseNewsFragment{
         list.add(new FragmentInfo("博客",new BlogsFragment()));
         list.add(new FragmentInfo("问答",new QuestionFragment()));
         list.add(new FragmentInfo("活动",new ActionFragment()));
+        setRefreshEnable(false);
         return list;
     }
 

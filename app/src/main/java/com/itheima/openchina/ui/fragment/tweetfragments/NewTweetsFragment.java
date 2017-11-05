@@ -3,12 +3,17 @@ package com.itheima.openchina.ui.fragment.tweetfragments;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 
 import com.itheima.openchina.R;
 import com.itheima.openchina.adapters.tweetAdapter.TweetAdapter;
 import com.itheima.openchina.bases.BaseFragment;
+import com.itheima.openchina.bases.FootBean;
 import com.itheima.openchina.beans.TweetInfoBean;
 import com.itheima.openchina.cacheadmin.LoadData;
+import com.itheima.openchina.interfaces.ItemType;
+import com.itheima.openchina.utils.LogUtils;
 import com.itheima.openchina.utils.ToastUtil;
 import com.itheima.openchina.utils.Utils;
 
@@ -26,14 +31,17 @@ import java.util.List;
 public class NewTweetsFragment extends BaseFragment implements TweetAdapter.OnItemClickListener {
 
     private RecyclerView recyclerView;
-    private List<TweetInfoBean.ResultBean.TweetItem> tweetItems=new ArrayList<>();
+    private List<ItemType> tweetItems=new ArrayList<>();
     private TweetAdapter recyclerViewAdapter;
     private View view;
 
 
+
+    //下拉刷新
     @Override
     protected void dataOnRefresh() {
-          recyclerViewAdapter.notifyDataSetChanged();
+        onStartLoadData();
+        recyclerViewAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -50,11 +58,17 @@ public class NewTweetsFragment extends BaseFragment implements TweetAdapter.OnIt
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
         //设置RecyclerView的适配器
-        recyclerViewAdapter = new TweetAdapter<TweetInfoBean.ResultBean.TweetItem>(getContext(),tweetItems);
+        recyclerViewAdapter = new TweetAdapter(getContext(),tweetItems);
         recyclerView.setAdapter(recyclerViewAdapter);
         //最新动弹条目点击事件
         recyclerViewAdapter.setOnItemClickListener(this);
         dataOnRefresh();
+
+        //添加条目动画
+        LayoutAnimationController lac=new LayoutAnimationController(AnimationUtils.loadAnimation(getActivity(),R.anim.list_zoom));
+        lac.setOrder(LayoutAnimationController.ORDER_RANDOM);
+        recyclerView.setLayoutAnimation(lac);
+        recyclerView.startLayoutAnimation();
         //上拉加载更多
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -79,17 +93,21 @@ public class NewTweetsFragment extends BaseFragment implements TweetAdapter.OnIt
                    List<TweetInfoBean.ResultBean.TweetItem> tweetItemList = beanData.getResult().getItems();
 
                    tweetItems.addAll(tweetItemList);
+                   tweetItems.add(new FootBean());
                   //加载成功后
                    Utils.runOnUIThread(new Runnable() {
                        @Override
                        public void run() {
-                           setRefreshEnable(false);
-                               loadSuccess();
+                           loadSuccess();
+                           recyclerViewAdapter.updateData();
                            recyclerViewAdapter.notifyDataSetChanged();
                        }
                    });
+
                }
            }).start();
+
+
     }
 
     //条目点击处理
@@ -97,6 +115,15 @@ public class NewTweetsFragment extends BaseFragment implements TweetAdapter.OnIt
     public void onItemClick(int position) {
         ToastUtil.showToast("当前条目"+position);
 
+
+    }
+
+    //ben提示:清除缓存的list,否则会导致内容重复
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        tweetItems.removeAll(tweetItems);
 
     }
 }

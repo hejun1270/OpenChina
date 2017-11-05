@@ -2,12 +2,17 @@ package com.itheima.openchina.bases;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.itheima.openchina.R;
+import com.itheima.openchina.interfaces.BodyType;
+import com.itheima.openchina.interfaces.FootType;
+import com.itheima.openchina.interfaces.HeadType;
+import com.itheima.openchina.interfaces.ItemType;
 import com.itheima.openchina.utils.LogUtils;
 
 import java.util.List;
@@ -20,18 +25,20 @@ import static android.content.ContentValues.TAG;
  * Time:  --- 22:06---
  * Function:
  */
-@Deprecated
-public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
+
+public abstract class BaseRecyclerAdapter extends RecyclerView.Adapter {
     private  Context context;
-    private List<T> list;
+    private List<ItemType> list;
 
 
-    public static final int HeadType = 0;
-    public static final int bodyType = 1;
-    public static final int footType = 2;
+    //多条目
+    public static final int HEADTYPE = 101;
+    public static final int BODYTYPE = 102;
+    public static final int FOOTTYPE = 103;
      RecycleViewItemOnClickListener mListener;
+    private ViewHolder fmListHolder;
 
-    public BaseRecyclerAdapter(Context context,List<T> list) {
+    public BaseRecyclerAdapter(Context context,List<ItemType> list) {
         this.context=context;
         this.list = list;
     }
@@ -40,7 +47,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
         return context;
     }
 
-    public List<T> getList() {
+    public List<ItemType> getList() {
         return list;
     }
 
@@ -49,28 +56,23 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
 
 
         View view = null;
-        LogUtils.i(viewType+"");
         switch (viewType) {
-            case HeadType:
-                if(createItemHeadLayout()!=null){
-                    view=createItemHeadLayout();
-                }
-                break;
-            case bodyType:
+            case HEADTYPE:
 
+                view=createItemHeadLayout();
+                break;
+            case BODYTYPE:
                 view= createItemBodyLayout();
                 break;
-            case footType:
-                
+            case FOOTTYPE:
                 view=LayoutInflater.from(context).inflate(R.layout.recycleview_foot_load,parent,false);
                 break;
            default:
-               view= createItemBodyLayout();
                break;
         }
-
-        if(view==null)view=new TextView(context);
-        ViewHolder fmListHolder= new ViewHolder(view,mListener);
+        if(view!=null){
+            fmListHolder = new ViewHolder(view,mListener);
+        }
         return fmListHolder;
     }
 
@@ -85,8 +87,21 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
     //写控件
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        createViewBodyItem(holder,position);
-//        MyItemOnClickListener myItemOnClickListener
+        switch (getItemViewType(position)) {
+
+            case HEADTYPE:
+                break;
+            case BODYTYPE:
+                createViewBodyItem(holder,position);
+                LogUtils.i("body"+position);
+                break;
+            case FOOTTYPE:
+                LogUtils.i("foot"+position);
+                break;
+            default:
+                break;
+        }
+
     }
 
     //绑定身体控件
@@ -97,15 +112,10 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        if(list!=null){
-            if(createItemHeadLayout()!=null){
-                return list.size()+2;
-            }else{
-                return list.size();//todo
-            }
-
+        if(list==null){
+            return 0;
         }
-        return 0;
+        return list.size();
     }
 
     private class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -121,7 +131,6 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
         public void onClick(View view) {
              if(mListener!=null){
                  mListener.onItemOnClick(view,getPosition()-1);
-                 LogUtils.i(getPosition()+"");
              }
         }
     }
@@ -129,23 +138,42 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
     //判断是否是首尾
     @Override
     public int getItemViewType(int position) {
-        if (position==0) {
-            if(createItemHeadLayout()!=null){
-                return HeadType;
-            }else{
-                return bodyType;
-            }
+        if (list.get(position) instanceof HeadType) {
+
+            return HEADTYPE;
         }
-        if (position==getItemCount()-1) {
-            return footType;
+        if (list.get(position) instanceof BodyType) {
+            return BODYTYPE;
         }
-        return bodyType;
+        if (list.get(position) instanceof FootType) {
+            LogUtils.i("footSuccess"+position);
+            return FOOTTYPE;
+        }
+        LogUtils.i("footFail"+position);
+        return BODYTYPE;
     }
 
+    //自动删除脚跟头的方法
+    public void updateData() {
+        for (int i = 1; i < list.size(); i++) {
+            if (list.get(i) instanceof HeadType) {
+                list.remove(i);
+            }
+        }
 
+        for (int i = 0; i < list.size()-1; i++) {
+            if (list.get(i) instanceof FootType) {
+                list.remove(i);
+            }
+        }
+
+        notifyDataSetChanged();
+
+    }
 
     public interface RecycleViewItemOnClickListener {
         public void onItemOnClick(View view,int postion);
+
     }
 
 

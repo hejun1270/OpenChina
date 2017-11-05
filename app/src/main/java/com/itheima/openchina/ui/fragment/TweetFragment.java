@@ -29,6 +29,7 @@ public class TweetFragment extends BaseNewsFragment {
         list.add(new FragmentInfo("热门动弹",new HotTweetsFragment()));
         list.add(new FragmentInfo("我的动弹",new MyTweetsFragment()));
 
+        setRefreshEnable(false);
         return list;
     }
 

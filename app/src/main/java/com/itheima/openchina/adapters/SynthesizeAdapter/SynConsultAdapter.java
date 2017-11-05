@@ -1,9 +1,8 @@
 package com.itheima.openchina.adapters.SynthesizeAdapter;
 
-import android.annotation.SuppressLint;
+
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.view.MotionEvent;
 import android.view.View;
 import com.itheima.loopviewpager.LoopViewPager;
 import com.itheima.openchina.R;
@@ -21,12 +20,13 @@ import java.util.List;
  * Function:
  */
 
-public class SynConsultAdapter<T> extends BaseRecyclerAdapter {
+public class SynConsultAdapter extends BaseRecyclerAdapter {
 
-    List<ConsultHeadBean.ResultBean.ItemsBean> beanHead=new ArrayList<>();
-    public SynConsultAdapter(Context context, List<T> list, List<ConsultHeadBean.ResultBean.ItemsBean> headList) {
+    List<ConsultHeadBean.ResultBean.ItemsBean> list;
+    ConsultHeadBean.ResultBean bean=new ConsultHeadBean.ResultBean();
+    public SynConsultAdapter(Context context, List list) {
         super(context,list);
-        beanHead=headList;
+        bean= (ConsultHeadBean.ResultBean) list.get(0);
     }
 
 
@@ -41,18 +41,18 @@ public class SynConsultAdapter<T> extends BaseRecyclerAdapter {
 
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected View createItemHeadLayout() {
 
 
         List<String> urlImage = new ArrayList<>();
         List<String> urlText = new ArrayList<>();
+        for (int i = 0; i <bean.getItems().size(); i++) {
 
-        for (int i = 0; i < beanHead.size(); i++) {
-            urlImage.add(beanHead.get(i).getImg());
-            urlText.add(beanHead.get(i).getName());
+            urlImage.add(bean.getItems().get(i).getImg());
+            urlText.add(bean.getItems().get(i).getName());
         }
+
         View view = View.inflate(getContext(), R.layout.view_loopviewpager, null);
         LoopViewPager loopView = view.findViewById(R.id.lvp_pager);
         loopView.setImgData(urlImage);
