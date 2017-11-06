@@ -2,6 +2,7 @@ package com.itheima.openchina.beans;
 
 import com.itheima.openchina.interfaces.BodyType;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -12,7 +13,7 @@ import java.util.List;
  * Description: //TODO
  * Copyright notice:
  */
-public class TweetInfoBean {
+public class TweetInfoBean implements Serializable{
 
     /**
      * code : 1

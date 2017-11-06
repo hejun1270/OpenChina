@@ -25,7 +25,6 @@ import com.itheima.openchina.beans.UserInfo;
 import com.itheima.openchina.utils.FileUtil;
 import com.itheima.openchina.utils.ImageUtils;
 import com.itheima.openchina.utils.SpUtil;
-import com.itheima.openchina.utils.StringUtils;
 import com.itheima.openchina.utils.ToastUtil;
 import com.itheima.openchina.utils.Utils;
 import com.itheima.openchina.wedigt.HeadBottomMenu;

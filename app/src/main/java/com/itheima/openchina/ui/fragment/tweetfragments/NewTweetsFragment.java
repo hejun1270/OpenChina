@@ -1,5 +1,6 @@
 package com.itheima.openchina.ui.fragment.tweetfragments;
 
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -15,9 +16,11 @@ import com.itheima.openchina.beans.FootBean;
 import com.itheima.openchina.beans.TweetInfoBean;
 import com.itheima.openchina.cacheadmin.LoadData;
 import com.itheima.openchina.interfaces.ItemType;
+import com.itheima.openchina.ui.activity.tweet_activity.TweetDetailActivity;
 import com.itheima.openchina.utils.ToastUtil;
 import com.itheima.openchina.utils.Utils;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,11 +39,18 @@ public class NewTweetsFragment extends BaseFragment implements BaseRecyclerAdapt
     private TweetAdapter recyclerViewAdapter;
     private View view;
     private String nextPageToken;
+    private List<TweetInfoBean.ResultBean.TweetItem> tweetItemList;
+    private String newUrl;
+    private String url;
+    private int currentItem;
+    private int visibleItemPosition;
+    private String prevPageToken;
 
 
     //下拉刷新
     @Override
     protected void dataOnRefresh() {
+        currentState=DOWNDROPREFRESH;
         onStartLoadData();
         recyclerViewAdapter.notifyDataSetChanged();
     }
@@ -70,30 +80,49 @@ public class NewTweetsFragment extends BaseFragment implements BaseRecyclerAdapt
         lac.setOrder(LayoutAnimationController.ORDER_RANDOM);
         recyclerView.setLayoutAnimation(lac);
         recyclerView.startLayoutAnimation();
+
+
         //上拉加载更多
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-                int visibleItemPosition = layoutManager.findLastVisibleItemPosition();
-                if(visibleItemPosition==tweetItems.size()-1 && newState==RecyclerView.SCROLL_STATE_IDLE){
-                    //上拉刷新调用的方法
+                visibleItemPosition = layoutManager.findLastVisibleItemPosition();
+                if(visibleItemPosition ==tweetItems.size()-1 && newState==RecyclerView.SCROLL_STATE_IDLE){
+                    currentState=UPDROPREMORE;
+                    onStartLoadData();
+                    recyclerViewAdapter.notifyDataSetChanged();
 
                 }
             }
         });
     }
+
+    public static final int NOREFRESH=101;//空闲
+    public static final int DOWNDROPREFRESH=102;//下拉刷新
+    public static final int UPDROPREMORE=102;//上拉加载
+    private int currentState=NOREFRESH;
     //请求网络数据
     @Override
     protected void onStartLoadData() {
+        if(currentState==UPDROPREMORE){
+            url=NetDataApi.NEW_TWEET_URL+prevPageToken;
+        }
+        if(currentState==DOWNDROPREFRESH){
+            url=NetDataApi.NEW_TWEET_URL+nextPageToken;
+        }
+        if(currentState==NOREFRESH){
+            url=NetDataApi.NEW_TWEET_URL;
+        }
         /*Thread thread = Thread.currentThread();
         Log.d("------------",thread+"");*/
            new Thread(new Runnable() {
                @Override
                public void run() {
-                   TweetInfoBean beanData = LoadData.getInstance().getBeanData(NetDataApi.NEW_TWEET_URL, TweetInfoBean.class);
-                   List<TweetInfoBean.ResultBean.TweetItem> tweetItemList = beanData.getResult().getItems();
+                   TweetInfoBean beanData = LoadData.getInstance().getBeanData(url,TweetInfoBean.class);
+                   tweetItemList = beanData.getResult().getItems();
                    nextPageToken = beanData.getResult().getNextPageToken();
+                   prevPageToken = beanData.getResult().getPrevPageToken();
 
 
                    tweetItems.addAll(tweetItemList);
@@ -131,7 +160,9 @@ public class NewTweetsFragment extends BaseFragment implements BaseRecyclerAdapt
         ToastUtil.showToast("当前条目"+position);
         //判断用户是否登录
         //跳转到详情页面
-        new DetailFragment();
+        Intent intent = new Intent(getContext(), TweetDetailActivity.class);
+        intent.putExtra("userData", (Serializable) tweetItemList);
+        getContext().startActivity(intent);
 
     }
 }

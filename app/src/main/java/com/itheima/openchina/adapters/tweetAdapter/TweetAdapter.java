@@ -3,6 +3,7 @@ package com.itheima.openchina.adapters.tweetAdapter;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -80,28 +81,37 @@ public class TweetAdapter extends BaseRecyclerAdapter {
         //用户名
         TextView userName = holder.itemView.findViewById(R.id.tv_user_name);
            userName.setText(bean.getAuthor().getName());
-           //动弹内容
+        //动弹内容
         TextView tweetContent = holder.itemView.findViewById(R.id.tv_tweet_content);
         tweetContent.setText(bean.getContent());
+        //内容图片
+        /*ImageView contentImage = holder.itemView.findViewById(R.id.content_Image);
+        Glide.with(getContext()).load(bean.getImages().get(position).getType()).into(contentImage);*/
         //发送时间
         TextView sendTime = holder.itemView.findViewById(R.id.tv_send_time);
-        sendTime.setText(bean.getPubDate());
+        String pubTime = StringUtils.friendly_time(bean.getPubDate());
+        sendTime.setText(pubTime);
         //点赞数量
-        TextView thunbupNum = holder.itemView.findViewById(R.id.tv_thumbup_num);
-        thunbupNum.setText(bean.getStatistics().getLike()+"");
-        /*//点赞图片
-        ImageView icThumbupImg = holder.itemView.findViewById(R.id.ic_thumbup);
+        final TextView thunbupNum = holder.itemView.findViewById(R.id.tv_thumbup_num);
+        final int[] like = {bean.getStatistics().getLike()};
+        thunbupNum.setText(like[0] +"");
+        //点赞图片
+        final ImageView icThumbupImg = holder.itemView.findViewById(R.id.ic_thumbup);
         icThumbupImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                icThumbupImg.setImageResource(R.mipmap.ic_thumbup_actived);
+                  like[0] +=1;
 
             }
         });
-        */
         //评论数量
         TextView commentNum = holder.itemView.findViewById(R.id.tv_comment_num);
          commentNum.setText(bean.getStatistics().getComment()+"");
+         //评论图片
+        ImageView icComment = holder.itemView.findViewById(R.id.ic_comment);
     }
+
     /*//创建一个接口
     public interface OnItemClickListener{
         void onItemClick(int position);

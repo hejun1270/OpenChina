@@ -44,6 +44,7 @@
         <activity
             android:name=".ui.activity.LoginActivity"
             android:windowSoftInputMode="adjustNothing" />
+        <activity android:name=".ui.activity.tweet_activity.TweetDetailActivity"/>
         <activity android:name=".ui.activity.ProfileActivity" />
         <activity
             android:name=".ui.activity.PhotoActivity"
