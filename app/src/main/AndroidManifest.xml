@@ -14,6 +14,7 @@
     <uses-permission android:name="android.permission.FLASHLIGHT" />
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application
         android:name=".appcontrol.App"
@@ -39,6 +40,7 @@
         <activity android:name=".ui.activity.OpenChinaActivity"/>
         <activity android:name=".ui.activity.MainActivity" />
         <activity android:name=".ui.activity.AddActivity" />
+        <activity android:name=".ui.activity.ShakeActivity"></activity>
         <activity
             android:name=".ui.activity.LoginActivity"
             android:windowSoftInputMode="adjustNothing" />
