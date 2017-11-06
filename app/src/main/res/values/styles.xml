@@ -19,4 +19,34 @@
         <item name="android:activityCloseEnterAnimation">@anim/activity_close_enter</item>
         <item name="android:activityCloseExitAnimation">@anim/activity_exit</item>
     </style>
+
+    <style name="popoDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowNoTitle">true</item><!--去掉对话框标题-->
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:windowFrame">@null</item><!-- 边框 -->
+        <item name="android:windowIsFloating">true</item><!-- 是否浮现在activity之上 -->
+        <item name="android:windowIsTranslucent">true</item><!-- 半透明 -->
+        <item name="android:windowBackground">@android:color/transparent</item><!-- 背景透明 -->
+        <item name="android:backgroundDimEnabled">true</item><!-- 模糊 -->
+        <item name="windowActionBar">false</item>
+        <item name="android:windowAnimationStyle">@style/dialogAnim</item>
+    </style>
+
+    <style name="dialogAnim">
+        <!--对话框窗体进入的动画效果-->
+        <item name="android:windowEnterAnimation">@anim/dialog_enter</item>
+        <!--对话框窗体退出的动画效果-->
+        <item name="android:windowExitAnimation">@anim/dialog_exit</item>
+    </style>
+
+    <!--图片浏览-->
+    <style name="AppTheme.Lucency">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
 </resources>

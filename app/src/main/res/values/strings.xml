@@ -24,4 +24,27 @@
     <string name="Synthesize">综合</string>
     <string name="job">职业</string>
     <string name="office">站务</string>
+    <string name="integrl">积分</string>
+    <string name="collect">收藏</string>
+    <string name="attention">关注</string>
+    <string name="fans">粉丝</string>
+
+    <string name="jointime">加入时间: %s</string>
+    <string name="from">所在地区: %s</string>
+    <string name="devplatform">开发平台: %s</string>
+    <string name="zhuanchang">专长领域: %s</string>
+    <string name="sign_out">注销账号</string>
+    <string name="photograph">拍照</string>
+    <string name="look_photo_head">查看大头像</string>
+    <string name="photo_picture">相册</string>
+    <string name="save">保存</string>
+    <string name="send_twee">发送到动弹</string>
+    <string name="copy_link">复制图片链接</string>
+
+    <string name="qr_code_tip">扫一扫上面的二维码，加我为好友</string>
+    <string name="qr_code_tip2">(长按保存到本地)</string>
+
+
+    <string name="permissions_camera_error">相机无法完成初始化,请正确授权。</string>
+    <string name="str_request_camera_message">请求获取相机权限</string>
 </resources>

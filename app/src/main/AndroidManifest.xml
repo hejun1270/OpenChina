@@ -44,6 +44,13 @@
         <activity
             android:name=".ui.activity.LoginActivity"
             android:windowSoftInputMode="adjustNothing" />
+        <activity android:name=".ui.activity.ProfileActivity" />
+        <activity
+            android:name=".ui.activity.PhotoActivity"
+            android:theme="@style/AppTheme.Lucency" />
+        <activity
+            android:name=".ui.activity.PagerPhotoActivity"
+            android:theme="@style/AppTheme.Lucency" />
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="Theme.Dialog.NoTitle.Translucent" parent="Theme.AppCompat.Light.Dialog">
         <item name="android:windowFrame">@null</item><!-- 边框 -->
         <item name="android:windowIsFloating">true</item><!-- 是否浮现在activity之上 -->

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/title_pager" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:background="@mipmap/bg_my"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/head"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@mipmap/widget_dface"
+            app:civ_border_color="@color/white"
+            app:civ_border_width="3dp" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:text="@string/no_login"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_normal_size" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_jionTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/normal_padding"
+        android:text="@string/jointime"
+        android:textColor="@color/gray"
+        android:textSize="@dimen/text_title_size" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/line_bg_color" />
+
+    <TextView
+        android:id="@+id/tv_from"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/normal_padding"
+        android:text="@string/from"
+        android:textColor="@color/gray"
+        android:textSize="@dimen/text_title_size" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/line_bg_color" />
+
+    <TextView
+        android:id="@+id/tv_develop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/normal_padding"
+        android:text="@string/devplatform"
+        android:textColor="@color/gray"
+        android:textSize="@dimen/text_title_size" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/line_bg_color" />
+
+    <TextView
+        android:id="@+id/tv_zhuanchang"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/normal_padding"
+        android:text="@string/zhuanchang"
+        android:textColor="@color/gray"
+        android:textSize="@dimen/text_title_size" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/line_bg_color" />
+
+
+    <Button
+        android:id="@+id/btn_signout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@drawable/sign_outbg"
+        android:text="@string/sign_out"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_title_size" />
+</LinearLayout>

@@ -85,6 +85,7 @@ public abstract class BaseFragment extends Fragment {
 
     /**
      * 设置下拉刷新是否可用
+     *
      * @param isEnable
      */
     protected void setRefreshEnable(boolean isEnable) {
@@ -111,9 +112,18 @@ public abstract class BaseFragment extends Fragment {
         onStartLoadData();
     }
 
+    /**
+     * 设置是否显示刷新加载圈
+     *
+     * @param isRefresh
+     */
+    protected void setRefreshing(boolean isRefresh) {
+        refreshLayout.setRefreshing(isRefresh);
+    }
+
     protected void loadSuccess() {
         onFInishRefresh();
-        if(llLoadFailed!=null&&progressBar!=null&&refreshLayout!=null){
+        if (llLoadFailed != null && progressBar != null && refreshLayout != null) {
             llLoadFailed.setVisibility(View.GONE);
             progressBar.setVisibility(View.GONE);
             refreshLayout.addView(onCreateContentView());

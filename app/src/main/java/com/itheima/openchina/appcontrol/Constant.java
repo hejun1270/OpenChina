@@ -26,4 +26,8 @@ public class Constant {
      * 用户cookie
      */
     public static final String COOKIE = "cookie";
+    /**
+     * 用户头像
+     */
+    public static final String USER_HEAD_URL = "USER_HEAD_URL";
 }

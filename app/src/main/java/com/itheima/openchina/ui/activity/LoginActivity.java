@@ -1,9 +1,6 @@
 package com.itheima.openchina.ui.activity;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.Parcelable;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,11 +9,8 @@ import android.widget.TextView;
 
 import com.itheima.openchina.R;
 import com.itheima.openchina.appcontrol.Constant;
-import com.itheima.openchina.appcontrol.NetDataApi;
 import com.itheima.openchina.bases.BaseActivity;
 import com.itheima.openchina.beans.LoginInfo;
-import com.itheima.openchina.network_request.PostManager;
-import com.itheima.openchina.utils.GsonUtil;
 import com.itheima.openchina.utils.LogUtils;
 import com.itheima.openchina.utils.LoginUtils;
 import com.itheima.openchina.utils.SpUtil;
@@ -25,15 +19,11 @@ import com.itheima.openchina.utils.Utils;
 import com.itheima.openchina.wedigt.LoadDialog;
 import com.jaeger.library.StatusBarUtil;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
 
 /**
  * User:DoctorHe <p/>

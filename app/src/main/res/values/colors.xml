@@ -33,4 +33,8 @@
     <color name="lightblue">#0083FF</color>
     <!--动弹中的颜色-->
     <color name="list_item_background_pressed">#FCFCFC</color>
+    <color name="me_tab_bg">#67C54B</color>
+
+    <color name="sign_out_red">#D4584B</color>
+    <color name="sign_out_redp">#af4b40</color>
 </resources>
