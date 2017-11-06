@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import com.itheima.openchina.R;
 import com.itheima.openchina.adapters.FindAdapter;
 import com.itheima.openchina.bases.BaseActivity;
+import com.jaeger.library.StatusBarUtil;
 
 public class OpenChinaActivity extends BaseActivity {
 
@@ -19,10 +20,12 @@ public class OpenChinaActivity extends BaseActivity {
     @Override
     protected void init() {
         super.init();
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.colorAccent));//明天继续
         titles = new String[]{"分类","推荐","最新","热门","国产"};
         tb = findViewById(R.id.tool_bar);
         tabLayout = findViewById(R.id.tablayout);
         viewPager = findViewById(R.id.viewpager);
+
         initActionBar();
         initViewpager();
     }
@@ -56,4 +59,6 @@ public class OpenChinaActivity extends BaseActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 }
