@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <Button
+        android:id="@+id/btn_photograph"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_top_bg"
+        android:padding="@dimen/normal_padding"
+        android:text="@string/photograph"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_title_size" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/line_bg_color" />
+
+    <Button
+        android:id="@+id/btn_look"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_nor"
+        android:padding="@dimen/normal_padding"
+        android:text="@string/look_photo_head"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_title_size" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/line_bg_color" />
+
+    <Button
+        android:id="@+id/btn_photopictur"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_bottom_bg"
+        android:padding="@dimen/normal_padding"
+        android:text="@string/photo_picture"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_title_size" />
+
+
+    <Button
+        android:id="@+id/btn_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/btn_bttp_bg"
+        android:padding="@dimen/normal_padding"
+        android:text="@string/cancel"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_title_size" />
+</LinearLayout>

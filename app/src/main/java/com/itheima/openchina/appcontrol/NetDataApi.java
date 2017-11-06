@@ -23,4 +23,8 @@ public class NetDataApi {
      * 我的信息
      */
     public static final String MY_INFO = HOST_URL + "/action/api/my_information";
+    /**
+     * 上传头像
+     */
+    public static final String PORTRAIT_UPDATE = HOST_URL + "/action/api/portrait_update";
 }

@@ -6,33 +6,42 @@
     android:background="@color/grash"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/ll_noLogin"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:background="@mipmap/bg_my"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/unlogin_head"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:src="@mipmap/widget_dface"
-            app:civ_border_color="@color/white"
-            app:civ_border_width="3dp" />
+        <com.itheima.openchina.wedigt.LoginInfoHeadView
+            android:id="@+id/loginheadview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:text="@string/no_login"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_normal_size" />
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_noLogin"
+            android:layout_width="match_parent"
+            android:layout_height="190.5dp"
+            android:background="@mipmap/bg_my"
+            android:orientation="vertical">
 
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/unlogin_head"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:src="@mipmap/widget_dface"
+                app:civ_border_color="@color/white"
+                app:civ_border_width="3dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:text="@string/no_login"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_normal_size" />
+        </LinearLayout>
+    </RelativeLayout>
     <!--我的消息-->
     <LinearLayout
         android:id="@+id/ll_my_msg"

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/btn_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_nor"
+        android:padding="@dimen/normal_padding"
+        android:text="@string/save"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_title_size" />
+
+    <Button
+        android:id="@+id/btn_send_twee"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_nor"
+        android:padding="@dimen/normal_padding"
+        android:text="@string/send_twee"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_title_size" />
+
+    <Button
+        android:id="@+id/copy_link"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_nor"
+        android:padding="@dimen/normal_padding"
+        android:text="@string/copy_link"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_title_size" />
+</LinearLayout>

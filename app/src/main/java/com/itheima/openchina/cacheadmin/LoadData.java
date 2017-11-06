@@ -56,6 +56,38 @@ public class LoadData {
         //        return null;
     }
 
+    /**
+     * 从网络获取string字符串
+     * 需要传入cookie
+     *
+     * @param url
+     * @param cookie
+     * @return
+     */
+    public String getStringData(String url, String cookie) {
+
+        //1. 去网络获取数据
+        String content = HttpManager.getInstance().dataGet(url, cookie);
+        //2. 判断当前的数据是否为空
+        if (TextUtils.isEmpty(content)) {
+            //如果是空
+            //去缓存类中去取数据
+            content = CacheManger.getInstance().getCacheData(url);
+
+//            System.out.println("当前缓存数据:"+content.length());
+        } else {
+            //不为空
+            //保存数据,刷新缓存数据
+            CacheManger.getInstance().saveData(content, url);
+        }
+
+        //到这一步为止,我们已经得到数据了
+        //解析一把
+        return content;
+        //走到这一步就可以去解析了
+        //        return null;
+    }
+
     //获取json对象的方法
     public <T> T getBeanData(String url, Class<T> clazz) {
 
