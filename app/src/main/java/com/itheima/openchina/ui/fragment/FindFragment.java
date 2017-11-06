@@ -7,6 +7,7 @@ import com.google.zxing.activity.CaptureActivity;
 import com.itheima.openchina.R;
 import com.itheima.openchina.bases.BasePagerFragment;
 import com.itheima.openchina.ui.activity.OpenChinaActivity;
+import com.itheima.openchina.ui.activity.ShakeActivity;
 
 /**
  * User:DoctorHe <p/>
@@ -57,6 +58,8 @@ public class FindFragment extends BasePagerFragment implements View.OnClickListe
                 startActivity(intent1);
                 break;
             case R.id.item_shake:
+                Intent intent2 = new Intent(getContext(), ShakeActivity.class);
+                startActivity(intent2);
                 break;
         }
     }

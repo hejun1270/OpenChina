@@ -22,6 +22,8 @@ public class CategoryFragment extends BaseFragment {
     private CategoryBean categoryBean;
     private int size;
     private TextView viewcontent;
+    private ListView listView;
+    private Myadapter myadapter;
 
     @Override
     protected void dataOnRefresh() {
@@ -32,13 +34,38 @@ public class CategoryFragment extends BaseFragment {
     @Override
     protected View onCreateContentView() {
         View view = View.inflate(getContext(), R.layout.category_fragment, null);
-        ListView listView = view.findViewById(R.id.category_list);
-        listView.setAdapter(new Myadapter());
+        listView = view.findViewById(R.id.category_list);
+        myadapter = new Myadapter();
+        listView.setAdapter(myadapter);
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(final AdapterView<?> parent, final View view, final int position, long id) {
+//
+//                new Thread(){
+//                    @Override
+//                    public void run() {
+//                        String stringData = LoadData.getInstance().getStringData("http://www.oschina.net/action/api/softwarecatalog_list?tag=1");
+//                        categoryBean = XmlUtils.toBean(CategoryBean.class, stringData.getBytes());
+//                        ToastUtil.showToast(categoryBean.typeBean.list.get(position).name);
+//                        Utils.runOnUIThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                myadapter.notifyDataSetChanged();
+//                            }
+//                        });
+//                    }
+//                }.start();
+//
+//            }
+//        });
         return view;
     }
 
+
+
     @Override
     protected void onStartLoadData() {
+        //1. 去网络获取数据
         new Thread(){
             @Override
             public void run() {
@@ -48,24 +75,6 @@ public class CategoryFragment extends BaseFragment {
                 size = categoryBean.typeBean.list.size();
             }
         }.start();
-        //1. 去网络获取数据
-
-//        new Thread(){
-//            @Override
-//            public void run() {
-//                OkHttpClient okHttpClient=new OkHttpClient.Builder().build();
-//                Request builder = new Request.Builder()
-//                        .url("http://www.oschina.net/action/api/softwarecatalog_list?tag=0")
-//                        .build();
-//                try {
-//                    Response response = okHttpClient.newCall(builder).execute();
-//                    categoryBean = XmlUtils.toBean(CategoryBean.class,response.body().bytes());
-//                    size = categoryBean.typeBean.list.size();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }.start();
         loadSuccess();
     }
     public class Myadapter extends BaseAdapter{
@@ -99,6 +108,4 @@ public class CategoryFragment extends BaseFragment {
             return view;
         }
     }
-
-
 }

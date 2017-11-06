@@ -1,24 +1,13 @@
 package com.itheima.openchina.ui.activity;
 
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.Gravity;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toolbar;
 
 import com.itheima.openchina.R;
 import com.itheima.openchina.adapters.FindAdapter;
 import com.itheima.openchina.bases.BaseActivity;
-import com.itheima.openchina.ui.fragment.CategoryFragment;
 
 public class OpenChinaActivity extends BaseActivity {
 
@@ -67,35 +56,4 @@ public class OpenChinaActivity extends BaseActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-//    private PagerAdapter pagerAdapter=new PagerAdapter() {
-//        @Override
-//        public int getCount() {
-//            return titles.length;
-//        }
-//
-//        @Override
-//        public boolean isViewFromObject(View view, Object object) {
-//            return view==object;
-//        }
-//
-//        @Override
-//        public Object instantiateItem(ViewGroup container, int position) {
-//
-//            TextView textView = new TextView(OpenChinaActivity.this);
-//            textView.setText(titles[position]);
-//            container.addView(textView);
-//            return textView;
-//        }
-//
-//        @Override
-//        public void destroyItem(ViewGroup container, int position, Object object) {
-//            container.removeView((View) object);
-//        }
-//
-//        @Override
-//        public CharSequence getPageTitle(int position) {
-//            return titles[position];
-//        }
-//    };
 }
