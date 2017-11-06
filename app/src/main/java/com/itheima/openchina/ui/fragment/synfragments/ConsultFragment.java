@@ -4,20 +4,14 @@ package com.itheima.openchina.ui.fragment.synfragments;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LayoutAnimationController;
 
 import com.itheima.openchina.R;
 import com.itheima.openchina.adapters.SynthesizeAdapter.SynConsultAdapter;
 import com.itheima.openchina.bases.BaseFragment;
-import com.itheima.openchina.bases.BaseRecyclerAdapter;
-import com.itheima.openchina.bases.FootBean;
+import com.itheima.openchina.beans.FootBean;
 import com.itheima.openchina.beans.ConsultHeadBean;
 import com.itheima.openchina.cacheadmin.LoadData;
-import com.itheima.openchina.interfaces.HeadType;
 import com.itheima.openchina.interfaces.ItemType;
-import com.itheima.openchina.utils.LogUtils;
-import com.itheima.openchina.utils.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;

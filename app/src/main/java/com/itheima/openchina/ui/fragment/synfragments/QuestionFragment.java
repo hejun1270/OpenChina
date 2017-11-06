@@ -8,10 +8,9 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 
 import com.itheima.openchina.R;
-import com.itheima.openchina.adapters.SynthesizeAdapter.SynBlogsAdapter;
 import com.itheima.openchina.adapters.SynthesizeAdapter.SynQuestionAdapter;
 import com.itheima.openchina.bases.BaseFragment;
-import com.itheima.openchina.bases.FootBean;
+import com.itheima.openchina.beans.FootBean;
 import com.itheima.openchina.beans.HeadBean;
 import com.itheima.openchina.interfaces.ItemType;
 

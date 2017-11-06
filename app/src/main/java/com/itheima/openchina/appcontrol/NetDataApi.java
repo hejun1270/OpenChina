@@ -23,4 +23,10 @@ public class NetDataApi {
      * 我的信息
      */
     public static final String MY_INFO = HOST_URL + "/action/api/my_information";
+    /**
+     * 动弹界面url
+     */
+    public static final String HOT_TWEET_URL="http://www.oschina.net/action/apiv2/tweets?type=2";
+    public static final String NEW_TWEET_URL="http://www.oschina.net/action/apiv2/tweets?type=1";
+    public static final String MY_TWEET_URL="http://www.oschina.net/action/apiv2/tweets?type=3";
 }

@@ -1,4 +1,4 @@
-package com.itheima.openchina.bases;
+package com.itheima.openchina.beans;
 
 import com.itheima.openchina.interfaces.FootType;
 

@@ -12,6 +12,8 @@ import okhttp3.Response;
  */
 public class HttpManager {
 
+
+
     private HttpManager() {
 
     }
@@ -53,8 +55,6 @@ public class HttpManager {
 
         }
     }
-
-
 
 
 }

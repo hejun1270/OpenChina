@@ -3,18 +3,38 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#fff">
+    </android.support.v7.widget.RecyclerView>
     <LinearLayout
+        android:id="@+id/not_login_or_net"
         android:orientation="vertical"
         android:layout_centerInParent="true"
-        android:layout_width="wrap_content"
+        android:layout_width="80dp"
         android:layout_height="wrap_content">
         <ImageView
             android:src="@mipmap/pagefailed_bg"
+            android:layout_width="80dp"
+            android:layout_height="80dp" />
+        <TextView
+            android:gravity="center_horizontal"
+            android:text="您还未登录或网络延迟"
+            android:layout_marginTop="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-        <TextView
-            android:text="您"
-
+    </LinearLayout>
+    <LinearLayout
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:visibility="gone"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/iv_load_img"
+            android:alpha="0.5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>

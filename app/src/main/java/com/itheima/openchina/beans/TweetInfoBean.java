@@ -12,7 +12,7 @@ import java.util.List;
  * Description: //TODO
  * Copyright notice:
  */
-public class TweetInfoBean implements BodyType{
+public class TweetInfoBean {
 
     /**
      * code : 1

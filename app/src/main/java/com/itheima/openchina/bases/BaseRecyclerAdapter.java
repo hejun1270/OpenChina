@@ -2,11 +2,9 @@ package com.itheima.openchina.bases;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.itheima.openchina.R;
 import com.itheima.openchina.interfaces.BodyType;
@@ -16,8 +14,6 @@ import com.itheima.openchina.interfaces.ItemType;
 import com.itheima.openchina.utils.LogUtils;
 
 import java.util.List;
-
-import static android.content.ContentValues.TAG;
 
 /**
  * Created by 佘本民
@@ -93,10 +89,10 @@ public abstract class BaseRecyclerAdapter extends RecyclerView.Adapter {
                 break;
             case BODYTYPE:
                 createViewBodyItem(holder,position);
-                LogUtils.i("body"+position);
+                //LogUtils.i("body"+position);
                 break;
             case FOOTTYPE:
-                LogUtils.i("foot"+position);
+                //LogUtils.i("foot"+position);
                 break;
             default:
                 break;
@@ -124,6 +120,7 @@ public abstract class BaseRecyclerAdapter extends RecyclerView.Adapter {
         ViewHolder(View itemView, RecycleViewItemOnClickListener mListener) {
              super(itemView);
              BaseRecyclerAdapter.this.mListener=mListener;
+             //条目的点击事件
              itemView.setOnClickListener(this);
         }
 
@@ -172,11 +169,9 @@ public abstract class BaseRecyclerAdapter extends RecyclerView.Adapter {
     }
 
     public interface RecycleViewItemOnClickListener {
-        public void onItemOnClick(View view,int postion);
+        public void onItemOnClick(View view,int position);
 
     }
-
-
     public void setRecycleViewItemOnClickListener(RecycleViewItemOnClickListener mListener){
         if(mListener!=null){
             this.mListener=mListener;

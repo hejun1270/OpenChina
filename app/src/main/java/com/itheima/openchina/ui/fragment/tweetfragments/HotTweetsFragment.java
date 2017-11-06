@@ -8,12 +8,13 @@ import android.view.animation.LayoutAnimationController;
 
 import com.itheima.openchina.R;
 import com.itheima.openchina.adapters.tweetAdapter.TweetAdapter;
+import com.itheima.openchina.appcontrol.NetDataApi;
 import com.itheima.openchina.bases.BaseFragment;
-import com.itheima.openchina.bases.FootBean;
+import com.itheima.openchina.bases.BaseRecyclerAdapter;
+import com.itheima.openchina.beans.FootBean;
 import com.itheima.openchina.beans.TweetInfoBean;
 import com.itheima.openchina.cacheadmin.LoadData;
 import com.itheima.openchina.interfaces.ItemType;
-import com.itheima.openchina.utils.LogUtils;
 import com.itheima.openchina.utils.ToastUtil;
 import com.itheima.openchina.utils.Utils;
 
@@ -28,12 +29,12 @@ import java.util.List;
  * Description:
  * Copyright notice:
  */
-public class HotTweetsFragment extends BaseFragment implements TweetAdapter.OnItemClickListener {
+public class HotTweetsFragment extends BaseFragment implements BaseRecyclerAdapter.RecycleViewItemOnClickListener {
 
     private RecyclerView recyclerView;
     private List<ItemType> tweetItems=new ArrayList<>();
     private TweetAdapter tweetAdapter;
-
+    //下拉刷新
     @Override
     protected void dataOnRefresh() {
         onStartLoadData();
@@ -56,7 +57,7 @@ public class HotTweetsFragment extends BaseFragment implements TweetAdapter.OnIt
         tweetAdapter = new TweetAdapter(getContext(), tweetItems);
         recyclerView.setAdapter(tweetAdapter);
         //动弹条目的点击事件
-        tweetAdapter.setOnItemClickListener(this);
+        tweetAdapter.setRecycleViewItemOnClickListener(this);
 
         //添加条目动画
         LayoutAnimationController lac=new LayoutAnimationController(AnimationUtils.loadAnimation(getActivity(),R.anim.list_zoom));
@@ -70,7 +71,7 @@ public class HotTweetsFragment extends BaseFragment implements TweetAdapter.OnIt
         new Thread(new Runnable() {
             @Override
             public void run() {
-                TweetInfoBean beanData = LoadData.getInstance().getBeanData("http://www.oschina.net/action/apiv2/tweets?type=2", TweetInfoBean.class);
+                TweetInfoBean beanData = LoadData.getInstance().getBeanData(NetDataApi.HOT_TWEET_URL, TweetInfoBean.class);
                 tweetItems.addAll(beanData.getResult().getItems());
                 tweetItems.add(new FootBean());
                 Utils.runOnUIThread(new Runnable() {
@@ -88,16 +89,16 @@ public class HotTweetsFragment extends BaseFragment implements TweetAdapter.OnIt
     }
 
     //ben:需要清除list的内容缓存,
-
-
     @Override
     public void onPause() {
         super.onPause();
         tweetItems.removeAll(tweetItems);
     }
 
+
+    //条目点击事件处理
     @Override
-    public void onItemClick(int position) {
+    public void onItemOnClick(View view, int position) {
         ToastUtil.showToast("当前点击的条目"+position);
     }
 }

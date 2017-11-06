@@ -3,8 +3,6 @@ package com.itheima.openchina.adapters.tweetAdapter;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.ScaleAnimation;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -12,7 +10,6 @@ import com.itheima.openchina.R;
 import com.itheima.openchina.bases.BaseRecyclerAdapter;
 import com.itheima.openchina.beans.TweetInfoBean;
 import com.itheima.openchina.interfaces.ItemType;
-import com.itheima.openchina.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,12 +69,13 @@ public class TweetAdapter extends BaseRecyclerAdapter {
         //用户头像
         CircleImageView userImg = holder.itemView.findViewById(R.id.profile_image);
         Glide.with(getContext()).load(bean.getAuthor().getPortrait()).into(userImg);
-       /* userImg.setOnClickListener(new View.OnClickListener() {
+         //头像的点击事件
+        userImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
             }
-        });*/
+        });
 
         //用户名
         TextView userName = holder.itemView.findViewById(R.id.tv_user_name);
@@ -89,20 +87,29 @@ public class TweetAdapter extends BaseRecyclerAdapter {
         TextView sendTime = holder.itemView.findViewById(R.id.tv_send_time);
         sendTime.setText(bean.getPubDate());
         //点赞数量
-        /*TextView thunbupNum = holder.itemView.findViewById(R.id.tv_thumbup_num);
-        thunbupNum.setText(list.get(position).getLikeCount());*/
+        TextView thunbupNum = holder.itemView.findViewById(R.id.tv_thumbup_num);
+        thunbupNum.setText(bean.getStatistics().getLike()+"");
+        /*//点赞图片
+        ImageView icThumbupImg = holder.itemView.findViewById(R.id.ic_thumbup);
+        icThumbupImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        */
         //评论数量
-        /*TextView commentNum = holder.itemView.findViewById(R.id.tv_comment_num);
-         commentNum.setText(list.get(position).getCommentCount());*/
+        TextView commentNum = holder.itemView.findViewById(R.id.tv_comment_num);
+         commentNum.setText(bean.getStatistics().getComment()+"");
     }
-    //创建一个接口
+    /*//创建一个接口
     public interface OnItemClickListener{
         void onItemClick(int position);
-    }
-      private OnItemClickListener onItemClickListener;
+    }*/
+      /*private OnItemClickListener onItemClickListener;
    public void setOnItemClickListener(OnItemClickListener onItemClickListener){
             this.onItemClickListener=onItemClickListener;
-    }
+    }*/
 
 
 }
