@@ -11,6 +11,7 @@ import com.itheima.openchina.R;
 import com.itheima.openchina.bases.BaseRecyclerAdapter;
 import com.itheima.openchina.beans.TweetInfoBean;
 import com.itheima.openchina.interfaces.ItemType;
+import com.itheima.openchina.utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
