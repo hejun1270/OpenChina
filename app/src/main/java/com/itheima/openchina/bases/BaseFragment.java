@@ -59,8 +59,15 @@ public abstract class BaseFragment extends Fragment {
             window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager
                     .LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
+
+
         initSnackBar();
+
     }
+
+
+
+
 
     private void initSnackBar() {
         //注意getRootView()最为重要，直接关系到TSnackBar的位置

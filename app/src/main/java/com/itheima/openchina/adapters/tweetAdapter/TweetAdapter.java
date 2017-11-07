@@ -2,6 +2,7 @@ package com.itheima.openchina.adapters.tweetAdapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,7 +14,6 @@ import com.itheima.openchina.beans.TweetInfoBean;
 import com.itheima.openchina.interfaces.ItemType;
 import com.itheima.openchina.utils.StringUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -29,10 +29,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 public class TweetAdapter extends BaseRecyclerAdapter {
 
-    private List<ItemType> list=new ArrayList<>();
+    private List<ItemType> list;
     public TweetAdapter(Context context, List list) {
         super(context, list);
-        this.list.addAll(list);
+        this.list=list;
+        Log.e("aaaa22222", "TweetAdapter:   数据的条数 =====" + list.size() );
     }
 
 
@@ -84,7 +85,12 @@ public class TweetAdapter extends BaseRecyclerAdapter {
            userName.setText(bean.getAuthor().getName());
         //动弹内容
         TextView tweetContent = holder.itemView.findViewById(R.id.tv_tweet_content);
-        tweetContent.setText(bean.getContent());
+
+        String content = bean.getContent();
+         tweetContent.setText(content);
+        /*Spanned spanned = Html.fromHtml(content);
+        tweetContent.setText(spanned);
+        tweetContent.setMovementMethod(new LinkMovementMethod());*/
         //内容图片
         /*ImageView contentImage = holder.itemView.findViewById(R.id.content_Image);
         Glide.with(getContext()).load(bean.getImages().get(position).getType()).into(contentImage);*/
@@ -102,7 +108,7 @@ public class TweetAdapter extends BaseRecyclerAdapter {
             @Override
             public void onClick(View v) {
                 icThumbupImg.setImageResource(R.mipmap.ic_thumbup_actived);
-                  like[0] +=1;
+                  like[0]+=1;
 
             }
         });

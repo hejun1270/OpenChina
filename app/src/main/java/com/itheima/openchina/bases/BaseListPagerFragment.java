@@ -11,6 +11,7 @@ import android.view.View;
 
 public  class BaseListPagerFragment extends BasePagerFragment {
 
+
     @Override
     protected View onCreateContentView() {
 

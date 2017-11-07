@@ -11,7 +11,6 @@ import com.itheima.openchina.interfaces.BodyType;
 import com.itheima.openchina.interfaces.FootType;
 import com.itheima.openchina.interfaces.HeadType;
 import com.itheima.openchina.interfaces.ItemType;
-import com.itheima.openchina.utils.LogUtils;
 
 import java.util.List;
 
@@ -143,10 +142,10 @@ public abstract class BaseRecyclerAdapter extends RecyclerView.Adapter {
             return BODYTYPE;
         }
         if (list.get(position) instanceof FootType) {
-            LogUtils.i("footSuccess"+position);
+            //LogUtils.i("footSuccess"+position);
             return FOOTTYPE;
         }
-        LogUtils.i("footFail"+position);
+       // LogUtils.i("footFail"+position);
         return BODYTYPE;
     }
 

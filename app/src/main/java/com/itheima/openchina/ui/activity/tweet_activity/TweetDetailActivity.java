@@ -9,8 +9,6 @@ import android.widget.TextView;
 import com.itheima.openchina.R;
 import com.itheima.openchina.bases.BaseActivity;
 
-import java.io.Serializable;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -55,7 +53,7 @@ public class TweetDetailActivity extends BaseActivity {
     protected void init() {
         super.init();
         Intent intent = getIntent();
-        Serializable userData = intent.getSerializableExtra("userData");
+        //Serializable userData = intent.getSerializableExtra("userData");
 
 
     }
