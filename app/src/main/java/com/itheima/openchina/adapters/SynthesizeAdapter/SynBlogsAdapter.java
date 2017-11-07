@@ -3,6 +3,7 @@ package com.itheima.openchina.adapters.SynthesizeAdapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
@@ -17,6 +18,7 @@ import com.itheima.openchina.bases.BaseRecyclerAdapter;
 import com.itheima.openchina.beans.BlogBean;
 import com.itheima.openchina.interfaces.ItemType;
 import com.itheima.openchina.utils.LogUtils;
+import com.itheima.openchina.utils.SpUtil;
 import com.itheima.openchina.utils.StringUtils;
 import com.itheima.openchina.utils.ToastUtil;
 
@@ -30,7 +32,7 @@ import java.util.List;
  * Function:
  */
 
-public class SynBlogsAdapter extends BaseRecyclerAdapter {
+public class SynBlogsAdapter extends BaseRecyclerAdapter implements BaseRecyclerAdapter.RecycleViewItemOnClickListener{
 
     private BlogTitleListener listener;
     List<ItemType> body=new ArrayList<>();
@@ -98,6 +100,8 @@ public class SynBlogsAdapter extends BaseRecyclerAdapter {
             title.setText(bean.getTitle());
         }
 
+
+
         TextView content=holder.itemView.findViewById(R.id.consult_content);
         content.setText(bean.getBody());
 
@@ -111,9 +115,14 @@ public class SynBlogsAdapter extends BaseRecyclerAdapter {
         String s=bean.getAuthor()+"\b\b"+ StringUtils.friendly_time(bean.getPubDate());
         time.setText(s);
 
-
-
-
+        //title点击判断灰色
+        boolean isClick = SpUtil.getBoolean(bean.getTitle(), false);
+        if(isClick){
+            title.setTextColor(Color.parseColor("#7F878585"));
+        }else{
+            title.setTextColor(Color.parseColor("#0d0d0d"));
+        }
+        setRecycleViewItemOnClickListener(this);
     }
 
 
@@ -141,15 +150,24 @@ public class SynBlogsAdapter extends BaseRecyclerAdapter {
         return view;
     }
 
-
-
     public interface BlogTitleListener{
+
+
         void onClickRadioPosition(int position);
     }
-
     public void setBlogTitleListener(BlogTitleListener listener){
         if(listener!=null){
             this.listener=listener;
+        }
+    }
+
+    @Override
+    public void onItemOnClick(View view, int position) {
+        if(position>0||position<body.size()-1){
+            BlogBean.ResultBean.BlogItemsBean bean= (BlogBean.ResultBean.BlogItemsBean) body.get(position+1);
+            String title = bean.getTitle();
+            SpUtil.saveBoolean(title,true);
+            notifyItemRangeChanged(1,body.size()-1);
         }
     }
 }

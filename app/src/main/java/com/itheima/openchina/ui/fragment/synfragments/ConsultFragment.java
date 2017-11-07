@@ -20,6 +20,8 @@ import com.itheima.openchina.beans.FootBean;
 import com.itheima.openchina.beans.ConsultHeadBean;
 import com.itheima.openchina.cacheadmin.LoadData;
 import com.itheima.openchina.interfaces.ItemType;
+import com.itheima.openchina.utils.ToastUtil;
+
 import java.util.ArrayList;
 import java.util.List;
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
@@ -51,7 +53,7 @@ public class ConsultFragment extends BaseFragment {
         adapter=new SynConsultAdapter(getContext(),list);
         recyclerView.setAdapter(adapter);
 
-        //        添加条目动画
+        //添加条目动画
         LayoutAnimationController lac = new LayoutAnimationController(AnimationUtils.loadAnimation(getActivity(), R.anim.list_zoom));
         lac.setOrder(LayoutAnimationController.ORDER_RANDOM);
         recyclerView.setLayoutAnimation(lac);
@@ -63,23 +65,19 @@ public class ConsultFragment extends BaseFragment {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if(newState == SCROLL_STATE_IDLE) {
+                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                int lastVisibleItemPosition=layoutManager.findLastVisibleItemPosition();
+                if(newState == SCROLL_STATE_IDLE&&lastVisibleItemPosition==list.size()-1) {
                     if(list.size()==size){
                         Toast.makeText(getActivity().getApplication(), "数据正在赶来的途中..", Toast.LENGTH_SHORT).show();
                     }
+                    ToastUtil.showToast(recyclerView.getAdapter().getItemCount()+"");
                     recyclerView.scrollBy(0,-xp2dp(60));
                     loadMore(bodyData.getResult().getNextPageToken());
                 }
             }
         });
 
-        //条目点击事件
-        adapter.setRecycleViewItemOnClickListener(new BaseRecyclerAdapter.RecycleViewItemOnClickListener() {
-            @Override
-            public void onItemOnClick(View view, int position) {
-
-            }
-        });
         return view;
     }
 
@@ -130,7 +128,7 @@ public class ConsultFragment extends BaseFragment {
     //上拉加载更多
     public void loadMore(String nextPageToken){
         size = list.size();
-        final String urlMore="http://www.oschina.net/action/apiv2/news?pageToken="+nextPageToken;
+//        final String urlMore="http://www.oschina.net/action/apiv2/news?pageToken="+nextPageToken;
         new Thread(new Runnable() {
             @Override
             public void run() {

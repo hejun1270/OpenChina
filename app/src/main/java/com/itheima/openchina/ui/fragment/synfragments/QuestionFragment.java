@@ -29,7 +29,7 @@ import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
  * Created by 佘本民
  * When:  --- 2017/11/4---
  * Time:  --- 14:05---
- * Function:
+ * Function:问答界面
  */
 
 public class QuestionFragment extends BaseFragment {
@@ -69,7 +69,9 @@ public class QuestionFragment extends BaseFragment {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if (newState == SCROLL_STATE_IDLE) {
+                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                int lastVisibleItemPosition=layoutManager.findLastVisibleItemPosition();
+                if (newState == SCROLL_STATE_IDLE&&lastVisibleItemPosition==list.size()-1) {
                     if(list.size()==size){
                         Toast.makeText(getActivity().getApplication(), "数据正在赶来的途中..", Toast.LENGTH_SHORT).show();
                     }
@@ -98,7 +100,6 @@ public class QuestionFragment extends BaseFragment {
 
                 questionBean = LoadData.getInstance().getBeanData(url, QuestionBean.class);
                 list.removeAll(list);
-                LogUtils.i(list.size()+"=============");
                 list.add(new HeadBean());
                 list.addAll(questionBean.getResult().getItems());
                 list.add(new FootBean());
@@ -153,7 +154,7 @@ public class QuestionFragment extends BaseFragment {
                     @Override
                     public void run() {
                         loadSuccess();
-                        adapter.notifyItemRangeChanged(1,list.size()-2);
+                        adapter.notifyItemRangeChanged(1,list.size()-1);
                     }
                 });
             }

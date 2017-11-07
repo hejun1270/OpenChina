@@ -3,6 +3,7 @@ package com.itheima.openchina.adapters.SynthesizeAdapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.View;
@@ -15,6 +16,7 @@ import com.itheima.openchina.R;
 import com.itheima.openchina.bases.BaseRecyclerAdapter;
 import com.itheima.openchina.beans.QuestionBean;
 import com.itheima.openchina.interfaces.ItemType;
+import com.itheima.openchina.utils.SpUtil;
 import com.itheima.openchina.utils.StringUtils;
 
 import java.util.ArrayList;
@@ -30,7 +32,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Function:
  */
 
-public class SynQuestionAdapter extends BaseRecyclerAdapter {
+public class SynQuestionAdapter extends BaseRecyclerAdapter implements BaseRecyclerAdapter.RecycleViewItemOnClickListener{
 
     List<ItemType> bean=new ArrayList<>();
 
@@ -78,6 +80,14 @@ public class SynQuestionAdapter extends BaseRecyclerAdapter {
             TextView time=holder.itemView.findViewById(R.id.consult_time);
             time.setText(que.getAuthor()+"\b\b"+ StringUtils.friendly_time(que.getPubDate()));
 
+            //title点击判断灰色
+            boolean isClick = SpUtil.getBoolean(que.getTitle(), false);
+            if(isClick){
+                title.setTextColor(Color.parseColor("#7F878585"));
+            }else{
+                title.setTextColor(Color.parseColor("#0d0d0d"));
+            }
+            setRecycleViewItemOnClickListener(this);
         }
     }
 
@@ -120,15 +130,25 @@ public class SynQuestionAdapter extends BaseRecyclerAdapter {
         return view;
     }
 
-
-
     public interface QuestionListener{
+
+
         void onListener(int position);
     }
-
     public void setQustionListener(QuestionListener listener){
         if(listener!=null){
             this.listener=listener;
+        }
+    }
+
+    //点击监听
+    @Override
+    public void onItemOnClick(View view, int position) {
+        if(position>0||position<bean.size()-1){
+            QuestionBean.ResultBean.QuestiontemsBean que=(QuestionBean.ResultBean.QuestiontemsBean) bean.get(position+1);
+            String title = que.getTitle();
+            SpUtil.saveBoolean(title,true);
+            notifyItemRangeChanged(1,bean.size()-1);
         }
     }
 }

@@ -3,6 +3,7 @@ package com.itheima.openchina.adapters.SynthesizeAdapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.Spannable;
@@ -18,9 +19,11 @@ import com.itheima.openchina.bases.BaseRecyclerAdapter;
 import com.itheima.openchina.beans.ActionContentBean;
 import com.itheima.openchina.beans.ActionHeadBean;
 import com.itheima.openchina.beans.ConsultHeadBean;
+import com.itheima.openchina.beans.QuestionBean;
 import com.itheima.openchina.interfaces.HeadType;
 import com.itheima.openchina.interfaces.ItemType;
 import com.itheima.openchina.utils.LogUtils;
+import com.itheima.openchina.utils.SpUtil;
 import com.itheima.openchina.utils.StringUtils;
 import com.itheima.openchina.utils.ToastUtil;
 
@@ -37,14 +40,14 @@ import java.util.List;
 
 
 
-public class SynActionAdapter extends BaseRecyclerAdapter {
+public class SynActionAdapter extends BaseRecyclerAdapter implements BaseRecyclerAdapter.RecycleViewItemOnClickListener{
 
 
 
     List<ItemType> mList=new ArrayList<>();
     ActionHeadBean.ResultBean.ActionItems head=new ActionHeadBean.ResultBean.ActionItems();
 
-    ActionContentBean.ResultBean.ItemsBean body=new ActionContentBean.ResultBean.ItemsBean();
+
 
     public SynActionAdapter(Context context, List list) {
         super(context,list);
@@ -70,7 +73,7 @@ public class SynActionAdapter extends BaseRecyclerAdapter {
     @Override
     protected void createViewBodyItem(RecyclerView.ViewHolder holder, int position) {
         if(position<mList.size()-2){
-            body = (ActionContentBean.ResultBean.ItemsBean) mList.get(position);
+            ActionContentBean.ResultBean.ItemsBean body = (ActionContentBean.ResultBean.ItemsBean) mList.get(position);
 
             TextView title = holder.itemView.findViewById(R.id.consult_title);
             title.setText(body.getTitle());
@@ -98,6 +101,15 @@ public class SynActionAdapter extends BaseRecyclerAdapter {
             TextView message = holder.itemView.findViewById(R.id.consult_message);
             String s=body.getApplyCount()+"人参与";
             message.setText(s);
+
+            //title点击判断灰色
+            boolean isClick = SpUtil.getBoolean(body.getTitle(), false);
+            if(isClick){
+                title.setTextColor(Color.parseColor("#7F878585"));
+            }else{
+                title.setTextColor(Color.parseColor("#0d0d0d"));
+            }
+            setRecycleViewItemOnClickListener(this);
         }
     }
 
@@ -112,6 +124,13 @@ public class SynActionAdapter extends BaseRecyclerAdapter {
     }
 
 
-
-
+    @Override
+    public void onItemOnClick(View view, int position) {
+        if(position>0||position<mList.size()-1){
+            ActionContentBean.ResultBean.ItemsBean body = (ActionContentBean.ResultBean.ItemsBean) mList.get(position+1);
+            String title = body.getTitle();
+            SpUtil.saveBoolean(title,true);
+            notifyItemRangeChanged(1,mList.size()-1);
+        }
+    }
 }

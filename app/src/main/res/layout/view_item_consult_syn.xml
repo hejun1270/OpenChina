@@ -34,7 +34,7 @@
             android:id="@+id/consult_title"
             android:text="@string/title"
             android:textSize="16sp"
-            android:textColor="#414040"
+            android:textColor="#0d0d0d"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

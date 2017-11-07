@@ -3,6 +3,7 @@ package com.itheima.openchina.adapters.SynthesizeAdapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
@@ -18,6 +19,7 @@ import com.itheima.openchina.bases.BaseRecyclerAdapter;
 import com.itheima.openchina.beans.ConsultBodyBean;
 import com.itheima.openchina.beans.ConsultHeadBean;
 import com.itheima.openchina.interfaces.ItemType;
+import com.itheima.openchina.utils.SpUtil;
 import com.itheima.openchina.utils.StringUtils;
 import com.itheima.openchina.utils.ToastUtil;
 
@@ -32,16 +34,16 @@ import java.util.List;
  * Function:
  */
 
-public class SynConsultAdapter extends BaseRecyclerAdapter {
+public class SynConsultAdapter extends BaseRecyclerAdapter implements BaseRecyclerAdapter.RecycleViewItemOnClickListener {
 
     public void setmList(List<ItemType> mList) {
         this.mList = mList;
-        notifyItemRangeChanged(1,mList.size()-2);
+        notifyItemRangeChanged(1,mList.size()-1);
     }
 
     List<ItemType> mList=new ArrayList<>();
     ConsultHeadBean.ResultBean bean=new ConsultHeadBean.ResultBean();
-    ConsultBodyBean.ConsultBodyResultBean body=new ConsultBodyBean.ConsultBodyResultBean();
+
 
 
 
@@ -68,6 +70,14 @@ public class SynConsultAdapter extends BaseRecyclerAdapter {
             body = (ConsultBodyBean.ConsultBodyResultBean.ItemsBean) mList.get(position);
             TextView title = holder.itemView.findViewById(R.id.consult_title);
 
+            //title点击判断灰色
+            boolean isClick = SpUtil.getBoolean(body.getTitle(), false);
+            if(isClick){
+                title.setTextColor(Color.parseColor("#7F878585"));
+            }else{
+                title.setTextColor(Color.parseColor("#0d0d0d"));
+            }
+
             String s=StringUtils.friendly_time(body.getPubDate());
             TextView content = holder.itemView.findViewById(R.id.consult_content);
             content.setText(body.getBody());
@@ -93,7 +103,7 @@ public class SynConsultAdapter extends BaseRecyclerAdapter {
             return;
         }
 
-
+        setRecycleViewItemOnClickListener(this);
     }
 
 
@@ -116,6 +126,22 @@ public class SynConsultAdapter extends BaseRecyclerAdapter {
         loopView.start();
         return view;
     }
+
+    //条目点击事件
+    @Override
+    public void onItemOnClick(View view, int position) {
+        if(position>0||position<mList.size()-1){
+            ConsultBodyBean.ConsultBodyResultBean.ItemsBean itemsBean
+                    =  (ConsultBodyBean.ConsultBodyResultBean.ItemsBean) mList.get(position+1);
+            String title = itemsBean.getTitle();
+            SpUtil.saveBoolean(title,true);
+            notifyItemRangeChanged(1,mList.size()-1);
+        }
+
+    }
+
+
+
 
 
 }

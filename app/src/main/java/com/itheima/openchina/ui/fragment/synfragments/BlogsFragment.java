@@ -74,12 +74,15 @@ public class BlogsFragment extends BaseFragment {
             }
         });
 
+
         // 上拉加载更多
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if (newState == SCROLL_STATE_IDLE) {
+                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                final int lastVisibleItemPosition=layoutManager.findLastVisibleItemPosition();
+                if (newState == SCROLL_STATE_IDLE&&lastVisibleItemPosition==list.size()-1) {
                     if(list.size()==size){
                         Toast.makeText(getActivity().getApplication(), "数据正在赶来的途中..", Toast.LENGTH_SHORT).show();
                     }
