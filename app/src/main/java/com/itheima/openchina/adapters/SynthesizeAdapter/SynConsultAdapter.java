@@ -3,17 +3,18 @@ package com.itheima.openchina.adapters.SynthesizeAdapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.Spanned;
-import android.text.SpannedString;
 import android.text.style.ImageSpan;
 import android.view.View;
 import android.widget.TextView;
 
 import com.itheima.loopviewpager.LoopViewPager;
+import com.itheima.openchina.ui.activity.syn_activity.ConsultDetailsActivity;
 import com.itheima.openchina.R;
 import com.itheima.openchina.bases.BaseRecyclerAdapter;
 import com.itheima.openchina.beans.ConsultBodyBean;
@@ -21,7 +22,6 @@ import com.itheima.openchina.beans.ConsultHeadBean;
 import com.itheima.openchina.interfaces.ItemType;
 import com.itheima.openchina.utils.SpUtil;
 import com.itheima.openchina.utils.StringUtils;
-import com.itheima.openchina.utils.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -136,6 +136,12 @@ public class SynConsultAdapter extends BaseRecyclerAdapter implements BaseRecycl
             String title = itemsBean.getTitle();
             SpUtil.saveBoolean(title,true);
             notifyItemRangeChanged(1,mList.size()-1);
+            Intent intent = new Intent(getContext(),ConsultDetailsActivity.class);
+            intent.putExtra("href",itemsBean.getHref());
+            intent.putExtra("title","咨询详情");
+            intent.putExtra("commend",itemsBean.getCommentCount()+"");
+            getContext().startActivity(intent);
+
         }
 
     }

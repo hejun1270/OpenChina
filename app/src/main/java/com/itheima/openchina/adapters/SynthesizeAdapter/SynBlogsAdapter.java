@@ -3,6 +3,7 @@ package com.itheima.openchina.adapters.SynthesizeAdapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.itheima.openchina.ui.activity.syn_activity.ConsultDetailsActivity;
 import com.itheima.openchina.R;
 import com.itheima.openchina.bases.BaseRecyclerAdapter;
 import com.itheima.openchina.beans.BlogBean;
@@ -168,6 +170,10 @@ public class SynBlogsAdapter extends BaseRecyclerAdapter implements BaseRecycler
             String title = bean.getTitle();
             SpUtil.saveBoolean(title,true);
             notifyItemRangeChanged(1,body.size()-1);
+            Intent intent = new Intent(getContext(),ConsultDetailsActivity.class);
+            intent.putExtra("href",bean.getHref());
+            intent.putExtra("title","博客详情");
+            getContext().startActivity(intent);
         }
     }
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.itheima.openchina">
 
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -41,7 +42,6 @@
         <activity android:name=".ui.activity.MainActivity" />
         <activity android:name=".ui.activity.AddActivity" />
         <activity android:name=".ui.activity.ShakeActivity"></activity>
-        <activity android:name=".ui.activity.RecommDetailActivity"></activity>
         <activity
             android:name=".ui.activity.LoginActivity"
             android:windowSoftInputMode="adjustNothing" />
@@ -53,7 +53,8 @@
         <activity
             android:name=".ui.activity.PagerPhotoActivity"
             android:theme="@style/AppTheme.Lucency" />
-        <activity android:name=".ui.activity.RecommDetailActivity"/>
+        <activity android:name=".ui.activity.RecommDetailActivity" />
+        <activity android:name=".ui.activity.syn_activity.ConsultDetailsActivity"/>
     </application>
 
 </manifest>

@@ -3,15 +3,16 @@ package com.itheima.openchina.adapters.SynthesizeAdapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.itheima.openchina.ui.activity.syn_activity.ConsultDetailsActivity;
 import com.itheima.openchina.R;
 import com.itheima.openchina.bases.BaseRecyclerAdapter;
 import com.itheima.openchina.beans.QuestionBean;
@@ -149,6 +150,10 @@ public class SynQuestionAdapter extends BaseRecyclerAdapter implements BaseRecyc
             String title = que.getTitle();
             SpUtil.saveBoolean(title,true);
             notifyItemRangeChanged(1,bean.size()-1);
+            Intent intent = new Intent(getContext(),ConsultDetailsActivity.class);
+            intent.putExtra("href",que.getAuthorPortrait());
+            intent.putExtra("title","问答详情");
+            getContext().startActivity(intent);
         }
     }
 }

@@ -49,4 +49,5 @@
     <string name="str_request_camera_message">请求获取相机权限</string>
     <string name="action">活动</string>
     <string name="nameing">正在报名</string>
+    <string name="loss_detail">详情丢失</string>
 </resources>
