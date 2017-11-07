@@ -7,6 +7,7 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
+import android.widget.Toast;
 
 import com.itheima.openchina.R;
 import com.itheima.openchina.adapters.SynthesizeAdapter.SynConsultAdapter;
@@ -38,6 +39,7 @@ public class ConsultFragment extends BaseFragment {
     List<ItemType>list=new ArrayList<>();
     private ConsultBodyBean bodyData;
     private ConsultHeadBean headData;
+    private int size;
 
     @Override
     protected View onCreateContentView() {
@@ -61,6 +63,9 @@ public class ConsultFragment extends BaseFragment {
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 if(newState == SCROLL_STATE_IDLE) {
+                    if(list.size()==size){
+                        Toast.makeText(getActivity().getApplication(), "数据正在赶来的途中..", Toast.LENGTH_SHORT).show();
+                    }
                     recyclerView.scrollBy(0,-xp2dp(60));
                     loadMore(bodyData.getResult().getNextPageToken());
                 }
@@ -115,6 +120,7 @@ public class ConsultFragment extends BaseFragment {
 
     //上拉加载更多
     public void loadMore(String nextPageToken){
+        size = list.size();
         final String urlMore="http://www.oschina.net/action/apiv2/news?pageToken="+nextPageToken;
         new Thread(new Runnable() {
             @Override
