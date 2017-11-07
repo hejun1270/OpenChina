@@ -38,8 +38,8 @@ public class OpenChinaActivity extends BaseActivity {
 
 
     private void initViewpager() {
-        tabLayout.setupWithViewPager(viewPager);
         viewPager.setAdapter(new FindAdapter(titles,getSupportFragmentManager()));
+        tabLayout.setupWithViewPager(viewPager);
     }
 
     private void initActionBar() {
