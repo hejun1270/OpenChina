@@ -22,7 +22,7 @@ import com.itheima.openchina.utils.XmlUtils;
  * Created by jiang on 2017/11/4.
  */
 
-public class RecommondFragment extends BaseFragment{
+public class RecommondFragment extends BaseFragment {
 
 
     private RecommondBean recommondBean;
@@ -32,8 +32,9 @@ public class RecommondFragment extends BaseFragment{
 
     @Override
     protected void dataOnRefresh() {
-
+        onStartLoadData();
     }
+
     @Override
     //加载推荐页面的布局
     protected View onCreateContentView() {
@@ -47,14 +48,14 @@ public class RecommondFragment extends BaseFragment{
             public void onScrollStateChanged(AbsListView view, int scrollState) {
                 //最后一个可见的条目
                 int lastVisiblePosition = view.getLastVisiblePosition();
-                if(lastVisiblePosition==size-1&&scrollState==SCROLL_STATE_IDLE){
+                if (lastVisiblePosition == size - 1 && scrollState == SCROLL_STATE_IDLE) {
                     //上拉加载更多
-                    new Thread(){
+                    new Thread() {
                         @Override
                         public void run() {
                             //从网络获取推荐页面的数据
-                            size=size+10;
-                            String stringData = LoadData.getInstance().getStringData("http://www.oschina.net/action/api/software_list?pageIndex=1&searchTag=recommend&pageSize="+size);
+                            size = size + 10;
+                            String stringData = LoadData.getInstance().getStringData("http://www.oschina.net/action/api/software_list?pageIndex=1&searchTag=recommend&pageSize=" + size);
                             recommondBean = XmlUtils.toBean(RecommondBean.class, stringData.getBytes());
                             //获取条目的数量的大小
                             size = recommondBean.typeBean.list.size();
@@ -68,6 +69,7 @@ public class RecommondFragment extends BaseFragment{
                     }.start();
                 }
             }
+
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
             }
@@ -77,7 +79,7 @@ public class RecommondFragment extends BaseFragment{
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String url = recommondBean.typeBean.list.get(position).url;
                 Intent intent = new Intent(getContext(), RecommDetailActivity.class);
-                intent.putExtra("detailUrl",url);
+                intent.putExtra("detailUrl", url);
                 startActivity(intent);
             }
         });
@@ -86,7 +88,7 @@ public class RecommondFragment extends BaseFragment{
 
     @Override
     protected void onStartLoadData() {
-        new Thread(){
+        new Thread() {
             @Override
             public void run() {
                 //从网络获取推荐页面的数据
@@ -99,6 +101,7 @@ public class RecommondFragment extends BaseFragment{
                     @Override
                     public void run() {
                         loadSuccess();
+//                        onFInishRefresh();
                     }
                 });
             }
@@ -124,14 +127,14 @@ public class RecommondFragment extends BaseFragment{
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder viewHolder=null;
-            if(convertView==null){
+            ViewHolder viewHolder = null;
+            if (convertView == null) {
                 //把推荐页面中listView中的子条目布局加入进来
-                convertView= View.inflate(getContext(), R.layout.recommond_item, null);
+                convertView = View.inflate(getContext(), R.layout.recommond_item, null);
                 //绑定控件
                 viewHolder = new ViewHolder(convertView);
                 convertView.setTag(viewHolder);
-            }else{
+            } else {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
             //给控件设置数据
@@ -140,11 +143,13 @@ public class RecommondFragment extends BaseFragment{
             return convertView;
         }
     }
+
     //设置ViewHolder
-    public class ViewHolder{
+    public class ViewHolder {
         private TextView viewcontent;
         private TextView viewdesc;
-        public ViewHolder(View view){
+
+        public ViewHolder(View view) {
             viewcontent = view.findViewById(R.id.tv_content);
             viewdesc = view.findViewById(R.id.tv_description);
         }

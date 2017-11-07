@@ -17,6 +17,7 @@ import com.itheima.openchina.utils.XmlUtils;
 
 /**
  * Created by jiang on 2017/11/4.
+ * 分类页面
  */
 
 public class CategoryFragment extends BaseFragment {
@@ -41,35 +42,38 @@ public class CategoryFragment extends BaseFragment {
         listView = view.findViewById(R.id.category_list);
         myadapter = new Myadapter();
         listView.setAdapter(myadapter);
-        if(MODE==1){
             //设置listView条目的点击事件
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(final AdapterView<?> parent, final View view, final int position, long id) {
-                    new Thread(){
-                        @Override
-                        public void run() {
-                            int tag = categoryBean.typeBean.list.get(position).tag;
-                            //点击条目之后重新请求数据
-                            String stringData = LoadData.getInstance().getStringData("http://www.oschina.net/action/api/softwarecatalog_list?tag="+tag);
-                            //重置bean中的集合
-                            categoryBean = XmlUtils.toBean(CategoryBean.class, stringData.getBytes());
-                            //设置当前是第几层目录
-                            //更新适配器
-                            Utils.runOnUIThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    myadapter.notifyDataSetChanged();
-                                    Log.d(TAG, "run: "+3333);
-                                }
-                            });
-                            MODE=2;
-                        }
-                    }.start();
+                    //如果是第二层目录不设置点击事件
+                    if(MODE <2){
+                        new Thread(){
+                            @Override
+                            public void run() {
+                                Log.e("CategoryFragment", MODE + "");
+                                int tag = categoryBean.typeBean.list.get(position).tag;
+                                //点击条目之后重新请求数据
+                                String stringData = LoadData.getInstance().getStringData("http://www.oschina.net/action/api/softwarecatalog_list?tag="+tag);
+                                //重置bean中的集合
+                                categoryBean = XmlUtils.toBean(CategoryBean.class, stringData.getBytes());
+                                //设置当前是第几层目录
+                                //更新适配器
+                                Utils.runOnUIThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        //更新适配器
+                                        myadapter.notifyDataSetChanged();
+                                        Log.d(TAG, "run: "+3333);
+                                    }
+                                });
+                               // 将目录设置为第二层
+                                MODE=2;
+                            }
+                        }.start();
+                    }
                 }
             });
-        }
-
         return view;
     }
     @Override
@@ -91,7 +95,6 @@ public class CategoryFragment extends BaseFragment {
                         loadSuccess();
                     }
                 });
-
             }
         }.start();
 
@@ -99,6 +102,7 @@ public class CategoryFragment extends BaseFragment {
     public class Myadapter extends BaseAdapter{
 
         @Override
+        //获取条目数
         public int getCount() {
             return size;
         }
