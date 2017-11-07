@@ -18,6 +18,9 @@ import com.itheima.openchina.ui.activity.RecommDetailActivity;
 import com.itheima.openchina.utils.Utils;
 import com.itheima.openchina.utils.XmlUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by jiang on 2017/11/4.
  */
@@ -30,9 +33,13 @@ public class RecommondFragment extends BaseFragment {
     private Myadapter myadapter;
     private ListView listView;
 
+    private List<RecommondBean.TypeBean.Software> mlists =new ArrayList<>();
+
+
     @Override
     protected void dataOnRefresh() {
         onStartLoadData();
+
     }
 
     @Override
@@ -48,17 +55,19 @@ public class RecommondFragment extends BaseFragment {
             public void onScrollStateChanged(AbsListView view, int scrollState) {
                 //最后一个可见的条目
                 int lastVisiblePosition = view.getLastVisiblePosition();
-                if (lastVisiblePosition == size - 1 && scrollState == SCROLL_STATE_IDLE) {
+                if (lastVisiblePosition == mlists.size() - 1 && scrollState == SCROLL_STATE_IDLE) {
                     //上拉加载更多
                     new Thread() {
                         @Override
                         public void run() {
                             //从网络获取推荐页面的数据
-                            size = size + 10;
-                            String stringData = LoadData.getInstance().getStringData("http://www.oschina.net/action/api/software_list?pageIndex=1&searchTag=recommend&pageSize=" + size);
+                            int i = mlists.size() + 10;
+//                            size = size + 10;
+                            String stringData = LoadData.getInstance().getStringData("http://www.oschina.net/action/api/software_list?pageIndex=1&searchTag=recommend&pageSize=" + i);
                             recommondBean = XmlUtils.toBean(RecommondBean.class, stringData.getBytes());
+                            mlists.addAll(recommondBean.typeBean.list);
                             //获取条目的数量的大小
-                            size = recommondBean.typeBean.list.size();
+//                            size = recommondBean.typeBean.list.size();
                             Utils.runOnUIThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -69,7 +78,6 @@ public class RecommondFragment extends BaseFragment {
                     }.start();
                 }
             }
-
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
             }
@@ -85,7 +93,6 @@ public class RecommondFragment extends BaseFragment {
         });
         return view;
     }
-
     @Override
     protected void onStartLoadData() {
         new Thread() {
@@ -94,6 +101,7 @@ public class RecommondFragment extends BaseFragment {
                 //从网络获取推荐页面的数据
                 String stringData = LoadData.getInstance().getStringData("http://www.oschina.net/action/api/software_list?pageIndex=1&searchTag=recommend&pageSize=20");
                 recommondBean = XmlUtils.toBean(RecommondBean.class, stringData.getBytes());
+                mlists.addAll(recommondBean.typeBean.list);
                 //获取条目的数量的大小
                 size = recommondBean.typeBean.list.size();
                 //在主线程中更新UI
@@ -101,7 +109,7 @@ public class RecommondFragment extends BaseFragment {
                     @Override
                     public void run() {
                         loadSuccess();
-//                        onFInishRefresh();
+                        onFInishRefresh();
                     }
                 });
             }
@@ -112,7 +120,7 @@ public class RecommondFragment extends BaseFragment {
 
         @Override
         public int getCount() {
-            return size;
+            return mlists.size();
         }
 
         @Override
@@ -138,8 +146,10 @@ public class RecommondFragment extends BaseFragment {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
             //给控件设置数据
-            viewHolder.viewcontent.setText(recommondBean.typeBean.list.get(position).name);
-            viewHolder.viewdesc.setText(recommondBean.typeBean.list.get(position).description);
+//            viewHolder.viewcontent.setText(recommondBean.typeBean.list.get(position).name);
+//            viewHolder.viewdesc.setText(recommondBean.typeBean.list.get(position).description);
+            viewHolder.viewcontent.setText(mlists.get(position).name);
+            viewHolder.viewdesc.setText(mlists.get(position).description);
             return convertView;
         }
     }
