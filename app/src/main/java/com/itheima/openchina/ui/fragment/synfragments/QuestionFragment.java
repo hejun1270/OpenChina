@@ -12,7 +12,10 @@ import com.itheima.openchina.adapters.SynthesizeAdapter.SynQuestionAdapter;
 import com.itheima.openchina.bases.BaseFragment;
 import com.itheima.openchina.beans.FootBean;
 import com.itheima.openchina.beans.HeadBean;
+import com.itheima.openchina.beans.QuestionBean;
+import com.itheima.openchina.cacheadmin.LoadData;
 import com.itheima.openchina.interfaces.ItemType;
+import com.itheima.openchina.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +32,7 @@ public class QuestionFragment extends BaseFragment {
     private SynQuestionAdapter adapter;
     private RecyclerView recyclerView;
     private List<ItemType> list=new ArrayList<>();
+    private String url;
 
     @Override
     protected View onCreateContentView() {
@@ -44,7 +48,38 @@ public class QuestionFragment extends BaseFragment {
         lac.setOrder(LayoutAnimationController.ORDER_RANDOM);
         recyclerView.setLayoutAnimation(lac);
         recyclerView.startLayoutAnimation();
+
+        //头条目点击事件
+        adapter.setQustionListener(new SynQuestionAdapter.QuestionListener() {
+            @Override
+            public void onListener(int position) {
+                notifyChange(position);
+            }
+        });
         return view;
+    }
+
+    private void notifyChange(int position) {
+         url = "http://www.oschina.net/action/apiv2/question?catalog=" +
+                position + "&nextPageToken=";
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                QuestionBean questionBean = LoadData.getInstance().getBeanData(url, QuestionBean.class);
+                list.removeAll(list);
+                LogUtils.i(list.size()+"=============");
+                list.add(new HeadBean());
+                list.addAll(questionBean.getResult().getItems());
+                list.add(new FootBean());
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                       adapter.setBean(list);
+                    }
+                });
+            }
+        }).start();
     }
 
 
@@ -56,23 +91,29 @@ public class QuestionFragment extends BaseFragment {
 
     @Override
     protected void onStartLoadData() {
-        getActivity().runOnUiThread(new Runnable() {
+        url = "http://www.oschina.net/action/apiv2/question?catalog=1&nextPageToken=";
+        new Thread(new Runnable() {
             @Override
             public void run() {
+
+                QuestionBean questionBean = LoadData.getInstance().getBeanData(url, QuestionBean.class);
+                list.remove(list);
                 list.add(new HeadBean());
+                list.addAll(questionBean.getResult().getItems());
                 list.add(new FootBean());
-                loadSuccess();
-                adapter.updateData();
-                adapter.notifyDataSetChanged();
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        loadSuccess();
+                        adapter.notifyItemRangeChanged(1,list.size()-2);
+                    }
+                });
             }
-        });
+        }).start();
 
     }
 
-    @Override
-    protected void loadSuccess() {
-        super.loadSuccess();
-    }
+
 
 
 

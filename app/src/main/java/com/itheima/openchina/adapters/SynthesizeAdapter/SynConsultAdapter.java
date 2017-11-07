@@ -2,16 +2,27 @@ package com.itheima.openchina.adapters.SynthesizeAdapter;
 
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.SpannedString;
+import android.text.style.ImageSpan;
 import android.view.View;
+import android.widget.TextView;
+
 import com.itheima.loopviewpager.LoopViewPager;
 import com.itheima.openchina.R;
 import com.itheima.openchina.bases.BaseRecyclerAdapter;
+import com.itheima.openchina.beans.ConsultBodyBean;
 import com.itheima.openchina.beans.ConsultHeadBean;
-import com.itheima.openchina.utils.LogUtils;
+import com.itheima.openchina.interfaces.ItemType;
+import com.itheima.openchina.utils.StringUtils;
+import com.itheima.openchina.utils.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * Created by 佘本民
@@ -22,11 +33,23 @@ import java.util.List;
 
 public class SynConsultAdapter extends BaseRecyclerAdapter {
 
-    List<ConsultHeadBean.ResultBean.ItemsBean> list;
+    public void setmList(List<ItemType> mList) {
+        this.mList = mList;
+        notifyItemRangeChanged(1,mList.size()-1);
+    }
+
+    List<ItemType> mList=new ArrayList<>();
     ConsultHeadBean.ResultBean bean=new ConsultHeadBean.ResultBean();
+    ConsultBodyBean.ConsultBodyResultBean body=new ConsultBodyBean.ConsultBodyResultBean();
+
+
+
     public SynConsultAdapter(Context context, List list) {
         super(context,list);
+        mList.addAll(list);
+        //判断是头部分
         bean= (ConsultHeadBean.ResultBean) list.get(0);
+
     }
 
 
@@ -38,8 +61,34 @@ public class SynConsultAdapter extends BaseRecyclerAdapter {
 
     @Override
     protected void createViewBodyItem(RecyclerView.ViewHolder holder, int position) {
+        ConsultBodyBean.ConsultBodyResultBean.ItemsBean body;
+        if(position<mList.size()-1&&position>0) {
+            body = (ConsultBodyBean.ConsultBodyResultBean.ItemsBean) mList.get(position);
+            TextView title = holder.itemView.findViewById(R.id.consult_title);
+
+            String s=StringUtils.friendly_time(body.getPubDate());
+            TextView content = holder.itemView.findViewById(R.id.consult_content);
+            content.setText(body.getBody());
+            TextView time = holder.itemView.findViewById(R.id.consult_time);
+            time.setText(s);
+            if(!s.contains("天")){
+                SpannableString san=new SpannableString("*\b"+body.getTitle());
+                Drawable drawable=getContext().getResources().getDrawable(R.mipmap.ic_label_today);
+                ImageSpan image=new ImageSpan(drawable);
+                drawable.setBounds(0,0, (int) title.getTextSize(), (int) title.getTextSize());
+                san.setSpan(image,0,1, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+                title.setText(san);
+            }else{
+                title.setText(body.getTitle());
+            }
+
+        }else{
+            return;
+        }
+
 
     }
+
 
     @Override
     protected View createItemHeadLayout() {
@@ -48,7 +97,6 @@ public class SynConsultAdapter extends BaseRecyclerAdapter {
         List<String> urlImage = new ArrayList<>();
         List<String> urlText = new ArrayList<>();
         for (int i = 0; i <bean.getItems().size(); i++) {
-
             urlImage.add(bean.getItems().get(i).getImg());
             urlText.add(bean.getItems().get(i).getName());
         }

@@ -95,6 +95,7 @@ public class CategoryFragment extends BaseFragment {
                         loadSuccess();
                     }
                 });
+
             }
         }.start();
 

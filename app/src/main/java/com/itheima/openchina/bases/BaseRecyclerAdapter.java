@@ -2,17 +2,22 @@ package com.itheima.openchina.bases;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.itheima.openchina.R;
 import com.itheima.openchina.interfaces.BodyType;
 import com.itheima.openchina.interfaces.FootType;
 import com.itheima.openchina.interfaces.HeadType;
 import com.itheima.openchina.interfaces.ItemType;
+import com.itheima.openchina.utils.LogUtils;
 
 import java.util.List;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * Created by 佘本民
@@ -31,7 +36,7 @@ public abstract class BaseRecyclerAdapter extends RecyclerView.Adapter {
     public static final int BODYTYPE = 102;
     public static final int FOOTTYPE = 103;
      RecycleViewItemOnClickListener mListener;
-    private ViewHolder fmListHolder;
+
 
     public BaseRecyclerAdapter(Context context,List<ItemType> list) {
         this.context=context;
@@ -65,9 +70,9 @@ public abstract class BaseRecyclerAdapter extends RecyclerView.Adapter {
            default:
                break;
         }
-        if(view!=null){
-            fmListHolder = new ViewHolder(view,mListener);
-        }
+//        if(view!=null){
+           ViewHolder fmListHolder = new ViewHolder(view,mListener);
+//        }
         return fmListHolder;
     }
 

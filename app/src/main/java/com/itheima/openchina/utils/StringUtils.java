@@ -15,6 +15,10 @@ import java.util.regex.Pattern;
 
 /**
  * 字符串操作工具包
+ *
+ * @author liux (http://my.oschina.net/liux)
+ * @version 1.0
+ * @created 2012-3-21
  */
 public class StringUtils {
     private final static Pattern emailer = Pattern
@@ -26,24 +30,21 @@ public class StringUtils {
     private final static Pattern URL = Pattern
             .compile("^(https|http)://.*?$(net|com|.com.cn|org|me|)");
 
-    private final static ThreadLocal<SimpleDateFormat> dateFormater = new
-            ThreadLocal<SimpleDateFormat>() {
+    private final static ThreadLocal<SimpleDateFormat> dateFormater = new ThreadLocal<SimpleDateFormat>() {
         @Override
         protected SimpleDateFormat initialValue() {
             return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         }
     };
 
-    private final static ThreadLocal<SimpleDateFormat> dateFormater2 = new
-            ThreadLocal<SimpleDateFormat>() {
+    private final static ThreadLocal<SimpleDateFormat> dateFormater2 = new ThreadLocal<SimpleDateFormat>() {
         @Override
         protected SimpleDateFormat initialValue() {
             return new SimpleDateFormat("yyyy-MM-dd");
         }
     };
 
-    private final static ThreadLocal<SimpleDateFormat> dateFormat3 = new
-            ThreadLocal<SimpleDateFormat>() {
+    private final static ThreadLocal<SimpleDateFormat> dateFormat3 = new ThreadLocal<SimpleDateFormat>() {
         @Override
         protected SimpleDateFormat initialValue() {
             return new SimpleDateFormat("yyyy-MM-dd HH:mm");
@@ -81,8 +82,7 @@ public class StringUtils {
         String tempTime = sTime.substring(0, sTime.indexOf(" "));
         String[] split = tempTime.split("-");
         StringBuilder builder = new StringBuilder();
-        return builder.append(split[0]).append("年").append(split[1]).append("月").append(split[2])
-                .append("日").toString();
+        return builder.append(split[0]).append("年").append(split[1]).append("月").append(split[2]).append("日").toString();
     }
 
     /**
@@ -207,8 +207,7 @@ public class StringUtils {
             format.applyPattern(isMorning(date.getTime()) ? "MM-dd 上午 hh:mm" : "MM-dd 下午 hh:mm");
             res = format.format(date);
         } else {
-            format.applyPattern(isMorning(date.getTime()) ? "yyyy-MM-dd 上午 hh:mm" : "yyyy-MM-dd " +
-                    "下午 hh:mm");
+            format.applyPattern(isMorning(date.getTime()) ? "yyyy-MM-dd 上午 hh:mm" : "yyyy-MM-dd 下午 hh:mm");
             res = format.format(date);
         }
         return res;

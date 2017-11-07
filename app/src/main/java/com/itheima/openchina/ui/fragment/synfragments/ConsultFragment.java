@@ -7,7 +7,9 @@ import android.view.View;
 
 import com.itheima.openchina.R;
 import com.itheima.openchina.adapters.SynthesizeAdapter.SynConsultAdapter;
+import com.itheima.openchina.appcontrol.NetDataApi;
 import com.itheima.openchina.bases.BaseFragment;
+import com.itheima.openchina.beans.ConsultBodyBean;
 import com.itheima.openchina.beans.FootBean;
 import com.itheima.openchina.beans.ConsultHeadBean;
 import com.itheima.openchina.cacheadmin.LoadData;
@@ -16,11 +18,13 @@ import com.itheima.openchina.interfaces.ItemType;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.itheima.openchina.appcontrol.NetDataApi.CONSULT_BODY;
+
 /**
  * Created by 佘本民
  * When:  --- 2017/11/4---
  * Time:  --- 14:05---
- * Function:
+ * Function:咨询页面
  */
 
 public class ConsultFragment extends BaseFragment {
@@ -28,6 +32,7 @@ public class ConsultFragment extends BaseFragment {
     ConsultHeadBean.ResultBean itemsHead=new ConsultHeadBean.ResultBean();
     private SynConsultAdapter adapter;
     private RecyclerView recyclerView;
+    String url="http://www.oschina.net/action/apiv2/news?pageToken=";
     List<ItemType>list=new ArrayList<>();
 
     @Override
@@ -44,18 +49,23 @@ public class ConsultFragment extends BaseFragment {
 
 
 
+    //加载数据
     @Override
     protected void onStartLoadData() {
-
         new Thread(new Runnable() {
             @Override
             public void run() {
-                ConsultHeadBean beanData = LoadData.getInstance().getBeanData(
-                        "http://www.oschina.net/action/apiv2/banner?catalog=1",
+                ConsultHeadBean headData = LoadData.getInstance().getBeanData(
+                        NetDataApi.CONSULT_HEAD,
                         ConsultHeadBean.class);
+                ConsultBodyBean bodyData = LoadData.getInstance().getBeanData(url
+                        ,
+                        ConsultBodyBean.class);
+
                 //添加了头
-                list.add(beanData.getResult());
-                //添加了内容.........
+                list.add(headData.getResult());
+                //添加了内容
+                list.addAll(bodyData.getResult().getItems());
                 //添加了尾
                 list.add(new FootBean());
                 toDoinUI();
@@ -73,8 +83,28 @@ public class ConsultFragment extends BaseFragment {
         });
     }
 
+    //加载更多
+    public void loadMore(String BaseUrl, final ConsultBodyBean data){
+        final String urlMore=BaseUrl+data.getResult().getNextPageToken();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        onStartLoadData();
+                    }
+                });
+            }
+        }).start();
+    }
+
+
+    //下拉刷新
     @Override
     protected void dataOnRefresh() {
+
+        list.remove(list);
         onStartLoadData();
         adapter.notifyDataSetChanged();
     }
@@ -87,4 +117,5 @@ public class ConsultFragment extends BaseFragment {
         super.onPause();
         list.removeAll(list);
     }
+
 }

@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <RadioGroup
-            android:id="@+id/blogs_group"
+            android:id="@+id/question_group"
             android:orientation="horizontal"
             android:gravity="center"
             android:showDividers="middle"

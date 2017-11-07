@@ -11,16 +11,15 @@
     <LinearLayout
 
         android:orientation="vertical"
+        android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_marginTop="20dp"
-            android:background="@drawable/circle"
+        <ImageView
             android:id="@+id/imageItemConsult"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:visibility="gone"/>
+            android:layout_marginTop="8dp"
+            android:layout_width="100dp"
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 
@@ -38,15 +37,32 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <TextView
-            android:id="@+id/consult_content"
-            android:text="@string/content"
-            android:textSize="14sp"
-            android:layout_marginTop="4dp"
-            android:textColor="#878585"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content">
+            <TextView
+                android:background="@drawable/rect_round"
+                android:text="@string/nameing"
+                android:textSize="10sp"
+                android:layout_marginTop="4dp"
+                android:textColor="#58d963"
+                android:padding="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
+            <TextView
+                android:id="@+id/consult_content"
+                android:background="@drawable/rect_round2"
+                android:layout_marginLeft="5dp"
+                android:text="@string/action"
+                android:textSize="10sp"
+                android:layout_marginTop="4dp"
+                android:textColor="#878585"
+                android:padding="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
         <RelativeLayout
             android:layout_marginTop="4dp"
             android:layout_marginBottom="10dp"

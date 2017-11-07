@@ -52,6 +52,7 @@
         <activity
             android:name=".ui.activity.PagerPhotoActivity"
             android:theme="@style/AppTheme.Lucency" />
+        <activity android:name=".ui.activity.RecommDetailActivity"/>
     </application>
 
 </manifest>
