@@ -2,13 +2,13 @@ package com.itheima.openchina.ui.fragment.tweetfragments;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 
 import com.itheima.openchina.R;
 import com.itheima.openchina.adapters.tweetAdapter.TweetAdapter;
-import com.itheima.openchina.appcontrol.NetDataApi;
 import com.itheima.openchina.bases.BaseFragment;
 import com.itheima.openchina.bases.BaseRecyclerAdapter;
 import com.itheima.openchina.beans.FootBean;
@@ -34,13 +34,17 @@ public class HotTweetsFragment extends BaseFragment implements BaseRecyclerAdapt
     private RecyclerView recyclerView;
     private List<ItemType> tweetItems=new ArrayList<>();
     private TweetAdapter tweetAdapter;
-    //下拉刷新
-    @Override
-    protected void dataOnRefresh() {
-        onStartLoadData();
-        tweetAdapter.notifyDataSetChanged();
+    public static final int NOREFRESH = 101;//空闲
+    public static final int DOWNDROPREFRESH = 102;//下拉刷新
+    public static final int UPDROPREMORE = 103;//上拉加载
+    private int currentState = NOREFRESH;
+    private int visibleItemPosition;
+    private List<TweetInfoBean.ResultBean.TweetItem> tweetItemList;
+    private String nextPageToken;
+    private String prevPageToken;
+    private String url;
 
-    }
+
      //创建热门动弹页面布局
     @Override
     protected View onCreateContentView() {
@@ -55,32 +59,106 @@ public class HotTweetsFragment extends BaseFragment implements BaseRecyclerAdapt
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
         //设置RecyclerView的适配器
         tweetAdapter = new TweetAdapter(getContext(), tweetItems);
+        currentState = NOREFRESH;
+        //条目动画
+        itemAnimation();
+        //上拉加载更多
+        upLoadMoreData();
         recyclerView.setAdapter(tweetAdapter);
         //动弹条目的点击事件
         tweetAdapter.setRecycleViewItemOnClickListener(this);
 
+
+
+    }
+    //条目动画
+    private void itemAnimation() {
         //添加条目动画
-        LayoutAnimationController lac=new LayoutAnimationController(AnimationUtils.loadAnimation(getActivity(),R.anim.list_zoom));
+        LayoutAnimationController lac=new LayoutAnimationController(AnimationUtils.loadAnimation(getActivity(), R.anim.list_zoom));
         lac.setOrder(LayoutAnimationController.ORDER_RANDOM);
         recyclerView.setLayoutAnimation(lac);
         recyclerView.startLayoutAnimation();
     }
+
+    //下拉刷新
+    @Override
+    protected void dataOnRefresh() {
+        currentState = DOWNDROPREFRESH;
+        onStartLoadData();
+
+
+    }
+    //上拉加载更多
+    private void upLoadMoreData() {
+        //上拉加载更多
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                visibleItemPosition = layoutManager.findLastVisibleItemPosition();
+                if (visibleItemPosition == tweetItems.size() - 1 && newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    currentState = UPDROPREMORE;
+                    onStartLoadData();
+
+                }
+            }
+        });
+    }
     //加载数据
     @Override
     protected void onStartLoadData() {
+        //根据不同状态加载不同数据
+        if (currentState == UPDROPREMORE) {
+            Log.e("aaaa22222", "onStartLoadData: ====UPDROPREMORE");
+            url = "http://www.oschina.net/action/apiv2/tweets?pageToken=" + nextPageToken + "&type=2";
+        }
+        if (currentState == DOWNDROPREFRESH) {
+            Log.e("aaaa22222", "onStartLoadData: ====DOWNDROPREFRESH");
+            url = "http://www.oschina.net/action/apiv2/tweets?pageToken=" + prevPageToken + "&type=2";
+        }
+        if (currentState == NOREFRESH) {
+            Log.e("aaaa22222", "onStartLoadData: ====NOREFRESH");
+            url = "http://www.oschina.net/action/apiv2/tweets?type=2";
+        }
+
         new Thread(new Runnable() {
             @Override
             public void run() {
-                TweetInfoBean beanData = LoadData.getInstance().getBeanData(NetDataApi.HOT_TWEET_URL, TweetInfoBean.class);
-                tweetItems.addAll(beanData.getResult().getItems());
-                tweetItems.add(new FootBean());
+                if (currentState == DOWNDROPREFRESH) {
+
+                    Utils.runOnUIThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            tweetItemList.clear();
+
+                            tweetAdapter.notifyDataSetChanged();
+                        }
+                    });
+                } else if (currentState == UPDROPREMORE) {
+
+                    tweetItems.add(new FootBean());
+                    Utils.runOnUIThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            tweetAdapter.notifyDataSetChanged();
+                        }
+                    });
+                }
+
+                TweetInfoBean beanData = LoadData.getInstance().getBeanData(url, TweetInfoBean.class);
+                tweetItemList = beanData.getResult().getItems();
+                nextPageToken = beanData.getResult().getNextPageToken();
+                prevPageToken = beanData.getResult().getPrevPageToken();
+                tweetItems.addAll(tweetItemList);
+
                 Utils.runOnUIThread(new Runnable() {
                     @Override
                     public void run() {
-
-                        setRefreshEnable(false);
+                        //是否需要下拉刷新的开关
+                        //setRefreshEnable(false);
                         loadSuccess();
-                        tweetAdapter.notifyDataSetChanged();
+                        tweetAdapter.updateData();
+                        //tweetAdapter.notifyDataSetChanged();
 
                     }
                 });
@@ -92,7 +170,7 @@ public class HotTweetsFragment extends BaseFragment implements BaseRecyclerAdapt
     @Override
     public void onPause() {
         super.onPause();
-        tweetItems.removeAll(tweetItems);
+        //tweetItems.removeAll(tweetItems);
     }
 
 

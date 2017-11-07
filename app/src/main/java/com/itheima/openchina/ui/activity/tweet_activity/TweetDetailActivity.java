@@ -8,6 +8,10 @@ import android.widget.TextView;
 
 import com.itheima.openchina.R;
 import com.itheima.openchina.bases.BaseActivity;
+import com.itheima.openchina.beans.TweetInfoBean;
+import com.itheima.openchina.utils.ToastUtil;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -43,6 +47,7 @@ public class TweetDetailActivity extends BaseActivity {
     Button btnNice;
     @BindView(R.id.btn_comment)
     Button btnComment;
+    private List<TweetInfoBean.ResultBean.TweetItem> tweetItemList;
 
     @Override
     protected int getLayoutRs() {
@@ -53,12 +58,12 @@ public class TweetDetailActivity extends BaseActivity {
     protected void init() {
         super.init();
         Intent intent = getIntent();
-        //Serializable userData = intent.getSerializableExtra("userData");
+        tweetItemList = (List<TweetInfoBean.ResultBean.TweetItem>) intent.getSerializableExtra("userDate");
+        String s = tweetItemList.toString();
+        ToastUtil.showToast(s + tweetItemList.size());
 
 
     }
-
-
 
 
     @OnClick({R.id.ic_thumbup, R.id.ic_comment, R.id.btn_nice, R.id.btn_comment})

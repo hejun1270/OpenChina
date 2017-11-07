@@ -97,6 +97,7 @@ public class LoginActivity extends BaseActivity {
                     mLoadDialog.dismiss();
                     //将登录信息返回给启动此登录界面的activity
                     Intent intent = getIntent();
+                    intent.putExtra("login", true);
                     intent.putExtra("loginfo", loginInfo);
                     setResult(1001, intent);//返回登录信息
                     finish();

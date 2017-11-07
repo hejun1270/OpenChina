@@ -1,6 +1,7 @@
 package com.itheima.openchina.ui.fragment;
 
 import android.content.Intent;
+import android.text.TextUtils;
 import android.util.Xml;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -48,10 +49,10 @@ public class MeFragment extends BasePagerFragment {
 
     @Override
     protected View onCreateContentView() {
-        setRefreshEnable(false);
+        mSignout = false;
+        getUserData();
         childView = View.inflate(getContext(), R.layout.fragment_me, null);
         initView();
-        getUserData();
         return childView;
     }
 
@@ -68,9 +69,9 @@ public class MeFragment extends BasePagerFragment {
      */
     private void initView() {
         mUnloginHead = childView.findViewById(R.id.unlogin_head);
+
         mUnLogin = childView.findViewById(R.id.ll_noLogin);
         mLogin = childView.findViewById(R.id.loginheadview);
-
         mUnloginHead.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,7 +99,7 @@ public class MeFragment extends BasePagerFragment {
     @Override
     protected void onStartLoadData() {
         super.onStartLoadData();
-        if (!uid.equals("") && uid != null && !cookie.equals("") && cookie != null) {
+        if (!TextUtils.equals("", uid) && !TextUtils.equals("", cookie)) {
             setRefreshing(true);
             mUnLogin.setVisibility(View.GONE);
             setRefreshEnable(true);
@@ -119,6 +120,8 @@ public class MeFragment extends BasePagerFragment {
         if (mSignout) {
             setRefreshEnable(false);
             mUnLogin.setVisibility(View.VISIBLE);
+        } else {
+            setRefreshEnable(true);
         }
         super.onResume();
 

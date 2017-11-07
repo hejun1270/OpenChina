@@ -1,5 +1,6 @@
 package com.itheima.openchina.ui.fragment.tweetfragments;
 
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -15,10 +16,12 @@ import com.itheima.openchina.beans.FootBean;
 import com.itheima.openchina.beans.TweetInfoBean;
 import com.itheima.openchina.cacheadmin.LoadData;
 import com.itheima.openchina.interfaces.ItemType;
+import com.itheima.openchina.ui.activity.tweet_activity.TweetDetailActivity;
 import com.itheima.openchina.utils.LogUtils;
 import com.itheima.openchina.utils.ToastUtil;
 import com.itheima.openchina.utils.Utils;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,19 +67,24 @@ public class NewTweetsFragment extends BaseFragment implements BaseRecyclerAdapt
         //设置RecyclerView的适配器
         recyclerViewAdapter = new TweetAdapter(getContext(), tweetItems);
         currentState = NOREFRESH;
+        //条目的动画
+        itemAnimation();
         //上拉加载更多
         upLoadMoreData();
         recyclerView.setAdapter(recyclerViewAdapter);
         //最新动弹条目点击事件
         recyclerViewAdapter.setRecycleViewItemOnClickListener(this);
-        //条目的动画
-        itemAnimation();
+
     }
+
     //下拉刷新
     @Override
     protected void dataOnRefresh() {
         currentState = DOWNDROPREFRESH;
         onStartLoadData();
+        if (tweetItemList != null) {
+            ToastUtil.showToast("暂无新数据");
+        }
     }
 
     //条目的动画
@@ -132,7 +140,8 @@ public class NewTweetsFragment extends BaseFragment implements BaseRecyclerAdapt
                     Utils.runOnUIThread(new Runnable() {
                         @Override
                         public void run() {
-                            //tweetItemList.clear();
+                            // tweetItemList.clear();
+
                             recyclerViewAdapter.notifyDataSetChanged();
                         }
                     });
@@ -185,9 +194,10 @@ public class NewTweetsFragment extends BaseFragment implements BaseRecyclerAdapt
         ToastUtil.showToast("当前条目" + position);
         //判断用户是否登录
         //跳转到详情页面
-        //Intent intent = new Intent(getContext(), TweetDetailActivity.class);
-        //intent.putExtra("userData", (Serializable) tweetItemList);
-        //getContext().startActivity(intent);
+        Intent intent = new Intent(getActivity(), TweetDetailActivity.class);
+        intent.putExtra("userDate", (Serializable) tweetItemList);
+        startActivity(intent);
+
 
     }
 }

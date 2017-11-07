@@ -1,13 +1,18 @@
 package com.itheima.openchina.ui.fragment.tweetfragments;
 
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.itheima.openchina.R;
 import com.itheima.openchina.adapters.tweetAdapter.TweetAdapter;
+import com.itheima.openchina.appcontrol.Constant;
 import com.itheima.openchina.appcontrol.NetDataApi;
 import com.itheima.openchina.bases.BaseFragment;
 import com.itheima.openchina.beans.FootBean;
@@ -15,7 +20,9 @@ import com.itheima.openchina.beans.LoginInfo;
 import com.itheima.openchina.beans.TweetInfoBean;
 import com.itheima.openchina.cacheadmin.LoadData;
 import com.itheima.openchina.interfaces.ItemType;
+import com.itheima.openchina.ui.activity.LoginActivity;
 import com.itheima.openchina.utils.LogUtils;
+import com.itheima.openchina.utils.SpUtil;
 import com.itheima.openchina.utils.Utils;
 
 import java.util.ArrayList;
@@ -35,9 +42,12 @@ public class MyTweetsFragment extends BaseFragment {
     private LinearLayout notLoginOrNet;
     private ImageView ivLoadImg;
     private RecyclerView recyclerView;
-    private List<ItemType> itemLists=new ArrayList<>();
+    private List<ItemType> itemLists = new ArrayList<>();
     private TweetAdapter tweetAdapter;
     private LoginInfo loginfo;
+    private String uid;
+    private String cookie;
+    private AlertDialog.Builder aletDialog;
 
 
     @Override
@@ -82,7 +92,7 @@ public class MyTweetsFragment extends BaseFragment {
 
                 recyclerView.setAdapter(tweetAdapter);
             }*/
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
         tweetAdapter = new TweetAdapter(getContext(), itemLists);
 
@@ -100,30 +110,8 @@ public class MyTweetsFragment extends BaseFragment {
     @Override
     protected void onStartLoadData() {
         //http://www.oschina.net/action/apiv2/tweets?pageToken=DBA816934CD0AA59&authorId=3722341
-          new Thread(new Runnable() {
-              @Override
-              public void run() {
-                  TweetInfoBean beanData = LoadData.getInstance().getBeanData(NetDataApi.NEW_TWEET_URL, TweetInfoBean.class);
-                  List<TweetInfoBean.ResultBean.TweetItem> items = beanData.getResult().getItems();
-                  LogUtils.i("------------------"+String.valueOf(items));
-                  itemLists.addAll(items);
-                     itemLists.add(new FootBean());
-
-                  //加载成功后
-                  Utils.runOnUIThread(new Runnable() {
-                      @Override
-                      public void run() {
-                          loadSuccess();
-                          //删除中间的头和脚
-                          tweetAdapter.updateData();
-                          //recyclerViewAdapter.notifyDataSetChanged();
-                      }
-                  });
-              }
-          }).start();
-
-
-
+//
+        isLogin();
     }
 
     //ben提示:清除缓存的list,否则会导致内容重复
@@ -131,7 +119,86 @@ public class MyTweetsFragment extends BaseFragment {
     @Override
     public void onPause() {
         super.onPause();
+    }
 
+    /**
+     * 判断是否登录
+     */
+    private void isLogin() {
+        uid = SpUtil.getString(Constant.UID, "");
+        cookie = SpUtil.getString(Constant.COOKIE, "");
+        if (!TextUtils.equals("", uid) && !TextUtils.equals("", cookie)) {
+            //加载数据
+            getNetData();
+            LogUtils.i("用户已经登录.....");
+        } else {//提示登录
+            LogUtils.i("用户未登录.....");
+            loadFailed();
+            showLoginDialog();
+        }
+    }
+
+    /**
+     * 加载数据
+     */
+    private void getNetData() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                TweetInfoBean beanData = LoadData.getInstance().getBeanData(NetDataApi.NEW_TWEET_URL, TweetInfoBean.class);
+                List<TweetInfoBean.ResultBean.TweetItem> items = beanData.getResult().getItems();
+                LogUtils.i("------------------" + String.valueOf(items));
+                itemLists.addAll(items);
+                itemLists.add(new FootBean());
+
+                //加载成功后
+                Utils.runOnUIThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        loadSuccess();
+                        //删除中间的头和脚
+                        tweetAdapter.updateData();
+                        //recyclerViewAdapter.notifyDataSetChanged();
+                    }
+                });
+            }
+        }).start();
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == 1001) {
+            boolean login = data.getBooleanExtra("login", false);
+            if (login) {
+                uid = SpUtil.getString(Constant.UID, "");
+                cookie = SpUtil.getString(Constant.COOKIE, "");
+            } else {
+                LogUtils.i("--------<<>>>>>----" + "重新加载");
+                getNetData();
+            }
+        }
+    }
+
+    private void showLoginDialog() {
+        aletDialog = new AlertDialog.Builder(getContext())
+                .setTitle("登录提示:")
+                .setMessage("亲，登录后才能查看消息哦 -_-")
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(getContext(), LoginActivity.class);
+                        startActivityForResult(intent, 1001);
+                    }
+                })
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        loadFailed();
+                    }
+                });
+        aletDialog.show();
     }
 
 
