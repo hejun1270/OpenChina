@@ -41,6 +41,7 @@
         <activity android:name=".ui.activity.MainActivity" />
         <activity android:name=".ui.activity.AddActivity" />
         <activity android:name=".ui.activity.ShakeActivity"></activity>
+        <activity android:name=".ui.activity.RecommDetailActivity"></activity>
         <activity
             android:name=".ui.activity.LoginActivity"
             android:windowSoftInputMode="adjustNothing" />
