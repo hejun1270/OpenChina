@@ -13,6 +13,7 @@ import com.itheima.openchina.R;
 import com.itheima.openchina.adapters.SynthesizeAdapter.SynConsultAdapter;
 import com.itheima.openchina.appcontrol.NetDataApi;
 import com.itheima.openchina.bases.BaseFragment;
+import com.itheima.openchina.bases.BaseRecyclerAdapter;
 import com.itheima.openchina.beans.BlogBean;
 import com.itheima.openchina.beans.ConsultBodyBean;
 import com.itheima.openchina.beans.FootBean;
@@ -69,6 +70,14 @@ public class ConsultFragment extends BaseFragment {
                     recyclerView.scrollBy(0,-xp2dp(60));
                     loadMore(bodyData.getResult().getNextPageToken());
                 }
+            }
+        });
+
+        //条目点击事件
+        adapter.setRecycleViewItemOnClickListener(new BaseRecyclerAdapter.RecycleViewItemOnClickListener() {
+            @Override
+            public void onItemOnClick(View view, int position) {
+
             }
         });
         return view;

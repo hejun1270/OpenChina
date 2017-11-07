@@ -58,7 +58,6 @@ public abstract class BaseRecyclerAdapter extends RecyclerView.Adapter {
         View view = null;
         switch (viewType) {
             case HEADTYPE:
-
                 view=createItemHeadLayout();
                 break;
             case BODYTYPE:
@@ -131,7 +130,11 @@ public abstract class BaseRecyclerAdapter extends RecyclerView.Adapter {
         @Override
         public void onClick(View view) {
              if(mListener!=null){
-                 mListener.onItemOnClick(view,getPosition()-1);
+                 if(createItemHeadLayout()!=null){
+                     mListener.onItemOnClick(view,getPosition()-1);
+                 }else{
+                     mListener.onItemOnClick(view,getPosition());
+                 }
              }
         }
     }
@@ -140,7 +143,6 @@ public abstract class BaseRecyclerAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemViewType(int position) {
         if (list.get(position) instanceof HeadType) {
-
             return HEADTYPE;
         }
         if (list.get(position) instanceof BodyType) {

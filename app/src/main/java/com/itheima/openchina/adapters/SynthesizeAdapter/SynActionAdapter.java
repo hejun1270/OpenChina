@@ -35,14 +35,14 @@ import java.util.List;
  *
  */
 
+
+
 public class SynActionAdapter extends BaseRecyclerAdapter {
 
 
 
     List<ItemType> mList=new ArrayList<>();
     ActionHeadBean.ResultBean.ActionItems head=new ActionHeadBean.ResultBean.ActionItems();
-
-
 
     ActionContentBean.ResultBean.ItemsBean body=new ActionContentBean.ResultBean.ItemsBean();
 
