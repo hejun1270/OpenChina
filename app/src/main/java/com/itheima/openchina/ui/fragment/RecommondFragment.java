@@ -1,9 +1,11 @@
 package com.itheima.openchina.ui.fragment;
 
 
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -12,6 +14,7 @@ import com.itheima.openchina.R;
 import com.itheima.openchina.bases.BaseFragment;
 import com.itheima.openchina.beans.RecommondBean;
 import com.itheima.openchina.cacheadmin.LoadData;
+import com.itheima.openchina.ui.activity.RecommDetailActivity;
 import com.itheima.openchina.utils.Utils;
 import com.itheima.openchina.utils.XmlUtils;
 
@@ -69,6 +72,15 @@ public class RecommondFragment extends BaseFragment{
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
             }
         });
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String url = recommondBean.typeBean.list.get(position).url;
+                Intent intent = new Intent(getContext(), RecommDetailActivity.class);
+                intent.putExtra("detailUrl",url);
+                startActivity(intent);
+            }
+        });
         return view;
     }
 
@@ -82,10 +94,15 @@ public class RecommondFragment extends BaseFragment{
                 recommondBean = XmlUtils.toBean(RecommondBean.class, stringData.getBytes());
                 //获取条目的数量的大小
                 size = recommondBean.typeBean.list.size();
+                //在主线程中更新UI
+                Utils.runOnUIThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        loadSuccess();
+                    }
+                });
             }
         }.start();
-        loadSuccess();
-
     }
 
     public class Myadapter extends BaseAdapter {
@@ -123,6 +140,7 @@ public class RecommondFragment extends BaseFragment{
             return convertView;
         }
     }
+    //设置ViewHolder
     public class ViewHolder{
         private TextView viewcontent;
         private TextView viewdesc;

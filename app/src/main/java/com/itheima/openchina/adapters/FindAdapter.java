@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Log;
 import com.itheima.openchina.ui.fragment.CategoryFragment;
+import com.itheima.openchina.ui.fragment.CountryFragment;
 import com.itheima.openchina.ui.fragment.HotFragment;
 import com.itheima.openchina.ui.fragment.NewsMessage;
 import com.itheima.openchina.ui.fragment.RecommondFragment;
@@ -35,7 +36,7 @@ public class FindAdapter extends FragmentPagerAdapter {
             case 3:
                 return new HotFragment();
             case 4:
-                return new CategoryFragment();
+                return new CountryFragment();
 
         }
         return null;

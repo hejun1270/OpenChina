@@ -32,7 +32,7 @@ public class CategoryFragment extends BaseFragment {
     private int MODE;
     @Override
     protected void dataOnRefresh() {
-
+        loadSuccess();
     }
     @Override
     protected View onCreateContentView() {
@@ -41,7 +41,6 @@ public class CategoryFragment extends BaseFragment {
         listView = view.findViewById(R.id.category_list);
         myadapter = new Myadapter();
         listView.setAdapter(myadapter);
-        myadapter.notifyDataSetChanged();//明天做
         if(MODE==1){
             //设置listView条目的点击事件
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -61,21 +60,17 @@ public class CategoryFragment extends BaseFragment {
                                 @Override
                                 public void run() {
                                     myadapter.notifyDataSetChanged();
-                                    MODE=2;
                                     Log.d(TAG, "run: "+3333);
                                 }
                             });
+                            MODE=2;
                         }
                     }.start();
                 }
             });
-
         }
-        if(MODE==2){
 
-        }
         return view;
-
     }
     @Override
     protected void onStartLoadData() {
@@ -90,9 +85,16 @@ public class CategoryFragment extends BaseFragment {
                 MODE=1;
                 //获取文件中条目的类型
                 size = categoryBean.typeBean.list.size();
+                Utils.runOnUIThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        loadSuccess();
+                    }
+                });
+
             }
         }.start();
-        loadSuccess();
+
     }
     public class Myadapter extends BaseAdapter{
 
