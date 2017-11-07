@@ -39,7 +39,6 @@ public class SynBlogsAdapter extends BaseRecyclerAdapter {
         this.body = body;
         notifyItemRangeChanged(1,body.size()-1);
     }
-
     public SynBlogsAdapter(Context context, List list) {
         super(context,list);
         body.addAll(list);
@@ -48,12 +47,13 @@ public class SynBlogsAdapter extends BaseRecyclerAdapter {
 
     @Override
     protected View createItemBodyLayout() {
-        View view = View.inflate(getContext(), R.layout.view_item_consult_syn, null);
+        View view = View.inflate(getContext(), R.layout.view_item_consult_syn_center, null);
         return view;
     }
 
 
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void createViewBodyItem(RecyclerView.ViewHolder holder, int position) {
         LogUtils.i("ben");
@@ -100,9 +100,18 @@ public class SynBlogsAdapter extends BaseRecyclerAdapter {
 
         TextView content=holder.itemView.findViewById(R.id.consult_content);
         content.setText(bean.getBody());
+
+        TextView viewCount=holder.itemView.findViewById(R.id.consult_message1);
+        viewCount.setText(bean.getViewCount()+"");
+
+        TextView recommendCount=holder.itemView.findViewById(R.id.consult_message2);
+        recommendCount.setText(bean.getCommentCount()+"");
+
         TextView time=holder.itemView.findViewById(R.id.consult_time);
         String s=bean.getAuthor()+"\b\b"+ StringUtils.friendly_time(bean.getPubDate());
         time.setText(s);
+
+
 
 
     }

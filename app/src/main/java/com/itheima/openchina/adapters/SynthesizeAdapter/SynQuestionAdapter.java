@@ -1,6 +1,7 @@
 package com.itheima.openchina.adapters.SynthesizeAdapter;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
@@ -47,10 +48,11 @@ public class SynQuestionAdapter extends BaseRecyclerAdapter {
 
     @Override
     protected View createItemBodyLayout() {
-        View view = View.inflate(getContext(), R.layout.view_item_consult_syn, null);
+        View view = View.inflate(getContext(), R.layout.view_item_consult_syn_center, null);
         return view;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void createViewBodyItem(RecyclerView.ViewHolder holder, int position) {
         if(position>0&&position<bean.size()-1){
@@ -60,10 +62,19 @@ public class SynQuestionAdapter extends BaseRecyclerAdapter {
             imageView.setMaxWidth(xp2dp(45));
 
             Glide.with(getContext()).load(que.getAuthorPortrait()).into(imageView);
+
             TextView title=holder.itemView.findViewById(R.id.consult_title);
             title.setText(que.getTitle());
+
             TextView content=holder.itemView.findViewById(R.id.consult_content);
             content.setText(que.getBody());
+
+            TextView viewCount=holder.itemView.findViewById(R.id.consult_message1);
+            viewCount.setText(que.getViewCount()+"");
+
+            TextView recommendCount=holder.itemView.findViewById(R.id.consult_message2);
+            recommendCount.setText(que.getCommentCount()+"");
+
             TextView time=holder.itemView.findViewById(R.id.consult_time);
             time.setText(que.getAuthor()+"\b\b"+ StringUtils.friendly_time(que.getPubDate()));
 

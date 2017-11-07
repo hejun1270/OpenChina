@@ -67,7 +67,24 @@
                 android:orientation="horizontal"
                 android:layout_alignParentRight="true">
                 <TextView
-                    android:id="@+id/consult_message_image"
+                    android:id="@+id/consult_message_image1"
+                    android:textSize="12dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="5dp"
+                    android:background="@mipmap/ic_view"
+                    android:layout_width="15dp"
+                    android:layout_height="12dp" />
+
+                <TextView
+                    android:id="@+id/consult_message1"
+                    android:text="@string/message"
+                    android:textSize="12dp"
+                    android:layout_marginRight="7dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/consult_message_image2"
                     android:textSize="12dp"
                     android:layout_gravity="center"
                     android:layout_marginRight="5dp"
@@ -76,7 +93,7 @@
                     android:layout_height="12dp" />
 
                 <TextView
-                    android:id="@+id/consult_message"
+                    android:id="@+id/consult_message2"
                     android:text="@string/message"
                     android:textSize="12dp"
                     android:layout_alignParentRight="true"

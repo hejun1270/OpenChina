@@ -3,6 +3,7 @@ package com.itheima.openchina.ui.fragment.synfragments;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
@@ -10,6 +11,7 @@ import android.view.animation.LayoutAnimationController;
 import com.itheima.openchina.R;
 import com.itheima.openchina.adapters.SynthesizeAdapter.SynQuestionAdapter;
 import com.itheima.openchina.bases.BaseFragment;
+import com.itheima.openchina.beans.BlogBean;
 import com.itheima.openchina.beans.FootBean;
 import com.itheima.openchina.beans.HeadBean;
 import com.itheima.openchina.beans.QuestionBean;
@@ -19,6 +21,8 @@ import com.itheima.openchina.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
 
 /**
  * Created by 佘本民
@@ -33,6 +37,7 @@ public class QuestionFragment extends BaseFragment {
     private RecyclerView recyclerView;
     private List<ItemType> list=new ArrayList<>();
     private String url;
+    private QuestionBean questionBean;
 
     @Override
     protected View onCreateContentView() {
@@ -56,7 +61,27 @@ public class QuestionFragment extends BaseFragment {
                 notifyChange(position);
             }
         });
+
+        // 上拉加载更多
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == SCROLL_STATE_IDLE) {
+                    recyclerView.scrollBy(0, -xp2dp(60));
+                    loadMore(questionBean.getResult().getNextPageToken());
+                }
+            }
+        });
+
+
         return view;
+    }
+
+    //xp转为dp
+    public int xp2dp(int dp) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
+                getActivity().getResources().getDisplayMetrics());
     }
 
     private void notifyChange(int position) {
@@ -66,7 +91,7 @@ public class QuestionFragment extends BaseFragment {
             @Override
             public void run() {
 
-                QuestionBean questionBean = LoadData.getInstance().getBeanData(url, QuestionBean.class);
+                questionBean = LoadData.getInstance().getBeanData(url, QuestionBean.class);
                 list.removeAll(list);
                 LogUtils.i(list.size()+"=============");
                 list.add(new HeadBean());
@@ -85,8 +110,26 @@ public class QuestionFragment extends BaseFragment {
 
     @Override
     protected void dataOnRefresh() {
-        onStartLoadData();
-        adapter.notifyDataSetChanged();
+
+        url = "http://www.oschina.net/action/apiv2/question?catalog=1&nextPageToken=";
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                questionBean = LoadData.getInstance().getBeanData(url, QuestionBean.class);
+                list.remove(list);
+                list.add(new HeadBean());
+                list.addAll(questionBean.getResult().getItems());
+                list.add(new FootBean());
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapter.setBean(list);
+                        onFInishRefresh();
+                    }
+                });
+            }
+        }).start();
     }
 
     @Override
@@ -96,7 +139,7 @@ public class QuestionFragment extends BaseFragment {
             @Override
             public void run() {
 
-                QuestionBean questionBean = LoadData.getInstance().getBeanData(url, QuestionBean.class);
+                questionBean = LoadData.getInstance().getBeanData(url, QuestionBean.class);
                 list.remove(list);
                 list.add(new HeadBean());
                 list.addAll(questionBean.getResult().getItems());
@@ -113,7 +156,27 @@ public class QuestionFragment extends BaseFragment {
 
     }
 
+    //上拉加载更多
+    public void loadMore(String nextPageToken){
+        final String urlMore=url+nextPageToken;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
 
+                questionBean = LoadData.getInstance().getBeanData(urlMore, QuestionBean.class);
+                list.add(new HeadBean());
+                list.addAll(questionBean.getResult().getItems());
+                list.add(new FootBean());
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapter.setBean(list);
+                        adapter.updateData();
+                    }
+                });
+            }
+        }).start();
+    }
 
 
 

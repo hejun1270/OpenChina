@@ -3,6 +3,7 @@ package com.itheima.openchina.ui.fragment.synfragments;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
@@ -25,6 +26,8 @@ import com.itheima.openchina.utils.LogUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
+
 /**
  * Created by 佘本民
  * When:  --- 2017/11/4---
@@ -38,6 +41,9 @@ public class ActionFragment extends BaseFragment {
     private RecyclerView recyclerView;
     private String url="http://www.oschina.net/action/apiv2/event?nextPageToken=";
     private List<ItemType> list=new ArrayList<>();
+    private ActionContentBean bodyData;
+    String urlHead = "http://www.oschina.net/action/apiv2/banner?catalog=3&nextPageToken=226B2C51A4EC6281";
+    private ActionHeadBean beanData;
 
     @Override
     protected View onCreateContentView() {
@@ -52,18 +58,56 @@ public class ActionFragment extends BaseFragment {
         recyclerView.setLayoutAnimation(lac);
         recyclerView.startLayoutAnimation();
 
+        // 上拉加载更多
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if(newState == SCROLL_STATE_IDLE) {
+                    recyclerView.scrollBy(0,-xp2dp(60));
+                    loadMore(bodyData.getResult().getNextPageToken());
+                }
+            }
+        });
         return view;
     }
-
+    //xp转为dp
+    public int xp2dp(int dp){
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,dp,
+                getActivity().getResources().getDisplayMetrics());
+    }
 
     @Override
     protected void dataOnRefresh() {
-        onStartLoadData();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                beanData = LoadData.getInstance().getBeanData(
+                        urlHead, ActionHeadBean.class);
+                bodyData = LoadData.getInstance().getBeanData(
+                        url, ActionContentBean.class);
+                list.removeAll(list);
+                //添加了头
+                list.addAll(beanData.getResult().getItems());
+                //添加了内容
+                list.addAll(bodyData.getResult().getItems());
+                //添加了尾
+                list.add(new FootBean());
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapter.setmList(list);
+                        onFInishRefresh();
+                    }
+                });
+            }
+        }).start();
     }
 
     @Override
     protected void onStartLoadData() {
-        final String urlHead = "http://www.oschina.net/action/apiv2/banner?catalog=3&nextPageToken=226B2C51A4EC6281";
+        ;
         url = "http://www.oschina.net/action/apiv2/event?nextPageToken=DBA816934CD0AA59";
         getActivity().runOnUiThread(new Runnable() {
             @Override
@@ -71,17 +115,17 @@ public class ActionFragment extends BaseFragment {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        ActionHeadBean beanData = LoadData.getInstance().getBeanData(
+                        beanData = LoadData.getInstance().getBeanData(
                                 urlHead, ActionHeadBean.class);
-                        ActionContentBean bodyData = LoadData.getInstance().getBeanData(
+                        bodyData = LoadData.getInstance().getBeanData(
                                 url, ActionContentBean.class);
+                        list.removeAll(list);
                         //添加了头
                         list.addAll(beanData.getResult().getItems());
                         //添加了内容
                         list.addAll(bodyData.getResult().getItems());
                         //添加了尾
                         list.add(new FootBean());
-                        LogUtils.i(list.size()+"=========");
 
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
@@ -96,6 +140,35 @@ public class ActionFragment extends BaseFragment {
             }
         });
 
+    }
+    //上拉加载更多
+    public void loadMore(String nextPageToken){
+        final String urlMore=url+nextPageToken;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                beanData = LoadData.getInstance().getBeanData(
+                        urlHead, ActionHeadBean.class);
+                bodyData = LoadData.getInstance().getBeanData(
+                        urlMore, ActionContentBean.class);
+                list.removeAll(list);
+                //添加了头
+                list.addAll(beanData.getResult().getItems());
+                //添加了内容
+                list.addAll(bodyData.getResult().getItems());
+                //添加了尾
+                list.add(new FootBean());
+                LogUtils.i(list.size()+"=========");
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapter.setmList(list);
+                        adapter.updateData();
+                    }
+                });
+            }
+        }).start();
     }
 
 

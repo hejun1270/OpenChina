@@ -3,6 +3,7 @@ package com.itheima.openchina.ui.fragment.synfragments;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
@@ -15,11 +16,14 @@ import com.itheima.openchina.bases.BaseRecyclerAdapter;
 import com.itheima.openchina.beans.BlogBean;
 import com.itheima.openchina.beans.FootBean;
 import com.itheima.openchina.beans.HeadBean;
+import com.itheima.openchina.beans.QuestionBean;
 import com.itheima.openchina.cacheadmin.LoadData;
 import com.itheima.openchina.interfaces.ItemType;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
 
 /**
  * Created by 佘本民
@@ -37,6 +41,7 @@ public class BlogsFragment extends BaseFragment {
     private int i = 0;
     private String TAG = "BlogsFragment";
     private SynBlogsAdapter adapter;
+    private BlogBean bodyData;
 
     @Override
     protected View onCreateContentView() {
@@ -67,7 +72,25 @@ public class BlogsFragment extends BaseFragment {
             }
         });
 
+        // 上拉加载更多
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == SCROLL_STATE_IDLE) {
+                    recyclerView.scrollBy(0, -xp2dp(60));
+                    loadMore(bodyData.getResult().getNextPageToken());
+                }
+            }
+        });
         return view;
+    }
+
+
+    //xp转为dp
+    public int xp2dp(int dp) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
+                getActivity().getResources().getDisplayMetrics());
     }
 
     //头条目点击处理
@@ -93,7 +116,6 @@ public class BlogsFragment extends BaseFragment {
                     @Override
                     public void run() {
                         adapter.setBody(list);
-//
                     }
                 });
 
@@ -106,15 +128,35 @@ public class BlogsFragment extends BaseFragment {
 
     @Override
     protected void dataOnRefresh() {
-        list.remove(list);
-        onStartLoadData();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                bodyData = LoadData.getInstance().getBeanData(url
+                        , BlogBean.class);
+                list.removeAll(list);
+                //添加了头
+                list.add(new HeadBean());
+                //添加了内容
+                list.addAll(bodyData.getResult().getItems());
+                //添加了尾
+                list.add(new FootBean());
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapter.setBody(list);
+                        onFInishRefresh();
+                    }
+                });
+            }
+        }).start();
     }
 
 
     //url选择器
     public void urlChangeLoader(int index) {
-        index=4-index;
-        url = "http://www.oschina.net/action/apiv2/blog?catalog="+index+"&%20pageToken=DBA816934CD0AA5";
+        index = 4 - index;
+        url = "http://www.oschina.net/action/apiv2/blog?catalog=" + index+ "&%20pageToken=";
         titleChange();
     }
 
@@ -124,8 +166,9 @@ public class BlogsFragment extends BaseFragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                BlogBean bodyData = LoadData.getInstance().getBeanData(url
+                bodyData = LoadData.getInstance().getBeanData(url
                         , BlogBean.class);
+                list.removeAll(list);
                 //添加了头
                 list.add(new HeadBean());
                 //添加了内容
@@ -142,6 +185,33 @@ public class BlogsFragment extends BaseFragment {
             }
         }).start();
 
+    }
+
+    //上拉加载更多
+    public void loadMore(String nextPageToken){
+        url=url+nextPageToken;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                bodyData = LoadData.getInstance().getBeanData(url
+                        , BlogBean.class);
+
+                //添加了头
+                list.add(new HeadBean());
+                //添加了内容
+                list.addAll(bodyData.getResult().getItems());
+                //添加了尾
+                list.add(new FootBean());
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapter.setBody(list);
+                        adapter.updateData();
+                    }
+                });
+            }
+        }).start();
     }
 
 

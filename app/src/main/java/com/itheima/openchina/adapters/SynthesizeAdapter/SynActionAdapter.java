@@ -37,13 +37,24 @@ import java.util.List;
 
 public class SynActionAdapter extends BaseRecyclerAdapter {
 
+
+
     List<ItemType> mList=new ArrayList<>();
     ActionHeadBean.ResultBean.ActionItems head=new ActionHeadBean.ResultBean.ActionItems();
+
+
+
     ActionContentBean.ResultBean.ItemsBean body=new ActionContentBean.ResultBean.ItemsBean();
+
     public SynActionAdapter(Context context, List list) {
         super(context,list);
          mList.addAll(list);
          head= (ActionHeadBean.ResultBean.ActionItems) list.get(0);
+    }
+
+    public void setmList(List<ItemType> mList) {
+        this.mList = mList;
+        notifyItemRangeChanged(1,mList.size()-1);
     }
 
 
@@ -52,6 +63,8 @@ public class SynActionAdapter extends BaseRecyclerAdapter {
         View view = View.inflate(getContext(), R.layout.view_item_consult_syn2, null);
         return view;
     }
+
+
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -97,6 +110,8 @@ public class SynActionAdapter extends BaseRecyclerAdapter {
         Glide.with(getContext()).load(img).into(imageView);
         return imageView;
     }
+
+
 
 
 }

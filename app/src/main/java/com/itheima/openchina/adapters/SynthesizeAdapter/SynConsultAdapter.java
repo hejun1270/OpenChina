@@ -1,6 +1,7 @@
 package com.itheima.openchina.adapters.SynthesizeAdapter;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
@@ -35,7 +36,7 @@ public class SynConsultAdapter extends BaseRecyclerAdapter {
 
     public void setmList(List<ItemType> mList) {
         this.mList = mList;
-        notifyItemRangeChanged(1,mList.size()-1);
+        notifyItemRangeChanged(1,mList.size()-2);
     }
 
     List<ItemType> mList=new ArrayList<>();
@@ -59,6 +60,7 @@ public class SynConsultAdapter extends BaseRecyclerAdapter {
         return view;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void createViewBodyItem(RecyclerView.ViewHolder holder, int position) {
         ConsultBodyBean.ConsultBodyResultBean.ItemsBean body;
@@ -69,6 +71,10 @@ public class SynConsultAdapter extends BaseRecyclerAdapter {
             String s=StringUtils.friendly_time(body.getPubDate());
             TextView content = holder.itemView.findViewById(R.id.consult_content);
             content.setText(body.getBody());
+
+            TextView message = holder.itemView.findViewById(R.id.consult_message);
+            message.setText(body.getCommentCount()+"");
+
             TextView time = holder.itemView.findViewById(R.id.consult_time);
             time.setText(s);
             if(!s.contains("天")){
@@ -81,6 +87,7 @@ public class SynConsultAdapter extends BaseRecyclerAdapter {
             }else{
                 title.setText(body.getTitle());
             }
+
 
         }else{
             return;
