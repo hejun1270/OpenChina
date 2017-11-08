@@ -140,6 +140,7 @@ public class SynConsultAdapter extends BaseRecyclerAdapter implements BaseRecycl
             Intent intent = new Intent(getContext(),DetailsActivity.class);
             intent.putExtra("href",itemsBean.getHref());
             intent.putExtra("title","咨询详情");
+            intent.putExtra("id",itemsBean.getId()+"");
             intent.putExtra("commend",itemsBean.getCommentCount()+"");
             getContext().startActivity(intent);
 

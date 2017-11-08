@@ -172,6 +172,7 @@ public class SynBlogsAdapter extends BaseRecyclerAdapter implements BaseRecycler
             Intent intent = new Intent(getContext(),DetailsActivity.class);
             intent.putExtra("href",bean.getHref());
             intent.putExtra("title","博客详情");
+            intent.putExtra("id",bean.getId()+"");
             intent.putExtra("commend",bean.getCommentCount()+"");
             getContext().startActivity(intent);
         }

@@ -129,6 +129,7 @@ public class SynActionAdapter extends BaseRecyclerAdapter implements BaseRecycle
             notifyItemRangeChanged(1,mList.size()-1);
             Intent intent = new Intent(getContext(),DetailsActivity.class);
             intent.putExtra("href",body.getHref());
+            intent.putExtra("id",body.getId()+"");
             intent.putExtra("title","活动详情");
             getContext().startActivity(intent);
 

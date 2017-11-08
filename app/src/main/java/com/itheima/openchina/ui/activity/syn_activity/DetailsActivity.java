@@ -34,6 +34,16 @@ import com.itheima.openchina.utils.SpUtil;
 import com.itheima.openchina.wedigt.KeyboardChangeListener;
 import com.jaeger.library.StatusBarUtil;
 
+import java.io.IOException;
+
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
+import static com.itheima.openchina.appcontrol.Constant.COOKIE;
+
 /**
  * Created by 佘本民
  * When:  --- 2017/11/8---
@@ -48,10 +58,11 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
     private WebView webView;
     private ScrollView synScrollView;
     private EditText edit;
+    String uid;
     private LinearLayout synLinear;
     private int height;
     private int y;
-    private String uid;
+    private String id;
     private String cookie;
     private AlertDialog.Builder alertDialog;
 
@@ -68,6 +79,7 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
         Intent intent = getIntent();
         String title = intent.getStringExtra("title");
         String commend = intent.getStringExtra("commend");
+        id = intent.getStringExtra("id");
         href = intent.getStringExtra("href");
         //头布局
         ImageView imageBack = findViewById(R.id.image_back);
@@ -186,16 +198,50 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
      */
     private void isLogin() {
         uid = SpUtil.getString(Constant.UID, "");
-        cookie = SpUtil.getString(Constant.COOKIE, "");
+        cookie = SpUtil.getString(COOKIE, "");
         if (!TextUtils.equals("", uid) && !TextUtils.equals("", cookie)) {
             //加载数据
-
             LogUtils.i("用户已经登录.....");
+            sendMsgRight();
         } else {//提示登录
             LogUtils.i("用户未登录.....");
             showLoginDialog();
         }
     }
+
+
+    //发送数据
+    private void sendMsgRight() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                OkHttpClient okhttp=new OkHttpClient.Builder()
+                        .build();
+                RequestBody body=new FormBody.Builder()
+                        .add("sourceId",id)
+                        .add("type","6")
+                        .add("content",edit.getText().toString().trim()+"")
+                        .build();
+
+                Request rq=new Request.Builder()
+                        .addHeader("cookie",SpUtil.getString(COOKIE,"")+"")
+                        .url("http://www.oschina.net/action/apiv2/comment_pub")
+                        .post(body)
+                        .build();
+
+                try {
+                    Response execute = okhttp.newCall(rq).execute();
+                    webView.loadUrl(href);
+                    edit.setText("");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+
+    //提示用户登录
     private void showLoginDialog() {
         alertDialog = new AlertDialog.Builder(DetailsActivity.this)
                 .setTitle("登录提示:")

@@ -175,7 +175,6 @@ public class MyTweetsFragment extends BaseFragment {
                 uid = SpUtil.getString(Constant.UID, "");
                 cookie = SpUtil.getString(Constant.COOKIE, "");
             } else {
-                LogUtils.i("--------<<>>>>>----" + "重新加载");
                 getNetData();
             }
         }

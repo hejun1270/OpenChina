@@ -154,6 +154,7 @@ public class SynQuestionAdapter extends BaseRecyclerAdapter implements BaseRecyc
             Intent intent = new Intent(getContext(),DetailsActivity.class);
             intent.putExtra("href",que.getAuthorPortrait());
             intent.putExtra("title","问答详情");
+            intent.putExtra("id",que.getId()+"");
             intent.putExtra("commend",que.getCommentCount()+"");
             getContext().startActivity(intent);
         }
