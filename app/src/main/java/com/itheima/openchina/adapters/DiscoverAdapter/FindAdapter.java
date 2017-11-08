@@ -1,14 +1,14 @@
-package com.itheima.openchina.adapters;
+package com.itheima.openchina.adapters.DiscoverAdapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Log;
-import com.itheima.openchina.ui.fragment.CategoryFragment;
-import com.itheima.openchina.ui.fragment.CountryFragment;
-import com.itheima.openchina.ui.fragment.HotFragment;
-import com.itheima.openchina.ui.fragment.NewsMessage;
-import com.itheima.openchina.ui.fragment.RecommondFragment;
+import com.itheima.openchina.ui.fragment.discoverfragment.CategoryFragment;
+import com.itheima.openchina.ui.fragment.discoverfragment.CountryFragment;
+import com.itheima.openchina.ui.fragment.discoverfragment.HotFragment;
+import com.itheima.openchina.ui.fragment.discoverfragment.NewsMessage;
+import com.itheima.openchina.ui.fragment.discoverfragment.RecommondFragment;
 
 /**
  * Created by jiang on 2017/10/17.
