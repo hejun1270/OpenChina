@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.itheima.openchina">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -13,9 +13,8 @@
 
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
-
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application
         android:name=".appcontrol.App"
@@ -38,16 +37,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.OpenChinaActivity" />
+        <activity android:name=".ui.activity.discover_activity.OpenChinaActivity" />
         <activity android:name=".ui.activity.MainActivity" />
-        <activity
-            android:name=".ui.activity.AddActivity"
-            android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".ui.activity.ShakeActivity" />
+        <activity android:name=".ui.activity.AddActivity" />
+        <activity android:name=".ui.activity.discover_activity.ShakeActivity" />
         <activity
             android:name=".ui.activity.LoginActivity"
             android:windowSoftInputMode="adjustNothing" />
-        <activity android:name=".ui.activity.tweet_activity.TweetDetailActivity" />
+        <activity android:name=".ui.activity.tweet_activity.TweetDetailActivity"/>
         <activity android:name=".ui.activity.ProfileActivity" />
         <activity
             android:name=".ui.activity.PhotoActivity"
@@ -55,10 +52,11 @@
         <activity
             android:name=".ui.activity.PagerPhotoActivity"
             android:theme="@style/AppTheme.Lucency" />
-        <activity android:name=".ui.activity.RecommDetailActivity" />
-        <activity android:name=".ui.activity.LoadImage"/>
-        <activity android:name=".ui.activity.syn_activity.DetailsActivity"
-            android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".ui.activity.discover_activity.RecommDetailActivity" />
+        <activity
+            android:name=".ui.activity.syn_activity.DetailsActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".ui.activity.discover_activity.AskActivity"></activity>
     </application>
 
 </manifest>

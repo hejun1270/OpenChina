@@ -1,4 +1,4 @@
-package com.itheima.openchina.ui.activity;
+package com.itheima.openchina.ui.activity.discover_activity;
 
 import android.content.pm.ActivityInfo;
 import android.hardware.Sensor;
@@ -20,7 +20,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.itheima.openchina.R;
-import com.jaeger.library.StatusBarUtil;
 
 import java.lang.ref.WeakReference;
 
@@ -53,7 +52,6 @@ public class ShakeActivity extends AppCompatActivity implements SensorEventListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatusBarUtil.setColor(this,getResources().getColor(R.color.colorPrimary));
         //设置只竖屏
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.shake_activity);

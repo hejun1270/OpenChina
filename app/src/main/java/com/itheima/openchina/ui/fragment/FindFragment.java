@@ -6,8 +6,9 @@ import android.view.View;
 import com.google.zxing.activity.CaptureActivity;
 import com.itheima.openchina.R;
 import com.itheima.openchina.bases.BasePagerFragment;
-import com.itheima.openchina.ui.activity.OpenChinaActivity;
-import com.itheima.openchina.ui.activity.ShakeActivity;
+import com.itheima.openchina.ui.activity.discover_activity.AskActivity;
+import com.itheima.openchina.ui.activity.discover_activity.OpenChinaActivity;
+import com.itheima.openchina.ui.activity.discover_activity.ShakeActivity;
 
 /**
  * User:DoctorHe <p/>
@@ -51,6 +52,8 @@ public class FindFragment extends BasePagerFragment implements View.OnClickListe
                 startActivity(intent);
                 break;
             case R.id.item_find:
+                Intent intent3 = new Intent(getContext(), AskActivity.class);
+                startActivity(intent3);
                 break;
             case R.id.item_scan:
                 Intent intent1 = new Intent(getContext(), CaptureActivity.class);
