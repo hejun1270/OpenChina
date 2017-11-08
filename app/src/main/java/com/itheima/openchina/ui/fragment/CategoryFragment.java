@@ -64,7 +64,6 @@ public class CategoryFragment extends BaseFragment {
                                     public void run() {
                                         //更新适配器
                                         myadapter.notifyDataSetChanged();
-                                        Log.d(TAG, "run: "+3333);
                                     }
                                 });
                                // 将目录设置为第二层

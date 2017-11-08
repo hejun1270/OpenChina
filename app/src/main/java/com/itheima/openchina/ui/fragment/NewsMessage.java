@@ -27,7 +27,7 @@ public class NewsMessage extends BaseFragment {
 
     @Override
     protected void dataOnRefresh() {
-
+        onStartLoadData();
     }
 
     @Override
@@ -106,6 +106,7 @@ public class NewsMessage extends BaseFragment {
                     @Override
                     public void run() {
                         loadSuccess();
+                        onFInishRefresh();
                     }
                 });
             }
