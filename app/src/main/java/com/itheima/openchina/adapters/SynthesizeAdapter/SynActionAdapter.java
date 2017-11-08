@@ -11,7 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.itheima.openchina.ui.activity.syn_activity.ConsultDetailsActivity;
+import com.itheima.openchina.interfaces.BodyType;
+import com.itheima.openchina.ui.activity.syn_activity.DetailsActivity;
 import com.itheima.openchina.R;
 import com.itheima.openchina.bases.BaseRecyclerAdapter;
 import com.itheima.openchina.beans.ActionContentBean;
@@ -77,6 +78,9 @@ public class SynActionAdapter extends BaseRecyclerAdapter implements BaseRecycle
             image.setScaleType(ImageView.ScaleType.MATRIX);
             Glide.with(getContext()).load(body.getImg()).into(image);
 
+
+
+
             //活动介绍
             TextView content = holder.itemView.findViewById(R.id.consult_content);
             if(body.getType()==3){
@@ -118,12 +122,12 @@ public class SynActionAdapter extends BaseRecyclerAdapter implements BaseRecycle
 
     @Override
     public void onItemOnClick(View view, int position) {
-        if(position>0||position<mList.size()-1){
+        if(mList.get(position+1) instanceof BodyType){
             ActionContentBean.ResultBean.ItemsBean body = (ActionContentBean.ResultBean.ItemsBean) mList.get(position+1);
             String title = body.getTitle();
             SpUtil.saveBoolean(title,true);
             notifyItemRangeChanged(1,mList.size()-1);
-            Intent intent = new Intent(getContext(),ConsultDetailsActivity.class);
+            Intent intent = new Intent(getContext(),DetailsActivity.class);
             intent.putExtra("href",body.getHref());
             intent.putExtra("title","活动详情");
             getContext().startActivity(intent);

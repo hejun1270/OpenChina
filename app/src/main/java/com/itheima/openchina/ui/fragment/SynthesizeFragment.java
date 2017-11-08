@@ -6,6 +6,7 @@ import com.itheima.openchina.ui.fragment.synfragments.ActionFragment;
 import com.itheima.openchina.ui.fragment.synfragments.BlogsFragment;
 import com.itheima.openchina.ui.fragment.synfragments.ConsultFragment;
 import com.itheima.openchina.ui.fragment.synfragments.QuestionFragment;
+import com.itheima.openchina.utils.SpUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,7 @@ public class SynthesizeFragment extends BaseNewsFragment{
 
     @Override
     protected List<FragmentInfo> listViewPagerFragmentData() {
+        
         List<FragmentInfo> list=new ArrayList<>();
         list.add(new FragmentInfo("咨询",new ConsultFragment()));
         list.add(new FragmentInfo("博客",new BlogsFragment()));

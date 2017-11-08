@@ -12,7 +12,8 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.itheima.openchina.ui.activity.syn_activity.ConsultDetailsActivity;
+import com.itheima.openchina.interfaces.BodyType;
+import com.itheima.openchina.ui.activity.syn_activity.DetailsActivity;
 import com.itheima.openchina.R;
 import com.itheima.openchina.bases.BaseRecyclerAdapter;
 import com.itheima.openchina.beans.QuestionBean;
@@ -145,14 +146,15 @@ public class SynQuestionAdapter extends BaseRecyclerAdapter implements BaseRecyc
     //点击监听
     @Override
     public void onItemOnClick(View view, int position) {
-        if(position>0||position<bean.size()-1){
+        if(bean.get(position+1) instanceof BodyType){
             QuestionBean.ResultBean.QuestiontemsBean que=(QuestionBean.ResultBean.QuestiontemsBean) bean.get(position+1);
             String title = que.getTitle();
             SpUtil.saveBoolean(title,true);
             notifyItemRangeChanged(1,bean.size()-1);
-            Intent intent = new Intent(getContext(),ConsultDetailsActivity.class);
+            Intent intent = new Intent(getContext(),DetailsActivity.class);
             intent.putExtra("href",que.getAuthorPortrait());
             intent.putExtra("title","问答详情");
+            intent.putExtra("commend",que.getCommentCount()+"");
             getContext().startActivity(intent);
         }
     }

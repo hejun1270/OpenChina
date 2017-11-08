@@ -11,18 +11,12 @@ import android.widget.Toast;
 
 import com.itheima.openchina.R;
 import com.itheima.openchina.adapters.SynthesizeAdapter.SynActionAdapter;
-import com.itheima.openchina.adapters.SynthesizeAdapter.SynQuestionAdapter;
-import com.itheima.openchina.appcontrol.NetDataApi;
 import com.itheima.openchina.bases.BaseFragment;
 import com.itheima.openchina.beans.ActionContentBean;
 import com.itheima.openchina.beans.ActionHeadBean;
-import com.itheima.openchina.beans.ConsultBodyBean;
-import com.itheima.openchina.beans.ConsultHeadBean;
 import com.itheima.openchina.beans.FootBean;
 import com.itheima.openchina.cacheadmin.LoadData;
-import com.itheima.openchina.interfaces.HeadType;
 import com.itheima.openchina.interfaces.ItemType;
-import com.itheima.openchina.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -168,7 +162,6 @@ public class ActionFragment extends BaseFragment {
                 list.addAll(bodyData.getResult().getItems());
                 //添加了尾
                 list.add(new FootBean());
-                LogUtils.i(list.size()+"=========");
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

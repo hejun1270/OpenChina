@@ -14,7 +14,8 @@ import android.view.View;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.itheima.openchina.ui.activity.syn_activity.ConsultDetailsActivity;
+import com.itheima.openchina.interfaces.BodyType;
+import com.itheima.openchina.ui.activity.syn_activity.DetailsActivity;
 import com.itheima.openchina.R;
 import com.itheima.openchina.bases.BaseRecyclerAdapter;
 import com.itheima.openchina.beans.BlogBean;
@@ -22,7 +23,6 @@ import com.itheima.openchina.interfaces.ItemType;
 import com.itheima.openchina.utils.LogUtils;
 import com.itheima.openchina.utils.SpUtil;
 import com.itheima.openchina.utils.StringUtils;
-import com.itheima.openchina.utils.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +65,6 @@ public class SynBlogsAdapter extends BaseRecyclerAdapter implements BaseRecycler
         if(position>0&&position<body.size()-1){
             bean=(BlogBean.ResultBean.BlogItemsBean)body.get(position);
         }
-        ToastUtil.showToast(bean.getTitle());
         TextView title=holder.itemView.findViewById(R.id.consult_title);
         if(bean.isOriginal()&&bean.isRecommend()){
             SpannableString san=new SpannableString("*\b*\b"+bean.getTitle());
@@ -165,14 +164,15 @@ public class SynBlogsAdapter extends BaseRecyclerAdapter implements BaseRecycler
 
     @Override
     public void onItemOnClick(View view, int position) {
-        if(position>0||position<body.size()-1){
+        if(body.get(position+1) instanceof BodyType){
             BlogBean.ResultBean.BlogItemsBean bean= (BlogBean.ResultBean.BlogItemsBean) body.get(position+1);
             String title = bean.getTitle();
             SpUtil.saveBoolean(title,true);
             notifyItemRangeChanged(1,body.size()-1);
-            Intent intent = new Intent(getContext(),ConsultDetailsActivity.class);
+            Intent intent = new Intent(getContext(),DetailsActivity.class);
             intent.putExtra("href",bean.getHref());
             intent.putExtra("title","博客详情");
+            intent.putExtra("commend",bean.getCommentCount()+"");
             getContext().startActivity(intent);
         }
     }

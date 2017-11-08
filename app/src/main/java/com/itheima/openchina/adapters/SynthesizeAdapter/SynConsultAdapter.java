@@ -14,7 +14,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.itheima.loopviewpager.LoopViewPager;
-import com.itheima.openchina.ui.activity.syn_activity.ConsultDetailsActivity;
+import com.itheima.openchina.interfaces.BodyType;
+import com.itheima.openchina.ui.activity.syn_activity.DetailsActivity;
 import com.itheima.openchina.R;
 import com.itheima.openchina.bases.BaseRecyclerAdapter;
 import com.itheima.openchina.beans.ConsultBodyBean;
@@ -130,13 +131,13 @@ public class SynConsultAdapter extends BaseRecyclerAdapter implements BaseRecycl
     //条目点击事件
     @Override
     public void onItemOnClick(View view, int position) {
-        if(position>0||position<mList.size()-1){
+        if(mList.get(position+1) instanceof BodyType){
             ConsultBodyBean.ConsultBodyResultBean.ItemsBean itemsBean
                     =  (ConsultBodyBean.ConsultBodyResultBean.ItemsBean) mList.get(position+1);
             String title = itemsBean.getTitle();
             SpUtil.saveBoolean(title,true);
             notifyItemRangeChanged(1,mList.size()-1);
-            Intent intent = new Intent(getContext(),ConsultDetailsActivity.class);
+            Intent intent = new Intent(getContext(),DetailsActivity.class);
             intent.putExtra("href",itemsBean.getHref());
             intent.putExtra("title","咨询详情");
             intent.putExtra("commend",itemsBean.getCommentCount()+"");
