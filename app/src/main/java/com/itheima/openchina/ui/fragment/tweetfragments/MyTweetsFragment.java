@@ -13,7 +13,6 @@ import android.widget.LinearLayout;
 import com.itheima.openchina.R;
 import com.itheima.openchina.adapters.tweetAdapter.TweetAdapter;
 import com.itheima.openchina.appcontrol.Constant;
-import com.itheima.openchina.appcontrol.NetDataApi;
 import com.itheima.openchina.bases.BaseFragment;
 import com.itheima.openchina.beans.FootBean;
 import com.itheima.openchina.beans.LoginInfo;
@@ -21,8 +20,8 @@ import com.itheima.openchina.beans.TweetInfoBean;
 import com.itheima.openchina.cacheadmin.LoadData;
 import com.itheima.openchina.interfaces.ItemType;
 import com.itheima.openchina.ui.activity.LoginActivity;
-import com.itheima.openchina.utils.LogUtils;
 import com.itheima.openchina.utils.SpUtil;
+import com.itheima.openchina.utils.ToastUtil;
 import com.itheima.openchina.utils.Utils;
 
 import java.util.ArrayList;
@@ -41,6 +40,7 @@ public class MyTweetsFragment extends BaseFragment {
 
     private LinearLayout notLoginOrNet;
     private ImageView ivLoadImg;
+    private int visibleItemPosition;
     private RecyclerView recyclerView;
     private List<ItemType> itemLists = new ArrayList<>();
     private TweetAdapter tweetAdapter;
@@ -48,12 +48,20 @@ public class MyTweetsFragment extends BaseFragment {
     private String uid;
     private String cookie;
     private AlertDialog.Builder aletDialog;
+    private List<TweetInfoBean.ResultBean.TweetItem> tweetItemList;
+    private List<ItemType> tweetItems = new ArrayList<>();
+    private String nextPageToken;
+    private String prevPageToken;
+    private String url;
 
 
     @Override
     protected void dataOnRefresh() {
+        currentState = DOWNDROPREFRESH;
         onStartLoadData();
-        tweetAdapter.notifyDataSetChanged();
+        if (tweetItemList != null) {
+            ToastUtil.showToast("暂无新数据");
+        }
     }
 
     @Override
@@ -61,7 +69,7 @@ public class MyTweetsFragment extends BaseFragment {
         View view = View.inflate(getContext(), R.layout.view_please_login, null);
         recyclerView = view.findViewById(R.id.recycler_view);
         notLoginOrNet = view.findViewById(R.id.not_login_or_net);
-        //ivLoadImg = view.findViewById(R.id.iv_load_img);
+       ivLoadImg = view.findViewById(R.id.iv_load_img);
         notLoginOrNet.setVisibility(View.GONE);
         init();
         return view;
@@ -70,56 +78,58 @@ public class MyTweetsFragment extends BaseFragment {
 
     private void init() {
 
-            /*//加载时动画
-            ivLoadImg.setBackgroundResource(R.drawable.animal_bird);
-            AnimationDrawable background = (AnimationDrawable) ivLoadImg.getBackground();
-            background.start();*/
-
-            /*if(SpUtil.getString(Constant.COOKIE,"")==""){
-                notLoginOrNet.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // notLoginOrNet.setVisibility(View.GONE);
-                        getView().setVisibility(View.INVISIBLE);
-                        Intent intent = new Intent(getContext(), LoginActivity.class);
-                        startActivityForResult(intent,100);
-                    }
-                });
-            }else{
-                recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
-
-                tweetAdapter = new TweetAdapter(getContext(), itemLists);
-
-                recyclerView.setAdapter(tweetAdapter);
-            }*/
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
         tweetAdapter = new TweetAdapter(getContext(), itemLists);
-
+        //上拉加载更多
+        upLoadMoreData();
         recyclerView.setAdapter(tweetAdapter);
     }
+    //上拉加载更多
+    private void upLoadMoreData() {
+        //上拉加载更多
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                visibleItemPosition = layoutManager.findLastVisibleItemPosition();
+                if (visibleItemPosition == tweetItems.size() - 1 && newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    currentState = UPDROPREMORE;
+                    onStartLoadData();
 
-   /* @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-          if(requestCode==1001){
-              loginfo = (LoginInfo) data.getSerializableExtra("loginfo");
-                loginfo.
-          }
-    }*/
+                }
+            }
+        });
+    }
+
+
 
     @Override
     protected void onStartLoadData() {
-        //http://www.oschina.net/action/apiv2/tweets?pageToken=DBA816934CD0AA59&authorId=3722341
-//
+       /* //加载时动画
+        ivLoadImg.setBackgroundResource(R.drawable.animal_bird);
+        AnimationDrawable background = (AnimationDrawable) ivLoadImg.getBackground();
+        background.start();
+
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
+        Utils.runOnUIThread(new Runnable() {
+            @Override
+            public void run() {
+                getNetData();
+
+            }
+        });*/
         isLogin();
     }
 
-    //ben提示:清除缓存的list,否则会导致内容重复
 
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
+
 
     /**
      * 判断是否登录
@@ -130,26 +140,65 @@ public class MyTweetsFragment extends BaseFragment {
         if (!TextUtils.equals("", uid) && !TextUtils.equals("", cookie)) {
             //加载数据
             getNetData();
-            LogUtils.i("用户已经登录.....");
+            //LogUtils.i("用户已经登录.....");
         } else {//提示登录
-            LogUtils.i("用户未登录.....");
+            //LogUtils.i("用户未登录.....");
+
+
             loadFailed();
             showLoginDialog();
         }
     }
-
+    public static final int NOREFRESH = 101;//空闲
+    public static final int DOWNDROPREFRESH = 102;//下拉刷新
+    public static final int UPDROPREMORE = 103;//上拉加载
+    private int currentState = NOREFRESH;
     /**
      * 加载数据
      */
     private void getNetData() {
+        if (currentState == UPDROPREMORE) {
+            //Log.e("aaaa22222", "onStartLoadData: ====UPDROPREMORE");
+            url = "http://www.oschina.net/action/apiv2/tweets?pageToken=" + nextPageToken + "&authorId="+uid;
+        }
+        if (currentState == DOWNDROPREFRESH) {
+            //Log.e("aaaa22222", "onStartLoadData: ====DOWNDROPREFRESH");
+            url = "http://www.oschina.net/action/apiv2/tweets?pageToken=" + prevPageToken + "&authorId="+uid;
+        }
+        if (currentState == NOREFRESH) {
+            //Log.e("aaaa22222", "onStartLoadData: ====NOREFRESH");
+            url = "http://www.oschina.net/action/apiv2/tweets?authorId="+uid;
+        }
         new Thread(new Runnable() {
             @Override
             public void run() {
-                TweetInfoBean beanData = LoadData.getInstance().getBeanData(NetDataApi.NEW_TWEET_URL, TweetInfoBean.class);
+                if (currentState == DOWNDROPREFRESH) {
+
+                    Utils.runOnUIThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            // tweetItemList.clear();
+
+                            tweetAdapter.notifyDataSetChanged();
+                        }
+                    });
+                } else if (currentState == UPDROPREMORE) {
+                    tweetItems.add(new FootBean());
+                    Utils.runOnUIThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            tweetAdapter.notifyDataSetChanged();
+                        }
+                    });
+                }
+                TweetInfoBean beanData = LoadData.getInstance().getBeanData(url, TweetInfoBean.class);
                 List<TweetInfoBean.ResultBean.TweetItem> items = beanData.getResult().getItems();
-                LogUtils.i("------------------" + String.valueOf(items));
+                nextPageToken = beanData.getResult().getNextPageToken();
+                prevPageToken = beanData.getResult().getPrevPageToken();
+                //LogUtils.i("------------------" + String.valueOf(items));
+
                 itemLists.addAll(items);
-                itemLists.add(new FootBean());
+
 
                 //加载成功后
                 Utils.runOnUIThread(new Runnable() {
@@ -175,7 +224,9 @@ public class MyTweetsFragment extends BaseFragment {
                 uid = SpUtil.getString(Constant.UID, "");
                 cookie = SpUtil.getString(Constant.COOKIE, "");
             } else {
-                getNetData();
+                //LogUtils.i("--------<<>>>>>----" + "重新加载");
+
+            getNetData();
             }
         }
     }

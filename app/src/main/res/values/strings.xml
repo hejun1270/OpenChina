@@ -51,4 +51,12 @@
     <string name="nameing">正在报名</string>
     <string name="loss_detail">详情丢失</string>
     <string name="commend">  发表评论:</string>
+
+
+    <string name="from_web">网页</string>
+    <string name="from_mobile">手机</string>
+    <string name="from_android">Android</string>
+    <string name="from_iphone">iPhone</string>
+    <string name="from_windows_phone">Windows Phone</string>
+    <string name="from_wechat">微信</string>
 </resources>

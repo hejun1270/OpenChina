@@ -54,6 +54,7 @@
             android:name=".ui.activity.PagerPhotoActivity"
             android:theme="@style/AppTheme.Lucency" />
         <activity android:name=".ui.activity.RecommDetailActivity" />
+        <activity android:name=".ui.activity.LoadImage"/>
         <activity android:name=".ui.activity.syn_activity.DetailsActivity"
             android:windowSoftInputMode="stateHidden"/>
     </application>
