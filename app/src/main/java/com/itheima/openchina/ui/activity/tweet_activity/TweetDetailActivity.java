@@ -1,6 +1,7 @@
 package com.itheima.openchina.ui.activity.tweet_activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -9,9 +10,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.itheima.openchina.R;
 import com.itheima.openchina.bases.BaseActivity;
-import com.itheima.openchina.beans.TweetInfoBean;
-
-import java.util.List;
+import com.jaeger.library.StatusBarUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -47,7 +46,9 @@ public class TweetDetailActivity extends BaseActivity {
     Button btnNice;
     @BindView(R.id.btn_comment)
     Button btnComment;
-    private List<TweetInfoBean.ResultBean.TweetItem> tweetItemList;
+    @BindView(R.id.btn_back)
+    ImageView btnBack;
+
 
     @Override
     protected int getLayoutRs() {
@@ -57,25 +58,44 @@ public class TweetDetailActivity extends BaseActivity {
     @Override
     protected void init() {
         super.init();
+        StatusBarUtil.setColor(this,getResources().getColor(R.color.colorPrimary));
         Intent intent = getIntent();
         String userName = intent.getStringExtra("userName");
         String userImage = intent.getStringExtra("userImage");
         String tweetContent = intent.getStringExtra("tweetContent");
         String sendTime = intent.getStringExtra("sendTime");
+        String thunbupNum = intent.getStringExtra("thunbupNum");
+        String comment = intent.getStringExtra("comment");
+        //用户名称
         tvUserName.setText(userName);
+        //用户头像
         Glide.with(getApplicationContext()).load(userImage).into(profileImage);
+        //动弹内容
         content.setText(tweetContent);
+        //发送时间
         tvPubTime.setText(sendTime);
-
+        //点赞数量
+        tvThumbupNum.setText(thunbupNum+"");
+        //评论数量
+        tvCommentNum.setText(comment);
 
 
     }
 
 
-    @OnClick({R.id.ic_thumbup, R.id.ic_comment, R.id.btn_nice, R.id.btn_comment})
+
+    int i=0;
+    @OnClick({R.id.btn_back, R.id.ic_thumbup, R.id.ic_comment, R.id.btn_nice, R.id.btn_comment})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.btn_back:
+                finish();
+                break;
             case R.id.ic_thumbup:
+
+                tvThumbupNum.setTextColor(Color.GREEN);
+                i+=1;
+                tvThumbupNum.setText(i+"");
                 break;
             case R.id.ic_comment:
                 break;

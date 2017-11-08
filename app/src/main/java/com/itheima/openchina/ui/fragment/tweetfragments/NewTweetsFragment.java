@@ -14,7 +14,6 @@ import com.itheima.openchina.beans.FootBean;
 import com.itheima.openchina.beans.TweetInfoBean;
 import com.itheima.openchina.cacheadmin.LoadData;
 import com.itheima.openchina.interfaces.ItemType;
-import com.itheima.openchina.utils.LogUtils;
 import com.itheima.openchina.utils.ToastUtil;
 import com.itheima.openchina.utils.Utils;
 
@@ -37,9 +36,9 @@ public class NewTweetsFragment extends BaseFragment {
     private View view;
     private String nextPageToken;
     private List<TweetInfoBean.ResultBean.TweetItem> tweetItemList;
-    private String newUrl;
+
     private String url;
-    private int currentItem;
+
     private int visibleItemPosition;
     private String prevPageToken;
     public static final int NOREFRESH = 101;//空闲
@@ -114,24 +113,25 @@ public class NewTweetsFragment extends BaseFragment {
     //http://www.oschina.net/action/apiv2/tweets?pageToken=56374BD0797A25134AD6659CDD5740BA&type=1
     @Override
     protected void onStartLoadData() {
-        if (currentState == UPDROPREMORE) {
-            Log.e("aaaa22222", "onStartLoadData: ====UPDROPREMORE");
-            url = "http://www.oschina.net/action/apiv2/tweets?pageToken=" + nextPageToken + "&type=1";
-        }
-        if (currentState == DOWNDROPREFRESH) {
-            Log.e("aaaa22222", "onStartLoadData: ====DOWNDROPREFRESH");
-            url = "http://www.oschina.net/action/apiv2/tweets?pageToken=" + prevPageToken + "&type=1";
-        }
-        if (currentState == NOREFRESH) {
-            Log.e("aaaa22222", "onStartLoadData: ====NOREFRESH");
-            url = "http://www.oschina.net/action/apiv2/tweets?type=1";
-        }
+
         //tweetItemList.clear();
         /*Thread thread = Thread.currentThread();
         Log.d("------------",thread+"");*/
         new Thread(new Runnable() {
             @Override
             public void run() {
+                if (currentState == UPDROPREMORE) {
+                    Log.e("aaaa22222", "onStartLoadData: ====UPDROPREMORE");
+                    url = "http://www.oschina.net/action/apiv2/tweets?pageToken=" + nextPageToken + "&type=1";
+                }
+                if (currentState == DOWNDROPREFRESH) {
+                    Log.e("aaaa22222", "onStartLoadData: ====DOWNDROPREFRESH");
+                    url = "http://www.oschina.net/action/apiv2/tweets?pageToken=" + prevPageToken + "&type=1";
+                }
+                if (currentState == NOREFRESH) {
+                    Log.e("aaaa22222", "onStartLoadData: ====NOREFRESH");
+                    url = "http://www.oschina.net/action/apiv2/tweets?type=1";
+                }
                 if (currentState == DOWNDROPREFRESH) {
 
                     Utils.runOnUIThread(new Runnable() {
@@ -158,7 +158,7 @@ public class NewTweetsFragment extends BaseFragment {
                 prevPageToken = beanData.getResult().getPrevPageToken();
                 tweetItems.addAll(tweetItemList);
 
-                LogUtils.i("run:   tweetItemList的个数====  " + tweetItemList.size() + "=====tweetItems的个数====" + tweetItems.size());
+                //LogUtils.i("run:   tweetItemList的个数====  " + tweetItemList.size() + "=====tweetItems的个数====" + tweetItems.size());
                 //加载成功后
                 Utils.runOnUIThread(new Runnable() {
                     @Override
@@ -169,7 +169,7 @@ public class NewTweetsFragment extends BaseFragment {
 
                         recyclerViewAdapter.updateData();
                         }
-                        LogUtils.i("tweetItems-------------<>" + tweetItems.size());
+                       // LogUtils.i("tweetItems-------------<>" + tweetItems.size());
                     }
                 });
             }

@@ -4,12 +4,33 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+     <ImageView
+         android:id="@+id/btn_back"
+         android:src="@mipmap/ic_arrow_back"
+         android:layout_gravity="center_vertical"
+         android:layout_marginLeft="12dp"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content" />
+        <TextView
+            android:text="动弹详情"
+            android:textSize="20sp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="25dp"
+            android:textColor="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 <LinearLayout
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <de.hdodenhof.circleimageview.CircleImageView
-        android:padding="8dp"
+        android:padding="10dp"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/profile_image"
         android:layout_width="80dp"
@@ -22,13 +43,15 @@
         android:id="@+id/tv_user_name"
         android:layout_marginTop="30dp"
         android:layout_marginLeft="5dp"
+        android:textSize="20sp"
+        android:textColor="@color/black"
         android:text="用户名"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 </LinearLayout>
     <TextView
         android:id="@+id/content"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="60dp"
         android:text="5555555555555555555"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -39,6 +62,7 @@
         <TextView
             android:id="@+id/tv_pub_time"
             android:text="发送时间"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -80,6 +104,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <Button
             android:id="@+id/btn_nice"
             android:text="赞(0)"

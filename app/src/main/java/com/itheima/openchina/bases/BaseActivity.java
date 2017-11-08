@@ -2,7 +2,6 @@ package com.itheima.openchina.bases;
 
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -52,6 +51,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager
                     .LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
+
         ButterKnife.bind(this);
         initSnackBar();
         setNetReciverListener();
