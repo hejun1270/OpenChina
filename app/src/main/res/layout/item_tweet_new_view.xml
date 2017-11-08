@@ -21,6 +21,8 @@
     <TextView
         android:id="@+id/tv_user_name"
         android:text="用户名"
+        android:textSize="20sp"
+        android:textColor="@color/black"
         android:layout_marginTop="8dp"
         android:layout_marginLeft="10dp"
         android:layout_width="match_parent"
@@ -34,18 +36,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <ImageView
-        android:id="@+id/content_Image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:id="@+id/tl_content_image"
+        android:layout_below="@id/tv_tweet_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"/>
     <TextView
         android:id="@+id/tv_send_time"
-        android:layout_below="@id/tv_tweet_content"
+        android:layout_below="@id/tl_content_image"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="10dp"
         android:text="发送时间"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <LinearLayout
+
         android:layout_marginRight="8dp"
         android:layout_below="@id/tv_tweet_content"
         android:layout_marginTop="20dp"

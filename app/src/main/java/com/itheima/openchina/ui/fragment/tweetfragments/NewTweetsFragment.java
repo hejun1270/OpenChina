@@ -1,6 +1,5 @@
 package com.itheima.openchina.ui.fragment.tweetfragments;
 
-import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -11,17 +10,14 @@ import android.view.animation.LayoutAnimationController;
 import com.itheima.openchina.R;
 import com.itheima.openchina.adapters.tweetAdapter.TweetAdapter;
 import com.itheima.openchina.bases.BaseFragment;
-import com.itheima.openchina.bases.BaseRecyclerAdapter;
 import com.itheima.openchina.beans.FootBean;
 import com.itheima.openchina.beans.TweetInfoBean;
 import com.itheima.openchina.cacheadmin.LoadData;
 import com.itheima.openchina.interfaces.ItemType;
-import com.itheima.openchina.ui.activity.tweet_activity.TweetDetailActivity;
 import com.itheima.openchina.utils.LogUtils;
 import com.itheima.openchina.utils.ToastUtil;
 import com.itheima.openchina.utils.Utils;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +29,7 @@ import java.util.List;
  * Description: //TODO
  * Copyright notice:
  */
-public class NewTweetsFragment extends BaseFragment implements BaseRecyclerAdapter.RecycleViewItemOnClickListener {
+public class NewTweetsFragment extends BaseFragment {
 
     private RecyclerView recyclerView;
     private List<ItemType> tweetItems = new ArrayList<>();
@@ -50,6 +46,7 @@ public class NewTweetsFragment extends BaseFragment implements BaseRecyclerAdapt
     public static final int DOWNDROPREFRESH = 102;//下拉刷新
     public static final int UPDROPREMORE = 103;//上拉加载
     private int currentState = NOREFRESH;
+    private TweetInfoBean beanData;
 
 
     //加载布局
@@ -72,8 +69,7 @@ public class NewTweetsFragment extends BaseFragment implements BaseRecyclerAdapt
         //上拉加载更多
         upLoadMoreData();
         recyclerView.setAdapter(recyclerViewAdapter);
-        //最新动弹条目点击事件
-        recyclerViewAdapter.setRecycleViewItemOnClickListener(this);
+
 
     }
 
@@ -90,6 +86,7 @@ public class NewTweetsFragment extends BaseFragment implements BaseRecyclerAdapt
     //条目的动画
     private void itemAnimation() {
         //添加条目动画
+
         LayoutAnimationController lac = new LayoutAnimationController(AnimationUtils.loadAnimation(getActivity(), R.anim.list_zoom));
         lac.setOrder(LayoutAnimationController.ORDER_RANDOM);
         recyclerView.setLayoutAnimation(lac);
@@ -155,7 +152,7 @@ public class NewTweetsFragment extends BaseFragment implements BaseRecyclerAdapt
                     });
                 }
 
-                TweetInfoBean beanData = LoadData.getInstance().getBeanData(url, TweetInfoBean.class);
+                beanData = LoadData.getInstance().getBeanData(url, TweetInfoBean.class);
                 tweetItemList = beanData.getResult().getItems();
                 nextPageToken = beanData.getResult().getNextPageToken();
                 prevPageToken = beanData.getResult().getPrevPageToken();
@@ -168,18 +165,16 @@ public class NewTweetsFragment extends BaseFragment implements BaseRecyclerAdapt
                     public void run() {
                         //删除中间的头和脚
                         loadSuccess();
+                        if(recyclerViewAdapter!=null){
+
                         recyclerViewAdapter.updateData();
+                        }
                         LogUtils.i("tweetItems-------------<>" + tweetItems.size());
                     }
                 });
-
-
             }
         }).start();
-
-
     }
-
 
     @Override
     public void onPause() {
@@ -188,16 +183,5 @@ public class NewTweetsFragment extends BaseFragment implements BaseRecyclerAdapt
 
     }
 
-    //条目点击处理
-    @Override
-    public void onItemOnClick(View view, int position) {
-        ToastUtil.showToast("当前条目" + position);
-        //判断用户是否登录
-        //跳转到详情页面
-        Intent intent = new Intent(getActivity(), TweetDetailActivity.class);
-        intent.putExtra("userDate", (Serializable) tweetItemList);
-        startActivity(intent);
 
-
-    }
 }

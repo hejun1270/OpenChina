@@ -1,7 +1,11 @@
 package com.itheima.openchina.adapters.tweetAdapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,6 +16,8 @@ import com.itheima.openchina.R;
 import com.itheima.openchina.bases.BaseRecyclerAdapter;
 import com.itheima.openchina.beans.TweetInfoBean;
 import com.itheima.openchina.interfaces.ItemType;
+import com.itheima.openchina.ui.activity.LoadImage;
+import com.itheima.openchina.ui.activity.tweet_activity.TweetDetailActivity;
 import com.itheima.openchina.utils.StringUtils;
 
 import java.util.List;
@@ -27,13 +33,23 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Description: //TODO 这是动弹模块的适配器（创建条目布局、刷新条目数据、设置接口实现条目点击事件）
  * Copyright notice:
  */
-public class TweetAdapter extends BaseRecyclerAdapter {
+public class TweetAdapter extends BaseRecyclerAdapter implements BaseRecyclerAdapter.RecycleViewItemOnClickListener {
 
     private List<ItemType> list;
+    private TweetInfoBean.ResultBean.TweetItem bean;
+    private String name;
+    private String content;
+    private String pubTime;
+    private int[] like;
+    private String commentnum;
+    private String portrait;
+
+
     public TweetAdapter(Context context, List list) {
         super(context, list);
         this.list=list;
         Log.e("aaaa22222", "TweetAdapter:   数据的条数 =====" + list.size() );
+
     }
 
 
@@ -49,11 +65,11 @@ public class TweetAdapter extends BaseRecyclerAdapter {
     @Override
     protected void createViewBodyItem(RecyclerView.ViewHolder holder, final int position) {
 
-        TweetInfoBean.ResultBean.TweetItem bean=null;
-
+        bean = null;
+       this.setRecycleViewItemOnClickListener(this);
 
         if(position<list.size()-1){
-            bean=(TweetInfoBean.ResultBean.TweetItem)list.get(position);
+            bean =(TweetInfoBean.ResultBean.TweetItem)list.get(position);
         }else{
             return;
             //ben:暂时性防止下拉崩盘
@@ -71,7 +87,8 @@ public class TweetAdapter extends BaseRecyclerAdapter {
 
         //用户头像
         CircleImageView userImg = holder.itemView.findViewById(R.id.profile_image);
-        Glide.with(getContext()).load(bean.getAuthor().getPortrait()).into(userImg);
+        portrait = bean.getAuthor().getPortrait();
+        Glide.with(getContext()).load(portrait).into(userImg);
          //头像的点击事件
         userImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,25 +99,51 @@ public class TweetAdapter extends BaseRecyclerAdapter {
 
         //用户名
         TextView userName = holder.itemView.findViewById(R.id.tv_user_name);
-           userName.setText(bean.getAuthor().getName());
+        name = bean.getAuthor().getName();
+        userName.setText(name);
         //动弹内容
         TextView tweetContent = holder.itemView.findViewById(R.id.tv_tweet_content);
 
-        String content = bean.getContent();
-         tweetContent.setText(content);
-        /*Spanned spanned = Html.fromHtml(content);
+        content = bean.getContent();
+
+        /*if(content.contains("[:/]")){
+
+        }*/
+         //tweetContent.setText(content);
+        Spanned spanned = Html.fromHtml(content);
         tweetContent.setText(spanned);
-        tweetContent.setMovementMethod(new LinkMovementMethod());*/
+        tweetContent.setMovementMethod(new LinkMovementMethod());
         //内容图片
-        /*ImageView contentImage = holder.itemView.findViewById(R.id.content_Image);
-        Glide.with(getContext()).load(bean.getImages().get(position).getType()).into(contentImage);*/
+       final ImageView tlContentImage = holder.itemView.findViewById(R.id.tl_content_image);
+
+        if(bean.getImages()!=null) {
+            Glide.with(getContext()).load(bean.getImages().get(0).getThumb()).into(tlContentImage);
+            tlContentImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getContext(), LoadImage.class);
+                    intent.putExtra("contentImage",bean.getImages().get(0).getThumb());
+                    getContext().startActivity(intent);
+                }
+            });
+        }
+
+        //Glide.with(getContext()).load(bean.getImages().get(position).getThumb()).into(contentImage);
+        /*String thumb = bean.getImages().get(position).getThumb();
+        if(thumb!=null){
+
+        Glide.with(getContext()).load(thumb).into(contentImage);
+        }*/
+
+
+
         //发送时间
         TextView sendTime = holder.itemView.findViewById(R.id.tv_send_time);
-        String pubTime = StringUtils.friendly_time(bean.getPubDate());
+        pubTime = StringUtils.friendly_time(bean.getPubDate());
         sendTime.setText(pubTime);
         //点赞数量
         final TextView thunbupNum = holder.itemView.findViewById(R.id.tv_thumbup_num);
-        final int[] like = {bean.getStatistics().getLike()};
+        like = new int[]{bean.getStatistics().getLike()};
         thunbupNum.setText(like[0] +"");
         //点赞图片
         final ImageView icThumbupImg = holder.itemView.findViewById(R.id.ic_thumbup);
@@ -114,11 +157,51 @@ public class TweetAdapter extends BaseRecyclerAdapter {
         });
         //评论数量
         TextView commentNum = holder.itemView.findViewById(R.id.tv_comment_num);
-         commentNum.setText(bean.getStatistics().getComment()+"");
+        commentnum = bean.getStatistics().getComment() + "";
+        commentNum.setText(commentnum);
          //评论图片
         ImageView icComment = holder.itemView.findViewById(R.id.ic_comment);
     }
 
+    @Override
+    public void onItemOnClick(View view, int position) {
+        //ToastUtil.showToast("当前条目" + position);
+        //判断用户是否登录
+        //跳转到详情页面
+        Intent intent = new Intent(getContext(), TweetDetailActivity.class);
+        intent.putExtra("userName",name);
+        intent.putExtra("userImage",portrait);
+        intent.putExtra("tweetContent",content);
+        intent.putExtra("sendTime",pubTime);
+        intent.putExtra("thunbupNum",like);
+        intent.putExtra("comment",commentnum);
+
+        getContext().startActivity(intent);
+
+    }
+
+
+    /*public View loadContentImage(RecyclerView view , int position){
+
+        //创建一个流式布局
+        FlowLayout flowLayout = new FlowLayout(getContext());
+        //给流式布局设置padding
+        int padding = getResources().getDimensionPixelSize(R.dimen.padding);
+        flowLayout.setPadding(padding,padding,padding,padding);
+        //数据加载
+        if(bean.getImages()!=null){
+        for (TweetInfoBean.ResultBean.TweetItem.ImagesBean imagesBean : bean.getImages()) {
+
+
+                  String thumb = bean.getImages().get(position).getThumb();
+                  Glide.with(getContext()).load(thumb).into(view);
+                  //将数据加到流式布局当中
+                  flowLayout.addView(contentImage);
+              }
+        }
+
+         return flowLayout;
+    }*/
     /*//创建一个接口
     public interface OnItemClickListener{
         void onItemClick(int position);
