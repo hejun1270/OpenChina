@@ -6,10 +6,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.itheima.openchina.R;
 import com.itheima.openchina.bases.BaseActivity;
 import com.itheima.openchina.beans.TweetInfoBean;
-import com.itheima.openchina.utils.ToastUtil;
 
 import java.util.List;
 
@@ -26,7 +26,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Copyright notice:
  */
 public class TweetDetailActivity extends BaseActivity {
-    public int j;
+
     @BindView(R.id.profile_image)
     CircleImageView profileImage;
     @BindView(R.id.tv_user_name)
@@ -58,9 +58,15 @@ public class TweetDetailActivity extends BaseActivity {
     protected void init() {
         super.init();
         Intent intent = getIntent();
-        tweetItemList = (List<TweetInfoBean.ResultBean.TweetItem>) intent.getSerializableExtra("userDate");
-        String s = tweetItemList.toString();
-        ToastUtil.showToast(s + tweetItemList.size());
+        String userName = intent.getStringExtra("userName");
+        String userImage = intent.getStringExtra("userImage");
+        String tweetContent = intent.getStringExtra("tweetContent");
+        String sendTime = intent.getStringExtra("sendTime");
+        tvUserName.setText(userName);
+        Glide.with(getApplicationContext()).load(userImage).into(profileImage);
+        content.setText(tweetContent);
+        tvPubTime.setText(sendTime);
+
 
 
     }

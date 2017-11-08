@@ -157,7 +157,10 @@ public class HotTweetsFragment extends BaseFragment implements BaseRecyclerAdapt
                         //是否需要下拉刷新的开关
                         //setRefreshEnable(false);
                         loadSuccess();
+                        if(tweetAdapter!=null){
                         tweetAdapter.updateData();
+
+                        }
                         //tweetAdapter.notifyDataSetChanged();
 
                     }
