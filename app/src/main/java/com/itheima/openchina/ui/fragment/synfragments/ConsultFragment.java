@@ -130,6 +130,7 @@ public class ConsultFragment extends BaseFragment {
         size = list.size();
 
         final String urlMore = "http://www.oschina.net/action/apiv2/news?pageToken=" + nextPageToken;
+
         new Thread(new Runnable() {
             @Override
             public void run() {

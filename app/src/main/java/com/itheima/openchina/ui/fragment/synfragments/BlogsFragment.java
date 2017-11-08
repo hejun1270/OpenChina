@@ -20,6 +20,7 @@ import com.itheima.openchina.beans.HeadBean;
 import com.itheima.openchina.beans.QuestionBean;
 import com.itheima.openchina.cacheadmin.LoadData;
 import com.itheima.openchina.interfaces.ItemType;
+import com.itheima.openchina.utils.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -198,10 +199,7 @@ public class BlogsFragment extends BaseFragment {
 
     //上拉加载更多
     public void loadMore(String nextPageToken){
-
-        if(urlMore!=null&&urlMore.equals(url+nextPageToken)){
-            return;
-        }
+        ToastUtil.showToast(nextPageToken);
         urlMore = url+nextPageToken;
         size = list.size();
         new Thread(new Runnable() {

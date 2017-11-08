@@ -167,10 +167,6 @@ public class QuestionFragment extends BaseFragment {
 
     //上拉加载更多
     public void loadMore(String nextPageToken){
-        if(urlMore!=null&&urlMore.equals(url+nextPageToken)){
-            Toast.makeText(getActivity().getApplication(), "没有更多的数据", Toast.LENGTH_SHORT).show();
-            return;
-        }
         urlMore = url+nextPageToken;
         size = list.size();
         new Thread(new Runnable() {
