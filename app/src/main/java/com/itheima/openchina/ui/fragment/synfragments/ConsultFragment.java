@@ -137,8 +137,7 @@ public class ConsultFragment extends BaseFragment {
                         NetDataApi.CONSULT_HEAD,
                         ConsultHeadBean.class);
                 bodyData = LoadData.getInstance().getBeanData(url
-                        ,
-                        ConsultBodyBean.class);
+                        , ConsultBodyBean.class);
 
                 //添加了头
                 list.add(headData.getResult());

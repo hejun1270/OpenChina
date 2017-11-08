@@ -178,4 +178,6 @@ public class LoginInfo implements Serializable {
                 ", newLikeCount='" + newLikeCount + '\'' +
                 '}';
     }
+
+
 }

@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/total_linear"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -96,6 +95,7 @@
     </ScrollView>
 
     <LinearLayout
+        android:id="@+id/edit_linear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
@@ -104,6 +104,7 @@
 
         <EditText
             android:id="@+id/synEditText"
+            android:imeOptions="actionSend"
             android:layout_width="0dp"
             android:layout_height="38dp"
             android:layout_weight="1"
@@ -114,19 +115,11 @@
             android:paddingStart="10dp" />
 
         <TextView
-            android:id="@+id/synFiveStar"
-            android:layout_width="38dp"
-            android:layout_height="38dp"
+            android:id="@+id/send"
+            android:layout_width="40dp"
+            android:layout_height="34dp"
             android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:background="@mipmap/ic_action_favor_normal" />
-
-        <TextView
-            android:id="@+id/synShare"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginRight="5dp"
-            android:background="@drawable/selector_share" />
+            android:background="@mipmap/biz_chat_comment_send" />
 
     </LinearLayout>
 </LinearLayout>
