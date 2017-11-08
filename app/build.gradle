@@ -19,12 +19,13 @@ android {
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:26.0.0-beta1'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:0.5'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:2.2.2'
+
     /*查找控件*/
     compile 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
@@ -35,7 +36,9 @@ dependencies {
     compile 'com.google.code.gson:gson:2.2.4'
     /*图片框架*/
     compile 'com.github.bumptech.glide:glide:3.7.0'
+
     compile 'com.android.support:design:26.1.0'
+
     /*SnackBar 框架*/
     compile 'com.trycatch.android:mysnackbar:1.2.2'
     /*状态栏透明设置*/
@@ -52,6 +55,8 @@ dependencies {
     compile 'org.kymjs.kjframe:kjframe:2.6'
     /*权限请求工具*/
     compile 'pub.devrel:easypermissions:0.1.7'
+    /*图片选择框架*/
+    compile 'com.lzy.widget:imagepicker:0.6.1'
     /*高斯模糊*/
     compile 'jp.wasabeef:glide-transformations:2.0.1'
 }
