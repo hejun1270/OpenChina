@@ -9,6 +9,7 @@ import android.webkit.WebViewClient;
 
 import com.itheima.openchina.R;
 import com.itheima.openchina.bases.BaseActivity;
+import com.jaeger.library.StatusBarUtil;
 
 public class RecommDetailActivity extends BaseActivity {
 
@@ -22,6 +23,7 @@ public class RecommDetailActivity extends BaseActivity {
     @Override
     protected void init() {
         super.init();
+        StatusBarUtil.setColor(this,getResources().getColor(R.color.colorPrimary));
         tb = findViewById(R.id.tool_bar);
         webView = findViewById(R.id.wv);
         initActionBar();

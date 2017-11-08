@@ -25,7 +25,7 @@ public class OpenChinaActivity extends BaseActivity {
         tb = findViewById(R.id.tool_bar);
         tabLayout = findViewById(R.id.tablayout);
         viewPager = findViewById(R.id.viewpager);
-
+        StatusBarUtil.setColor(this,getResources().getColor(R.color.colorPrimary));
         initActionBar();
         initViewpager();
     }

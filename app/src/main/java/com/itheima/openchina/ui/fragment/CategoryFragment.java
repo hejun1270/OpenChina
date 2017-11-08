@@ -78,6 +78,7 @@ public class CategoryFragment extends BaseFragment {
     }
     @Override
     protected void onStartLoadData() {
+
         //1. 去网络获取数据
         new Thread(){
             @Override
@@ -128,6 +129,7 @@ public class CategoryFragment extends BaseFragment {
                 view=convertView;
             }
             viewcontent = view.findViewById(R.id.tv_content);
+
             //设置数据给文本控件
             viewcontent.setText(categoryBean.typeBean.list.get(position).name);
             return view;
