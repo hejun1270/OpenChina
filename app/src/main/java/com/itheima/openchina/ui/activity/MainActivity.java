@@ -1,6 +1,10 @@
 package com.itheima.openchina.ui.activity;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v4.app.FragmentTabHost;
+import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -10,11 +14,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.itheima.openchina.R;
+import com.itheima.openchina.appcontrol.Constant;
 import com.itheima.openchina.bases.BaseActivity;
 import com.itheima.openchina.ui.fragment.FindFragment;
 import com.itheima.openchina.ui.fragment.MeFragment;
 import com.itheima.openchina.ui.fragment.SynthesizeFragment;
 import com.itheima.openchina.ui.fragment.TweetFragment;
+import com.itheima.openchina.utils.SpUtil;
 import com.jaeger.library.StatusBarUtil;
 
 import butterknife.BindView;
@@ -48,6 +54,9 @@ public class MainActivity extends BaseActivity {
     private String tabDesc[] = {"综合", "动弹", "", "发现", "我的"};
     private Class mFragment[] = {SynthesizeFragment.class, TweetFragment.class, TweetFragment
             .class, FindFragment.class, MeFragment.class};
+    private String uid;
+    private String mCookie;
+    private AlertDialog.Builder aletDialog;
 
 
     @Override
@@ -85,7 +94,7 @@ public class MainActivity extends BaseActivity {
     public void initBottomTab() {
 
         for (int i = 0; i < mTabItemBg.length; i++) {
-         tabhost.setup(getApplicationContext(), getSupportFragmentManager(), R.id.home_content);
+            tabhost.setup(getApplicationContext(), getSupportFragmentManager(), R.id.home_content);
             // 给每个Tab按钮设置图标、文字和内容
             TabHost.TabSpec tabSpec = tabhost.newTabSpec("tab" + i)
                     .setIndicator(getTabItemView(i));
@@ -135,8 +144,50 @@ public class MainActivity extends BaseActivity {
             case R.id.home_search:
                 break;
             case R.id.iv_add:
-                startMActivity(AddActivity.class);
+                isLogin();
                 break;
         }
+    }
+
+    /**
+     * 判断是否登录
+     */
+    private void isLogin() {
+        uid = SpUtil.getString(Constant.UID, "");
+        mCookie = SpUtil.getString(Constant.COOKIE, "");
+        if (!TextUtils.equals("", uid) && !TextUtils.equals("", mCookie)) {
+            startMActivity(AddActivity.class);
+        } else {//提示登录
+            showLoginDialog();
+        }
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == 1001) {
+            boolean login = data.getBooleanExtra("login", false);
+            if (login) {
+                uid = SpUtil.getString(Constant.UID, "");
+                mCookie = SpUtil.getString(Constant.COOKIE, "");
+                startMActivity(AddActivity.class);
+            }
+        }
+    }
+
+    private void showLoginDialog() {
+        aletDialog = new AlertDialog.Builder(this)
+                .setTitle("登录提示:")
+                .setMessage("亲，登录后才能发动弹哦 -_-")
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                        startActivityForResult(intent, 1001);
+                    }
+                })
+                .setNegativeButton("取消", null);
+        aletDialog.show();
     }
 }

@@ -1,7 +1,180 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+    <!--title-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/normal_padding">
 
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_arrow_back" />
+
+        <TextView
+            android:id="@+id/pager_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/tanyitan"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_title_size" />
+
+        <TextView
+            android:id="@+id/tv_send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:text="@string/send"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_title_size" />
+    </LinearLayout>
+    <!--内容区域-->
+    <ScrollView
+        android:id="@+id/sv_add_show_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/normal_padding">
+
+            <EditText
+                android:id="@+id/et_input_twee"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"
+                android:gravity="top"
+                android:hint="今天想动弹什么？"
+                android:minLines="5"
+                android:padding="@dimen/normal_padding" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rc_ShowPicture"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:choiceMode="singleChoice"
+                android:divider="@null"
+                android:fadingEdge="none"
+                android:listSelector="@android:color/transparent"
+                android:scrollbarStyle="outsideOverlay"
+                app:layoutManager="android.support.v7.widget.GridLayoutManager"
+                app:spanCount="4"
+                tools:listitem="@layout/list_item_image" />
+        </LinearLayout>
+    </ScrollView>
+    <!--底部控件-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/layout_bg" />
+    <!--底部toolbar-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iv_addPicture"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/btn_nor"
+            android:clickable="true"
+            android:padding="@dimen/normal_padding"
+            android:src="@mipmap/ic_tweet_picture_normal" />
+
+        <ImageView
+            android:id="@+id/iv_addMention"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/btn_nor"
+            android:clickable="true"
+            android:padding="@dimen/normal_padding"
+            android:src="@mipmap/ic_tweet_mention_normal" />
+
+        <ImageView
+            android:id="@+id/iv_addTopic"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/btn_nor"
+            android:clickable="true"
+            android:padding="@dimen/normal_padding"
+            android:src="@mipmap/ic_tweet_topic_normal" />
+
+        <ImageView
+            android:id="@+id/iv_addExpression"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/btn_nor"
+            android:clickable="true"
+            android:padding="@dimen/normal_padding"
+            android:src="@mipmap/ic_tweet_expression_normal" />
+    </LinearLayout>
+    <!--emoij input-->
+    <LinearLayout
+        android:id="@+id/ll_emoij"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/emoji_pager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/normal_padding">
+
+            <TextView
+                android:id="@+id/tv_qqEmoji"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="@string/qq_emoji"
+                android:textSize="@dimen/text_normal_size" />
+
+            <TextView
+                android:id="@+id/tv_Emoji"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="@string/emoji"
+                android:textSize="@dimen/text_normal_size" />
+
+            <ImageView
+                android:id="@+id/iv_backspace"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:scaleType="center"
+                android:src="@drawable/btn_del" />
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>

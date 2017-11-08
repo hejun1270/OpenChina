@@ -56,10 +56,8 @@ public abstract class BaseFragment extends Fragment {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build
                 .VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getActivity().getWindow();
-            window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager
-                    .LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
-
 
         initSnackBar();
 

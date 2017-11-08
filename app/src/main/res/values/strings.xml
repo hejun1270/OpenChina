@@ -47,6 +47,10 @@
 
     <string name="permissions_camera_error">相机无法完成初始化,请正确授权。</string>
     <string name="str_request_camera_message">请求获取相机权限</string>
+    <string name="tanyitan">弹一弹</string>
+    <string name="send">发送</string>
+    <string name="qq_emoji">QQ表情</string>
+    <string name="emoji">Emoji表情</string>
     <string name="action">活动</string>
     <string name="nameing">正在报名</string>
     <string name="loss_detail">详情丢失</string>
