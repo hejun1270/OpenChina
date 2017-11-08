@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -101,7 +102,7 @@ public class SynQuestionAdapter extends BaseRecyclerAdapter implements BaseRecyc
 
 
     @Override
-    protected View createItemHeadLayout() {
+    protected View createItemHeadLayout(ViewGroup parent) {
         View view = View.inflate(getContext(), R.layout.view_head_question_syn, null);
 
         RadioGroup group=view.findViewById(R.id.question_group);
@@ -146,8 +147,8 @@ public class SynQuestionAdapter extends BaseRecyclerAdapter implements BaseRecyc
     //点击监听
     @Override
     public void onItemOnClick(View view, int position) {
-        if(bean.get(position+1) instanceof BodyType){
-            QuestionBean.ResultBean.QuestiontemsBean que=(QuestionBean.ResultBean.QuestiontemsBean) bean.get(position+1);
+        if(bean.get(position) instanceof BodyType){
+            QuestionBean.ResultBean.QuestiontemsBean que=(QuestionBean.ResultBean.QuestiontemsBean) bean.get(position);
             String title = que.getTitle();
             SpUtil.saveBoolean(title,true);
             notifyItemRangeChanged(1,bean.size()-1);

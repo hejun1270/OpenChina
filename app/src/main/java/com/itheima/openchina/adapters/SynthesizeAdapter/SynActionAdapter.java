@@ -6,12 +6,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.itheima.openchina.interfaces.BodyType;
+import com.itheima.openchina.interfaces.HeadType;
 import com.itheima.openchina.ui.activity.syn_activity.DetailsActivity;
 import com.itheima.openchina.R;
 import com.itheima.openchina.bases.BaseRecyclerAdapter;
@@ -22,6 +25,8 @@ import com.itheima.openchina.utils.SpUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import jp.wasabeef.glide.transformations.BlurTransformation;
 
 /**
  * Created by 佘本民
@@ -110,20 +115,48 @@ public class SynActionAdapter extends BaseRecyclerAdapter implements BaseRecycle
     }
 
 
-    @Override
-    protected View createItemHeadLayout() {
-        ImageView imageView = (ImageView) View.inflate(getContext(), R.layout.view_head_image_action_syn, null);
 
-        String img = head.getImg();
-        Glide.with(getContext()).load(img).into(imageView);
-        return imageView;
+    @Override
+    protected View createItemHeadLayout(ViewGroup parent) {
+        View v = LayoutInflater.from(getContext()).inflate(R.layout.view_head_image_action_syn, parent, false);
+
+        ImageView img=v.findViewById(R.id.imageImg);
+        img.setScaleType(ImageView.ScaleType.FIT_XY);
+        Glide.with(getContext()).load(head.getImg()).into(img);
+
+
+        Glide.with(getContext()).load(head.getImg()).into(img);
+
+        ImageView imageView=v.findViewById(R.id.bg);
+        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+        Glide.with(getContext()).load(head.getImg())
+        .bitmapTransform(new BlurTransformation(getContext(),20)).into(imageView);
+
+
+        TextView title=v.findViewById(R.id.textImageTitle);
+        title.setText(head.getName());
+
+        TextView content=v.findViewById(R.id.textImageBody);
+        content.setText(head.getDetail());
+        return v;
+
+
     }
 
 
     @Override
     public void onItemOnClick(View view, int position) {
-        if(mList.get(position+1) instanceof BodyType){
-            ActionContentBean.ResultBean.ItemsBean body = (ActionContentBean.ResultBean.ItemsBean) mList.get(position+1);
+        if(mList.get(position) instanceof HeadType){
+            ActionHeadBean.ResultBean.ActionItems head=(ActionHeadBean.ResultBean.ActionItems) mList.get(0);
+            Intent intent = new Intent(getContext(),DetailsActivity.class);
+            intent.putExtra("href",head.getHref());
+
+            intent.putExtra("id",head.getId()+"");
+            intent.putExtra("title","活动详情");
+            getContext().startActivity(intent);
+        }
+        if(mList.get(position) instanceof BodyType){
+            ActionContentBean.ResultBean.ItemsBean body = (ActionContentBean.ResultBean.ItemsBean) mList.get(position);
             String title = body.getTitle();
             SpUtil.saveBoolean(title,true);
             notifyItemRangeChanged(1,mList.size()-1);
@@ -132,8 +165,6 @@ public class SynActionAdapter extends BaseRecyclerAdapter implements BaseRecycle
             intent.putExtra("id",body.getId()+"");
             intent.putExtra("title","活动详情");
             getContext().startActivity(intent);
-
-
         }
     }
 }

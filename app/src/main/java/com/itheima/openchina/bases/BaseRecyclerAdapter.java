@@ -2,22 +2,17 @@ package com.itheima.openchina.bases;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.itheima.openchina.R;
 import com.itheima.openchina.interfaces.BodyType;
 import com.itheima.openchina.interfaces.FootType;
 import com.itheima.openchina.interfaces.HeadType;
 import com.itheima.openchina.interfaces.ItemType;
-import com.itheima.openchina.utils.LogUtils;
 
 import java.util.List;
-
-import static android.content.ContentValues.TAG;
 
 /**
  * Created by 佘本民
@@ -58,7 +53,7 @@ public abstract class BaseRecyclerAdapter extends RecyclerView.Adapter {
         View view = null;
         switch (viewType) {
             case HEADTYPE:
-                view=createItemHeadLayout();
+                view=createItemHeadLayout(parent);
                 break;
             case BODYTYPE:
                 view= createItemBodyLayout();
@@ -78,7 +73,7 @@ public abstract class BaseRecyclerAdapter extends RecyclerView.Adapter {
     //添加item布局
     protected abstract View createItemBodyLayout();
 
-    protected View createItemHeadLayout() {
+    protected View createItemHeadLayout(ViewGroup parent) {
         return null;
     }
 
@@ -125,16 +120,19 @@ public abstract class BaseRecyclerAdapter extends RecyclerView.Adapter {
              BaseRecyclerAdapter.this.mListener=mListener;
              //条目的点击事件
              itemView.setOnClickListener(this);
+
+
         }
 
         @Override
         public void onClick(View view) {
              if(mListener!=null){
-                 if(createItemHeadLayout()!=null){
+                /* if(createItemHeadLayout(parent)!=null){
                      mListener.onItemOnClick(view,getPosition()-1);
                  }else{
                      mListener.onItemOnClick(view,getPosition());
-                 }
+                 }*/
+                 mListener.onItemOnClick(view,getPosition());
              }
         }
     }

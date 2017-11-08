@@ -31,6 +31,7 @@ import com.itheima.openchina.bases.BaseActivity;
 import com.itheima.openchina.ui.activity.LoginActivity;
 import com.itheima.openchina.utils.LogUtils;
 import com.itheima.openchina.utils.SpUtil;
+import com.itheima.openchina.utils.ToastUtil;
 import com.itheima.openchina.wedigt.KeyboardChangeListener;
 import com.jaeger.library.StatusBarUtil;
 
@@ -65,6 +66,7 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
     private String id;
     private String cookie;
     private AlertDialog.Builder alertDialog;
+    private String commend;
 
     @Override
     protected int getLayoutRs() {
@@ -78,14 +80,14 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
         StatusBarUtil.setColor(this, getResources().getColor(R.color.colorAccent));
         Intent intent = getIntent();
         String title = intent.getStringExtra("title");
-        String commend = intent.getStringExtra("commend");
+        commend = intent.getStringExtra("commend");
         id = intent.getStringExtra("id");
         href = intent.getStringExtra("href");
         //头布局
         ImageView imageBack = findViewById(R.id.image_back);
         ImageView imageBg = findViewById(R.id.imageBg);
         TextView titleText = findViewById(R.id.textTitle);
-        TextView commendText = findViewById(R.id.textCommend);
+        commendText = findViewById(R.id.textCommend);
         titleText.setText(title);
         commendText.setText(commend);
         imageBack.setOnClickListener(this);
@@ -94,6 +96,7 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
         webView = findViewById(R.id.synWebView);
         webViewSetting();
 
+        LogUtils.i(id);
         synScrollView = findViewById(R.id.synScrollView);
         edit = findViewById(R.id.synEditText);
         edit.setImeOptions(EditorInfo.IME_ACTION_SEND);
@@ -202,6 +205,7 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
         if (!TextUtils.equals("", uid) && !TextUtils.equals("", cookie)) {
             //加载数据
             LogUtils.i("用户已经登录.....");
+            LogUtils.i("id:"+id+"href:"+href);
             sendMsgRight();
         } else {//提示登录
             LogUtils.i("用户未登录.....");
@@ -231,11 +235,23 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
 
                 try {
                     Response execute = okhttp.newCall(rq).execute();
-                    webView.loadUrl(href);
-                    edit.setText("");
+                    LogUtils.i(execute.message()+"++++++");
+                    LogUtils.i("ben++++");
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
+                runOnUiThread(new Runnable() {
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void run() {
+                        edit.setText("");
+                        webView.loadUrl(href);
+                        int i = Integer.parseInt(commend) + 1;
+                        commendText.setText(i+"");
+                    }
+                });
             }
         }).start();
     }
@@ -245,7 +261,7 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
     private void showLoginDialog() {
         alertDialog = new AlertDialog.Builder(DetailsActivity.this)
                 .setTitle("登录提示:")
-                .setMessage("亲，登录后才能查看消息哦 -_-")
+                .setMessage("亲，登录后才能查看消息哦")
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

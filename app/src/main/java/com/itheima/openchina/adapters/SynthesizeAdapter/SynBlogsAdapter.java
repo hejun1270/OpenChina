@@ -11,6 +11,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ImageSpan;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -128,7 +129,7 @@ public class SynBlogsAdapter extends BaseRecyclerAdapter implements BaseRecycler
 
 
     @Override
-    protected View createItemHeadLayout() {
+    protected View createItemHeadLayout(ViewGroup parent) {
         View view = View.inflate(getContext(), R.layout.view_head_blogs_syn, null);
         RadioGroup group = view.findViewById(R.id.blogs_group);
 
@@ -164,8 +165,8 @@ public class SynBlogsAdapter extends BaseRecyclerAdapter implements BaseRecycler
 
     @Override
     public void onItemOnClick(View view, int position) {
-        if(body.get(position+1) instanceof BodyType){
-            BlogBean.ResultBean.BlogItemsBean bean= (BlogBean.ResultBean.BlogItemsBean) body.get(position+1);
+        if(body.get(position) instanceof BodyType){
+            BlogBean.ResultBean.BlogItemsBean bean= (BlogBean.ResultBean.BlogItemsBean) body.get(position);
             String title = bean.getTitle();
             SpUtil.saveBoolean(title,true);
             notifyItemRangeChanged(1,body.size()-1);

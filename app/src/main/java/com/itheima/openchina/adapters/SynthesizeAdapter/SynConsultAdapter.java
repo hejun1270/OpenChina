@@ -11,6 +11,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ImageSpan;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.itheima.loopviewpager.LoopViewPager;
@@ -109,7 +110,7 @@ public class SynConsultAdapter extends BaseRecyclerAdapter implements BaseRecycl
 
 
     @Override
-    protected View createItemHeadLayout() {
+    protected View createItemHeadLayout(ViewGroup parent) {
 
 
         List<String> urlImage = new ArrayList<>();
@@ -131,9 +132,9 @@ public class SynConsultAdapter extends BaseRecyclerAdapter implements BaseRecycl
     //条目点击事件
     @Override
     public void onItemOnClick(View view, int position) {
-        if(mList.get(position+1) instanceof BodyType){
+        if(mList.get(position) instanceof BodyType){
             ConsultBodyBean.ConsultBodyResultBean.ItemsBean itemsBean
-                    =  (ConsultBodyBean.ConsultBodyResultBean.ItemsBean) mList.get(position+1);
+                    =  (ConsultBodyBean.ConsultBodyResultBean.ItemsBean) mList.get(position);
             String title = itemsBean.getTitle();
             SpUtil.saveBoolean(title,true);
             notifyItemRangeChanged(1,mList.size()-1);
