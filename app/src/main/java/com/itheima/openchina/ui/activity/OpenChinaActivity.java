@@ -6,7 +6,7 @@ import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 
 import com.itheima.openchina.R;
-import com.itheima.openchina.adapters.FindAdapter;
+import com.itheima.openchina.adapters.DiscoverAdapter.FindAdapter;
 import com.itheima.openchina.bases.BaseActivity;
 import com.jaeger.library.StatusBarUtil;
 
@@ -47,7 +47,6 @@ public class OpenChinaActivity extends BaseActivity {
         ActionBar supportActionBar = getSupportActionBar();
         supportActionBar.setDisplayHomeAsUpEnabled(true);
         supportActionBar.setTitle("开源软件");
-
     }
 
     @Override

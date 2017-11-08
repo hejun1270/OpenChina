@@ -1,4 +1,4 @@
-package com.itheima.openchina.ui.fragment;
+package com.itheima.openchina.ui.fragment.discoverfragment;
 
 import android.util.Log;
 import android.view.View;
@@ -31,6 +31,7 @@ public class CategoryFragment extends BaseFragment {
     private Myadapter myadapter;
     private View view;
     private int MODE;
+
     @Override
     protected void dataOnRefresh() {
         loadSuccess();
@@ -134,4 +135,5 @@ public class CategoryFragment extends BaseFragment {
             return view;
         }
     }
+
 }

@@ -1,8 +1,11 @@
-package com.itheima.openchina.ui.fragment;
+package com.itheima.openchina.ui.fragment.discoverfragment;
 
 import android.content.Intent;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
@@ -24,16 +27,24 @@ public class CountryFragment extends BaseFragment {
 
     private int size;
     private RecommondBean countryBean;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void dataOnRefresh() {
-        onStartLoadData();
+
     }
 
     @Override
     protected View onCreateContentView() {
+        setRefreshEnable(false);
         View view = View.inflate(getContext(), R.layout.recommond_fragment, null);
         ListView listView = view.findViewById(R.id.recommond_listview);
+        swipeRefreshLayout = view.findViewById(R.id.srl);
+        //设置下拉刷新图标颜色变化
+        swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.swiperefresh_color1)
+                ,getResources().getColor(R.color.swiperefresh_color2)
+                ,getResources().getColor(R.color.swiperefresh_color3)
+                ,getResources().getColor(R.color.swiperefresh_color4));
         Myadapter myadapter = new Myadapter();
         listView.setAdapter(myadapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -45,9 +56,26 @@ public class CountryFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
+        //添加数据加载动画
+        LayoutAnimationController lac = new LayoutAnimationController(AnimationUtils.loadAnimation(getActivity(), R.anim.list_zoom));
+        //随机加载
+        lac.setOrder(LayoutAnimationController.ORDER_RANDOM);
+        listView.setLayoutAnimation(lac);
+        listView.startLayoutAnimation();
+        refreshDown();
         return view;
 
     }
+
+    private void refreshDown() {
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+    }
+
     public class Myadapter extends BaseAdapter {
 
         @Override
@@ -106,7 +134,6 @@ public class CountryFragment extends BaseFragment {
                     @Override
                     public void run() {
                         loadSuccess();
-                        onFInishRefresh();
                     }
                 });
             }
