@@ -128,7 +128,8 @@ public class ConsultFragment extends BaseFragment {
     //上拉加载更多
     public void loadMore(String nextPageToken){
         size = list.size();
-        final String urlMore="http://www.oschina.net/action/apiv2/news?pageToken="+nextPageToken;
+
+        final String urlMore = "http://www.oschina.net/action/apiv2/news?pageToken=" + nextPageToken;
         new Thread(new Runnable() {
             @Override
             public void run() {

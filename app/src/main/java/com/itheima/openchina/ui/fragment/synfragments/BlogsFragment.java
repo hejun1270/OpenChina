@@ -44,6 +44,7 @@ public class BlogsFragment extends BaseFragment {
     private SynBlogsAdapter adapter;
     private BlogBean bodyData;
     private int size;
+    private String urlMore;
 
     @Override
     protected View onCreateContentView() {
@@ -197,7 +198,11 @@ public class BlogsFragment extends BaseFragment {
 
     //上拉加载更多
     public void loadMore(String nextPageToken){
-        final String urlMore=url+nextPageToken;
+
+        if(urlMore!=null&&urlMore.equals(url+nextPageToken)){
+            return;
+        }
+        urlMore = url+nextPageToken;
         size = list.size();
         new Thread(new Runnable() {
             @Override
