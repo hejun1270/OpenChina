@@ -197,13 +197,13 @@ public class BlogsFragment extends BaseFragment {
 
     //上拉加载更多
     public void loadMore(String nextPageToken){
-        url=url+nextPageToken;
+        final String urlMore=url+nextPageToken;
         size = list.size();
         new Thread(new Runnable() {
             @Override
             public void run() {
 
-                bodyData = LoadData.getInstance().getBeanData(url
+                bodyData = LoadData.getInstance().getBeanData(urlMore
                         , BlogBean.class);
 
                 //添加了头
