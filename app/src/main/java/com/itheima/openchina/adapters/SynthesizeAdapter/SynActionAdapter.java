@@ -163,6 +163,7 @@ public class SynActionAdapter extends BaseRecyclerAdapter implements BaseRecycle
             Intent intent = new Intent(getContext(),DetailsActivity.class);
             intent.putExtra("href",body.getHref());
             intent.putExtra("id",body.getId()+"");
+            intent.putExtra("type",body.getType()+"");
             intent.putExtra("title","活动详情");
             getContext().startActivity(intent);
         }

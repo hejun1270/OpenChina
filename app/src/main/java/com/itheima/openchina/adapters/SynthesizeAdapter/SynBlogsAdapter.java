@@ -171,8 +171,10 @@ public class SynBlogsAdapter extends BaseRecyclerAdapter implements BaseRecycler
             SpUtil.saveBoolean(title,true);
             notifyItemRangeChanged(1,body.size()-1);
             Intent intent = new Intent(getContext(),DetailsActivity.class);
+            System.out.println("type:"+bean.getType()+"------>"+bean.getId());
             intent.putExtra("href",bean.getHref());
             intent.putExtra("title","博客详情");
+            intent.putExtra("type",bean.getType()+"");
             intent.putExtra("id",bean.getId()+"");
             intent.putExtra("commend",bean.getCommentCount()+"");
             getContext().startActivity(intent);

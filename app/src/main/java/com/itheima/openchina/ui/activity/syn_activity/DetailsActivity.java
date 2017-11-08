@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.SystemClock;
+import android.service.quicksettings.Tile;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -67,6 +68,8 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
     private String cookie;
     private AlertDialog.Builder alertDialog;
     private String commend;
+    private String type;
+    private String title;
 
     @Override
     protected int getLayoutRs() {
@@ -79,9 +82,10 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
         super.init();
         StatusBarUtil.setColor(this, getResources().getColor(R.color.colorAccent));
         Intent intent = getIntent();
-        String title = intent.getStringExtra("title");
+        title = intent.getStringExtra("title");
         commend = intent.getStringExtra("commend");
         id = intent.getStringExtra("id");
+        type = intent.getStringExtra("type");
         href = intent.getStringExtra("href");
         //头布局
         ImageView imageBack = findViewById(R.id.image_back);
@@ -141,7 +145,9 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
                     case MotionEvent.ACTION_MOVE:
                         int moveY = (int) event.getY();
                         if (y - moveY >= height/5) {
-                            synLinear.setVisibility(View.VISIBLE);
+                            if(!title.contains("活动")){
+                                synLinear.setVisibility(View.VISIBLE);
+                            }
                         } else if (moveY - y >= height/5) {
                             synLinear.setVisibility(View.GONE);
                         }
@@ -179,7 +185,9 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
             case R.id.textCommend:
                 height = synScrollView.getHeight();
                 synScrollView.smoothScrollBy(0, height * 100);
-                synLinear.setVisibility(View.VISIBLE);
+                if(!title.contains("活动")){
+                    synLinear.setVisibility(View.VISIBLE);
+                }
                 break;
             case R.id.send:
                 sendMessage();
@@ -223,7 +231,7 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
                         .build();
                 RequestBody body=new FormBody.Builder()
                         .add("sourceId",id)
-                        .add("type","6")
+                        .add("type",type)
                         .add("content",edit.getText().toString().trim()+"")
                         .build();
 
@@ -235,7 +243,7 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
 
                 try {
                     Response execute = okhttp.newCall(rq).execute();
-                    LogUtils.i(execute.message()+"++++++");
+                    LogUtils.i(execute.body().string()+"++++++");
                     LogUtils.i("ben++++");
 
                 } catch (IOException e) {
