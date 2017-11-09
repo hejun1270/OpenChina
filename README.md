@@ -5,3 +5,15 @@
 * 需要抽取基类和框架，请各位事先商量后再做决定防止产生不必要的麻烦
 > * 项目完成
 > * 此项目开源，供业内爱好者 下载参考学习
+> * 上传签名文件 keystore.jks
+##说明
+*   签名密码：123456
+*   别名：openchina
+##出处
+> ###北京黑马程序员
+
+##项目预览
+> ![](/preview/gaollg0.gif)	![](/preview/1.png)	![](/preview/2.png)	![](/preview/3.png)
+
+> ![](/preview/4.png) ![](/preview/5.png) ![](/preview/6.png)
+
