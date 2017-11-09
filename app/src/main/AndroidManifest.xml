@@ -28,6 +28,10 @@
         <meta-data
             android:name="com.itheima.openchina.config.ImageDiskChaceModle"
             android:value="GlideModule" />
+        <!--平台-->
+       <!-- <meta-data
+            android:name="platform"
+            android:value="${platform_name}" />-->
 
         <activity
             android:name=".SplashActivity"
@@ -56,9 +60,10 @@
             android:name=".ui.activity.PagerPhotoActivity"
             android:theme="@style/AppTheme.Lucency" />
         <activity android:name=".ui.activity.RecommDetailActivity" />
-        <activity android:name=".ui.activity.LoadImage"/>
-        <activity android:name=".ui.activity.syn_activity.DetailsActivity"
-            android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".ui.activity.LoadImage" />
+        <activity
+            android:name=".ui.activity.syn_activity.DetailsActivity"
+            android:windowSoftInputMode="stateHidden" />
     </application>
 
 </manifest>
