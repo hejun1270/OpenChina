@@ -28,10 +28,6 @@
         <meta-data
             android:name="com.itheima.openchina.config.ImageDiskChaceModle"
             android:value="GlideModule" />
-        <!--平台-->
-       <!-- <meta-data
-            android:name="platform"
-            android:value="${platform_name}" />-->
 
         <activity
             android:name=".SplashActivity"
@@ -42,12 +38,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.OpenChinaActivity" />
+        <activity android:name=".ui.activity.discover_activity.OpenChinaActivity" />
         <activity android:name=".ui.activity.MainActivity" />
-        <activity
-            android:name=".ui.activity.AddActivity"
-            android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".ui.activity.ShakeActivity" />
+        <activity android:name=".ui.activity.AddActivity" />
+        <activity android:name=".ui.activity.discover_activity.ShakeActivity" />
         <activity
             android:name=".ui.activity.LoginActivity"
             android:windowSoftInputMode="adjustNothing" />
@@ -59,11 +53,11 @@
         <activity
             android:name=".ui.activity.PagerPhotoActivity"
             android:theme="@style/AppTheme.Lucency" />
-        <activity android:name=".ui.activity.RecommDetailActivity" />
-        <activity android:name=".ui.activity.LoadImage" />
+        <activity android:name=".ui.activity.discover_activity.RecommDetailActivity" />
         <activity
             android:name=".ui.activity.syn_activity.DetailsActivity"
             android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".ui.activity.discover_activity.AskActivity"></activity>
     </application>
 
 </manifest>

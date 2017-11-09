@@ -15,7 +15,7 @@ import com.itheima.openchina.R;
 import com.itheima.openchina.bases.BaseFragment;
 import com.itheima.openchina.beans.RecommondBean;
 import com.itheima.openchina.cacheadmin.LoadData;
-import com.itheima.openchina.ui.activity.RecommDetailActivity;
+import com.itheima.openchina.ui.activity.discover_activity.RecommDetailActivity;
 import com.itheima.openchina.utils.Utils;
 import com.itheima.openchina.utils.XmlUtils;
 
