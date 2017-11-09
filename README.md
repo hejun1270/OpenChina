@@ -9,11 +9,18 @@
 ##说明
 *   签名密码：123456
 *   别名：openchina
+
 ##出处
+
 > ###北京黑马程序员
 
 ##项目预览
-> ![](/preview/gaollg0.gif)	![](/preview/1.png)	![](/preview/2.png)	![](/preview/3.png)
+> ![](https://github.com/hejun1270/OpenChina/blob/master/preview/gaollg0.gif)	
+> ![](https://github.com/hejun1270/OpenChina/blob/master/preview/1.png)	
+> ![](https://github.com/hejun1270/OpenChina/blob/master/preview/2.png)	
+> ![](https://github.com/hejun1270/OpenChina/blob/master/preview/3.png)
 
-> ![](/preview/4.png) ![](/preview/5.png) ![](/preview/6.png)
+> ![](https://github.com/hejun1270/OpenChina/blob/master/preview/4.png) 
+> ![](https://github.com/hejun1270/OpenChina/blob/master/preview/5.png) 
+> ![](https://github.com/hejun1270/OpenChina/blob/master/preview/6.png)
 
