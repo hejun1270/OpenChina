@@ -109,7 +109,6 @@ public class ActionFragment extends BaseFragment {
 
     @Override
     protected void onStartLoadData() {
-        ;
         url = "http://www.oschina.net/action/apiv2/event?nextPageToken=DBA816934CD0AA59";
         getActivity().runOnUiThread(new Runnable() {
             @Override

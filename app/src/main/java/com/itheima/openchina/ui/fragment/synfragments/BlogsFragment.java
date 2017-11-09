@@ -20,6 +20,7 @@ import com.itheima.openchina.beans.HeadBean;
 import com.itheima.openchina.beans.QuestionBean;
 import com.itheima.openchina.cacheadmin.LoadData;
 import com.itheima.openchina.interfaces.ItemType;
+import com.itheima.openchina.utils.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +45,7 @@ public class BlogsFragment extends BaseFragment {
     private SynBlogsAdapter adapter;
     private BlogBean bodyData;
     private int size;
+    private String urlMore;
 
     @Override
     protected View onCreateContentView() {
@@ -197,13 +199,14 @@ public class BlogsFragment extends BaseFragment {
 
     //上拉加载更多
     public void loadMore(String nextPageToken){
-        url=url+nextPageToken;
+        ToastUtil.showToast(nextPageToken);
+        urlMore = url+nextPageToken;
         size = list.size();
         new Thread(new Runnable() {
             @Override
             public void run() {
 
-                bodyData = LoadData.getInstance().getBeanData(url
+                bodyData = LoadData.getInstance().getBeanData(urlMore
                         , BlogBean.class);
 
                 //添加了头

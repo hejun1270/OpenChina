@@ -19,6 +19,7 @@ import com.itheima.openchina.beans.QuestionBean;
 import com.itheima.openchina.cacheadmin.LoadData;
 import com.itheima.openchina.interfaces.ItemType;
 import com.itheima.openchina.utils.LogUtils;
+import com.itheima.openchina.utils.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +41,7 @@ public class QuestionFragment extends BaseFragment {
     private String url;
     private QuestionBean questionBean;
     private int size;
+    private String urlMore;
 
     @Override
     protected View onCreateContentView() {
@@ -94,6 +96,7 @@ public class QuestionFragment extends BaseFragment {
     private void notifyChange(int position) {
          url = "http://www.oschina.net/action/apiv2/question?catalog=" +
                 position + "&nextPageToken=";
+
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -164,7 +167,7 @@ public class QuestionFragment extends BaseFragment {
 
     //上拉加载更多
     public void loadMore(String nextPageToken){
-        final String urlMore=url+nextPageToken;
+        urlMore = url+nextPageToken;
         size = list.size();
         new Thread(new Runnable() {
             @Override
