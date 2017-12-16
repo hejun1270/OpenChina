@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">OpenChina</string>
+    <string name="app_name">IT智博会</string>
     <string name="load_error_try_again">重新加载</string>
     <string name="loading">正在加载...</string>
     <string name="no_login">未登录</string>
@@ -63,4 +63,5 @@
     <string name="from_iphone">iPhone</string>
     <string name="from_windows_phone">Windows Phone</string>
     <string name="from_wechat">微信</string>
+    <string name="it_more">IT智博会</string>
 </resources>

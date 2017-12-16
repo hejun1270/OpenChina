@@ -64,7 +64,7 @@ public class LoadData {
      * @param cookie
      * @return
      */
-    public String getStringData(String url, String cookie) {
+    public String  getStringData(String url, String cookie) {
 
         //1. 去网络获取数据
         String content = HttpManager.getInstance().dataGet(url, cookie);
@@ -89,7 +89,7 @@ public class LoadData {
     }
 
     //获取json对象的方法
-    public <T> T getBeanData(String url, Class<T> clazz) {
+    public <T> T  getBeanData(String url, Class<T> clazz) {
 
         //1. 去网络获取数据
         String content = HttpManager.getInstance().dataGet(url);

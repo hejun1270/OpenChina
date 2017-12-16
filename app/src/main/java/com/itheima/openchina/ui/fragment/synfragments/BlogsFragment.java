@@ -3,6 +3,7 @@ package com.itheima.openchina.ui.fragment.synfragments;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.animation.AnimationUtils;
@@ -25,7 +26,9 @@ import com.itheima.openchina.utils.ToastUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.support.v7.widget.RecyclerView.HORIZONTAL;
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
+import static android.support.v7.widget.RecyclerView.VERTICAL;
 
 /**
  * Created by 佘本民

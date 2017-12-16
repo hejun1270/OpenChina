@@ -8,6 +8,7 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.itheima.openchina.anim.WeatherView;
 import com.itheima.openchina.appcontrol.App;
@@ -18,7 +19,7 @@ import com.itheima.openchina.utils.ToastUtil;
 public class SplashActivity extends BaseActivity {
 
     private WeatherView aninView;
-    private ImageView image;
+    private LinearLayout image;
 
     @Override
     protected int getLayoutRs() {

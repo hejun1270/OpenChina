@@ -12,14 +12,11 @@ import android.widget.Toast;
 import com.itheima.openchina.R;
 import com.itheima.openchina.adapters.SynthesizeAdapter.SynQuestionAdapter;
 import com.itheima.openchina.bases.BaseFragment;
-import com.itheima.openchina.beans.BlogBean;
 import com.itheima.openchina.beans.FootBean;
 import com.itheima.openchina.beans.HeadBean;
 import com.itheima.openchina.beans.QuestionBean;
 import com.itheima.openchina.cacheadmin.LoadData;
 import com.itheima.openchina.interfaces.ItemType;
-import com.itheima.openchina.utils.LogUtils;
-import com.itheima.openchina.utils.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
